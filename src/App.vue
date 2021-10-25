@@ -31,11 +31,12 @@ export default {
   },
   data() {
     return {
-      activeProjectId: 1,
+      // TODO We still need to create the default projects and insert them into the database. For now we'll use high IDs to not get a conflict
+      activeProjectId: 200,
       defaultProjects: [
-        {id: 1, icon: 'inbox', text: 'Inbox'},
-        {id: 2, icon: 'calendar_today', text: 'Today'},
-        {id: 3, icon: 'upcoming', text: 'Upcoming'},
+        {id: 200, icon: 'inbox', name: 'Inbox'},
+        {id: 210, icon: 'calendar_today', name: 'Today'},
+        {id: 220, icon: 'upcoming', name: 'Upcoming'},
       ],
       userProjects: [],
     }
@@ -109,7 +110,7 @@ a, a:visited {
 }
 
 #right-section {
-  background: green   ;
+  background: green;
   flex: 7;
 }
 </style>

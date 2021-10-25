@@ -1,20 +1,18 @@
 <template>
   <!-- eslint-disable -->
-  <div id="app">
-    <div id="sidebar">
-      <ProjectList v-model:active-project-id="activeProjectId" :projects="defaultProjects"></ProjectList>
-      <hr v-if="userProjects.length > 0">
-      <ProjectList v-model:active-project-id="activeProjectId" :projects="userProjects"
-                   section-title="Projects"></ProjectList>
-    </div>
+  <div id="sidebar">
+    <ProjectList v-model:active-project-id="activeProjectId" :projects="defaultProjects"></ProjectList>
+    <hr v-if="userProjects.length > 0">
+    <ProjectList v-model:active-project-id="activeProjectId" :projects="userProjects"
+                 section-title="Projects"></ProjectList>
+  </div>
 
-    <div id="middle-section">
-      <TasksView :project="getActiveProjectName()"></TasksView>
-    </div>
+  <div id="middle-section">
+    <TasksView :project="getActiveProjectName()"></TasksView>
+  </div>
 
-    <div id="right-section">
+  <div id="right-section">
 
-    </div>
   </div>
 </template>
 

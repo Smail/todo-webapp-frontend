@@ -9,7 +9,7 @@
     </div>
 
     <div id="middle-section">
-      <TasksView :project-id="activeProjectId"></TasksView>
+      <TasksView :project="getActiveProjectName()"></TasksView>
     </div>
 
     <div id="right-section">

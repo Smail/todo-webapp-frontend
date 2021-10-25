@@ -2,9 +2,9 @@
   <!-- eslint-disable -->
   <div id="app">
     <div id="sidebar">
-      <ProjectList :active-project-id.sync="activeProjectId" :projects="defaultProjects"></ProjectList>
+      <ProjectList v-model:active-project-id="activeProjectId" :projects="defaultProjects"></ProjectList>
       <hr v-if="userProjects.length > 0">
-      <ProjectList :active-project-id.sync="activeProjectId" :projects="userProjects"
+      <ProjectList v-model:active-project-id="activeProjectId" :projects="userProjects"
                    section-title="Projects"></ProjectList>
     </div>
 

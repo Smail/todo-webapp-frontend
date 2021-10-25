@@ -1,6 +1,5 @@
 <template>
-  <li :class="{ active: isActive }" class='project' data-theme='dark' draggable='true'
-      @click="$emit('click', id)">
+  <li :class="{ active: isActive }" class='project' data-theme='dark' draggable='true'>
     <span class='material-icons'>{{ icon }}</span><a href='#'>{{ name }}</a>
   </li>
 </template>

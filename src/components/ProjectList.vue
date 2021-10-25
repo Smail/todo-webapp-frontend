@@ -4,7 +4,7 @@
     <ul class="projects">
       <Project v-for="project in projects" :id="project.id" :icon="project.icon"
                :is-active="activeProjectId === project.id"
-               :name="project.name" @click="setActive"></Project>
+               :name="project.name" @click="$emit('update:activeProjectId', project.id)"></Project>
     </ul>
   </section>
 </template>
@@ -19,16 +19,10 @@ export default {
     sectionTitle: String,
     activeProjectId: Number,
     // [{id: Number, icon: String, name: String}]
-    projects: [],
+    projects: Array,
   },
-  emits: ['update:active-project-id'],
-  methods: {
-    setActive(id) {
-      if (this.activeProjectId !== id) {
-        this.$emit('update:active-project-id', id);
-      }
-    }
-  }
+  emits: ['update:activeProjectId'],
+  methods: {}
 }
 </script>
 

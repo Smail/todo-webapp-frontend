@@ -1,6 +1,9 @@
 <template>
   <li :class="{ active: isActive }" class='project' data-theme='dark' draggable='true'>
-    <span class='material-icons'>{{ icon }}</span><a href='#'>{{ name }}</a>
+    <!-- Draw the normal list icon if there was no specific icon passed -->
+    <span v-if="icon != null" class='material-icons' data-s>{{ icon }}</span>
+    <span v-else class='material-icons'>list</span>
+    <a href='#'>{{ name }}</a>
   </li>
 </template>
 

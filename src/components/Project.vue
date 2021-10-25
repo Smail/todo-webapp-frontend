@@ -1,6 +1,7 @@
 <template>
-  <li class='project' :class="{ active: isActive }" data-theme='dark' draggable='true'>
-    <span class='material-icons'>{{ icon }}</span><a href='#'>{{ text }}</a>
+  <li :class="{ active: isActive }" class='project' data-theme='dark' draggable='true'
+      @click="$emit('click', id)">
+    <span class='material-icons'>{{ icon }}</span><a href='#'>{{ name }}</a>
   </li>
 </template>
 
@@ -8,10 +9,12 @@
 export default {
   name: "Project",
   props: {
+    id: Number,
     icon: String,
-    text: String,
+    name: String,
     isActive: Boolean,
-  }
+  },
+  methods: {}
 }
 </script>
 

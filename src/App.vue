@@ -39,7 +39,42 @@ export default {
       ],
       userProjects: [],
     }
-  }
+  },
+  methods: {
+    loadUserProjects() {
+      $.post('http://api.todo.smail.de/ajax.php', {
+        action: 'get_all_projects',
+        // TODO add bearer token, username or simply some form of authentication
+      }, (response) => {
+        const json = $.parseJSON(response);
+        for (const obj of json) {
+          this.userProjects.push(obj);
+        }
+      });
+    },
+    getActiveProjectName() {
+      return this.defaultProjects.concat(this.userProjects).find(value => value.id === this.activeProjectId);
+    },
+  },
+  beforeCreate() {
+    $.ajaxSetup({
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      }
+    });
+
+    $.post('http://api.todo.smail.de/login.php', {username: 'Smail', password: 'secure'}, function (response) {
+      console.log(response);
+    }).fail(function (response) {
+      console.error(response);
+      alert("Could not log in. See console errors for more");
+    });
+  },
+  created() {
+    this.loadUserProjects();
+    console.log("sfsdfsd" + this.userProjects);
+  },
 }
 </script>
 

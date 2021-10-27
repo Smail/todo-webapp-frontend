@@ -26,8 +26,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * Request tasks for the currently selected project. After the successful server request, the tasks array will only
+     * contain the new values, i.e. it will be cleared first.
+     */
     loadData() {
-      // Request tasks from server.
       // TODO change URL to HTTPS when SSL is activated on the server
       // Note: I changed my /etc/hosts file to redirect smail.de to localhost
       $.ajax({
@@ -43,9 +46,7 @@ export default {
           this.tasks = [];
 
           for (const x of json) {
-            // if (!this.tasks.some(value => value.id === x.id)) {
             this.tasks.push(x);
-            // }
           }
         },
       });

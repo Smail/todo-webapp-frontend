@@ -47,14 +47,19 @@ export default {
   },
   methods: {
     loadUserProjects() {
-      $.post('http://api.todo.smail.de/ajax.php', {
-        action: 'get_all_projects',
-        // TODO add bearer token, username or simply some form of authentication
-      }, (response) => {
-        const json = $.parseJSON(response);
-        for (const obj of json) {
-          this.userProjects.push(obj);
-        }
+      $.ajax({
+        type: 'POST',
+        url: 'http://api.todo.smail.de/ajax.php',
+        data: {
+          // TODO add bearer token, username or simply some form of user authentication
+          'action': 'get_all_projects',
+        },
+        success: (response) => {
+          const json = $.parseJSON(response);
+          for (const obj of json) {
+            this.userProjects.push(obj);
+          }
+        },
       });
     },
   },

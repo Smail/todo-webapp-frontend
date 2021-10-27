@@ -19,26 +19,37 @@ export default {
       tasks: [],
     }
   },
-  mounted() {
-    // Request tasks from server after props are available with AJAX.
-    // Props are for the first time available in the mounted hook.
-    let vm = this;
-    // TODO change URL to HTTPS when SSL is activated on the server
-    // Note: I changed my /etc/hosts file to redirect smail.de to localhost
+  watch: {
+    // We maybe need immediate: true https://stackoverflow.com/a/51176290/9258134
+    project: function () {
+      this.loadData();
+    }
+  },
+  methods: {
+    loadData() {
+      // Request tasks from server.
+      // TODO change URL to HTTPS when SSL is activated on the server
+      // Note: I changed my /etc/hosts file to redirect smail.de to localhost
+      $.ajax({
+        type: 'POST',
+        url: 'http://api.todo.smail.de/ajax.php',
+        data: {
+          'action': 'get_tasks',
+          'projectId': this.project.id,
+          // TODO add bearer token, username or simply some form of authentication
+        },
+        success: (response) => {
+          const json = $.parseJSON(response);
+          this.tasks = [];
 
-    console.log(this.project);
-
-    $.post('http://api.todo.smail.de/ajax.php', {
-      "action": "get_tasks",
-      "projectId": this.project.id,
-    }, (response) => {
-      // TODO make this work
-      this.tasks = $.parseJSON(response);
-      console.log("jkhfdjhkdsdkl")
-    }).fail(function (response) {
-      console.log("err");
-      console.error(response);
-    });
+          for (const x of json) {
+            // if (!this.tasks.some(value => value.id === x.id)) {
+            this.tasks.push(x);
+            // }
+          }
+        },
+      });
+    }
   }
 }
 </script>

@@ -26,7 +26,7 @@ export default {
   components: {
     TasksView,
     ProjectList,
-    Project
+    Project,
   },
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
     $.ajaxSetup({
       crossDomain: true,
       xhrFields: {
-        withCredentials: true
+        withCredentials: true,
       }
     });
 

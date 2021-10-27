@@ -22,7 +22,7 @@ export default {
     projects: Array,
   },
   emits: ['update:activeProjectId'],
-  methods: {}
+  methods: {},
 }
 </script>
 

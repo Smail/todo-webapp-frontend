@@ -75,7 +75,6 @@ export default {
   },
   created() {
     this.loadUserProjects();
-    console.log("sfsdfsd" + this.userProjects);
   },
 }
 </script>

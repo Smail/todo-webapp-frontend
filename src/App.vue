@@ -8,7 +8,7 @@
   </div>
 
   <div id="middle-section">
-    <TasksView :project="getActiveProjectName()"></TasksView>
+    <TasksView :project="activeProjectName"></TasksView>
   </div>
 
   <div id="right-section">
@@ -40,6 +40,11 @@ export default {
       userProjects: [],
     }
   },
+  computed: {
+    activeProjectName() {
+      return this.defaultProjects.concat(this.userProjects).find(value => value.id === this.activeProjectId);
+    },
+  },
   methods: {
     loadUserProjects() {
       $.post('http://api.todo.smail.de/ajax.php', {
@@ -51,9 +56,6 @@ export default {
           this.userProjects.push(obj);
         }
       });
-    },
-    getActiveProjectName() {
-      return this.defaultProjects.concat(this.userProjects).find(value => value.id === this.activeProjectId);
     },
   },
   beforeCreate() {

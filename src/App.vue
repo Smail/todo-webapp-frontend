@@ -71,8 +71,9 @@ export default {
       }
     });
 
+    // Login
     $.post('http://api.todo.smail.de/login.php', {username: 'Smail', password: 'secure'}, function (response) {
-      console.log(response);
+      // console.log(response);
     }).fail(function (response) {
       console.error(response);
       alert("Could not log in. See console errors for more");

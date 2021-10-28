@@ -9,7 +9,7 @@
         <hr>
       </li>
       <li id="new-task-li">
-        <input id="new-task" placeholder="New task" @keypress.enter="createTask($event.target.value)"/>
+        <input placeholder="New task" @keypress.enter="createTask($event.target.value)"/>
       </li>
     </ul>
   </section>
@@ -175,6 +175,12 @@ li > hr {
   border-color: black;
   border-width: 1px;
   margin: 0.5em 0;
+}
+
+#new-task-li {
+  background-color: greenyellow;
+  padding: 0.5em;
+  border-radius: 5px;
 }
 
 /*#new-task[data-theme="light"]::placeholder {*/

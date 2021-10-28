@@ -158,7 +158,7 @@ li {
   /*margin-bottom: 0.5em;*/
 }
 
-li > input {
+input {
   background-color: transparent;
   border-width: 0;
   font-size: inherit;
@@ -167,7 +167,7 @@ li > input {
   width: 100%;
 }
 
-li > input::placeholder {
+input::placeholder {
   color: lightgray;
 }
 

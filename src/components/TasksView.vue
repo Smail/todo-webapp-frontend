@@ -155,7 +155,6 @@ ul {
 li {
   list-style: none;
   font-size: 12pt;
-  /*margin-bottom: 0.5em;*/
 }
 
 input {

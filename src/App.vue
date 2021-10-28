@@ -1,4 +1,4 @@
-<template>
+<template id="app">
   <!-- eslint-disable -->
   <div id="sidebar">
     <ProjectList v-model:active-project-id="activeProjectId" :projects="defaultProjects"></ProjectList>

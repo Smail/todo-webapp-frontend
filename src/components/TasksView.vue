@@ -8,9 +8,8 @@
         <input v-model="task.name" @input="updateTaskName(task, $event.target.value)"/>
         <hr>
       </li>
-      <li>
-        <input id="new-task" placeholder="New task" @focusout="createTask($event.target.value)"
-               @keypress.enter="createTask($event.target.value)"/>
+      <li id="new-task-li">
+        <input id="new-task" placeholder="New task" @keypress.enter="createTask($event.target.value)"/>
       </li>
     </ul>
   </section>

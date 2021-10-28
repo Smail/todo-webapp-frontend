@@ -8,8 +8,8 @@
         <input v-model="task.name" @input="updateTaskName(task, $event.target.value)"/>
         <hr>
       </li>
-      <li id="new-task-li">
-        <input placeholder="New task" @keypress.enter="createTask($event.target.value)"/>
+      <li>
+        <input id="new-task" placeholder="New task" @keypress.enter="createTask($event.target.value)"/>
       </li>
     </ul>
   </section>
@@ -162,7 +162,7 @@ li > input {
   background-color: transparent;
   border-width: 0;
   font-size: inherit;
-  /*padding-bottom: 1em;*/
+  margin: 0.5em 0;
   outline: none; /* TODO */
   width: 100%;
 }
@@ -177,10 +177,15 @@ li > hr {
   margin: 0.5em 0;
 }
 
-#new-task-li {
-  background-color: greenyellow;
+#new-task {
+  background-color: #5e5e5e;
   padding: 0.5em;
+  width: calc(100% - 2 * 0.5em);
   border-radius: 5px;
+}
+
+#new-task:focus {
+  outline: thin solid white;
 }
 
 /*#new-task[data-theme="light"]::placeholder {*/

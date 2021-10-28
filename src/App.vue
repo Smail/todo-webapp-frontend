@@ -113,6 +113,8 @@ a, a:visited {
 #middle-section {
   background: red;
   flex: 7;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 #right-section {

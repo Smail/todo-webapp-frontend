@@ -8,6 +8,10 @@
         <input v-model="task.name" @input="updateTaskName(task, $event.target.value)"/>
         <hr>
       </li>
+      <li>
+        <input id="new-task" placeholder="New task" @focusout="createTask($event.target.value)"
+               @keypress.enter="createTask($event.target.value)"/>
+      </li>
     </ul>
   </section>
 </template>
@@ -83,6 +87,49 @@ export default {
         },
         error: (response) => {
           alert('Could not update task name');
+          console.error(response);
+        }
+      });
+    },
+    /**
+     * Create a new task on client and server
+     *
+     * @param taskName
+     * @param taskContent
+     * @param taskDuration
+     * @param taskDueDate
+     */
+    createTask(taskName, taskContent = '', taskDuration = null, taskDueDate = null) {
+      $.ajax({
+        type: 'POST',
+        url: 'http://api.todo.smail.de/ajax.php',
+        data: {
+          'action': 'create_task',
+          'projectId': this.project.id,
+          'taskName': taskName,
+          'taskContent': taskContent,
+          'taskDuration': taskDuration,
+          'taskDueDate': taskDueDate,
+        },
+        success: (response) => {
+          console.log(response);
+          // Create task here on the client as well
+          const json = JSON.parse(response);
+          const taskId = json['taskId'];
+
+          if (taskId > 1) {
+            console.log('push')
+            this.tasks.push({
+              'id': taskId,
+              'name': taskName,
+              'content': taskContent,
+              'duration': taskDuration,
+              'dueDate': taskDueDate,
+            });
+          }
+        },
+        error: (response) => {
+          alert('Could not create task :/');
           console.error(response);
         }
       });

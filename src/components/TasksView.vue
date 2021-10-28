@@ -2,7 +2,12 @@
   <section>
     <h1>{{ project.name }}</h1>
     <ul>
-      <li v-for="task in tasks">{{ task.name }}</li>
+      <li v-for="task in tasks">
+        <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
+        <!-- <input v-model="task.name" @focusout="updateTask"/> -->
+        <input v-model="task.name" @input="updateTaskName(task, $event.target.value)"/>
+        <hr>
+      </li>
     </ul>
   </section>
 </template>
@@ -15,7 +20,7 @@ export default {
   },
   data() {
     return {
-      // [{id: String, name: String, content: String, duration: int, dueDate: String}]
+      // [{id: String, name: String, content: String, duration: int, dueDate: String}] TODO change id to int
       tasks: [],
     }
   },
@@ -43,14 +48,45 @@ export default {
         },
         success: (response) => {
           const json = $.parseJSON(response);
-          this.tasks = [];
+          // Don't use this.tasks = []; because it dereferences the current array
+          this.tasks.length = 0;
 
           for (const x of json) {
             this.tasks.push(x);
           }
         },
       });
-    }
+    },
+    /**
+     * Update a task name on both the client and server.
+     * This function will only update the client if the server update was successful.
+     *
+     * @param task The task, which should be updated.
+     * @param newTaskName The new task name for the parameter task.
+     */
+    updateTaskName(task, newTaskName) {
+      // TODO putting the task object has unnecessary overhead if we only update the name or content, etc. because we
+      // are sending also unchanged data to the server. We should either create individual functions or check for change
+      // and then use PATCH instead of PUT.
+      // Note: Server doesn't accept PATCH or PUT, so this is currently unnecessary.
+      $.ajax({
+        type: 'POST',
+        url: 'http://api.todo.smail.de/ajax.php',
+        data: {
+          'action': 'update_task_name',
+          'taskId': task.id,
+          'taskName': newTaskName,
+        },
+        success: () => {
+          // task.name will be automatically updated by v-model
+          console.log(task.name);
+        },
+        error: (response) => {
+          alert('Could not update task name');
+          console.error(response);
+        }
+      });
+    },
   }
 }
 </script>

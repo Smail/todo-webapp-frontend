@@ -56,7 +56,50 @@ export default {
 </script>
 
 <style scoped>
+section {
+  padding: 1em;
+}
+
 h1 {
   text-transform: capitalize;
+  margin-bottom: 1em;
 }
+
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  list-style: none;
+  font-size: 12pt;
+  /*margin-bottom: 0.5em;*/
+}
+
+li > input {
+  background-color: transparent;
+  border-width: 0;
+  font-size: inherit;
+  /*padding-bottom: 1em;*/
+  outline: none; /* TODO */
+  width: 100%;
+}
+
+li > input::placeholder {
+  color: lightgray;
+}
+
+li > hr {
+  border-color: black;
+  border-width: 1px;
+  margin: 0.5em 0;
+}
+
+/*#new-task[data-theme="light"]::placeholder {*/
+/*  color: ;*/
+/*}*/
+
+/*#new-task[data-theme="dark"]::placeholder {*/
+/*  color: ;*/
+/*}*/
 </style>

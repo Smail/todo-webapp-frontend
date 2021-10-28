@@ -2,14 +2,17 @@
   <section>
     <h1>{{ project.name }}</h1>
     <ul>
-      <li v-for="task in tasks">
+      <li v-for="(task, index) in tasks">
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
         <!-- <input v-model="task.name" @focusout="updateTask"/> -->
-        <input v-model="task.name" @input="updateTaskName(task, $event.target.value)"/>
-        <hr>
+        <div class="task">
+          <input type="checkbox"/>
+          <input v-model="task.name" type="text" @input="updateTaskName(task, $event.target.value)"/>
+        </div>
+        <hr v-if="index < tasks.length - 1">
       </li>
       <li>
-        <input id="new-task" placeholder="New task" @keypress.enter="createTask($event.target.value)"/>
+        <input id="new-task" placeholder="New task" type="text" @keypress.enter="createTask($event.target.value)"/>
       </li>
     </ul>
   </section>
@@ -144,7 +147,7 @@ section {
 
 h1 {
   text-transform: capitalize;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 ul {
@@ -157,7 +160,21 @@ li {
   font-size: 12pt;
 }
 
-input {
+div.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin: 0 0.5em;
+  border: 0 none;
+  height: 1.5em;
+  width: 1.5em;
+  background-color: red;
+}
+
+input[type="text"] {
   background-color: transparent;
   border-width: 0;
   font-size: inherit;
@@ -166,7 +183,7 @@ input {
   width: 100%;
 }
 
-input::placeholder {
+input[type="text"]::placeholder {
   color: lightgray;
 }
 
@@ -174,6 +191,7 @@ li > hr {
   background-color: black;
   height: 1px;
   border: none;
+  margin: 0.25em 0;
 }
 
 #new-task {

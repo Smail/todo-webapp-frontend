@@ -30,5 +30,6 @@ export default {
 .projects {
   display: flex;
   flex-direction: column;
+  padding: 0.5em;
 }
 </style>

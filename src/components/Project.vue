@@ -1,9 +1,9 @@
 <template>
-  <li :class="{ active: isActive }" class='project' data-theme='dark' draggable='true'>
+  <li :class="{ active: isActive }" class="project" draggable="true">
     <!-- Draw the normal list icon if there was no specific icon passed -->
-    <span v-if="icon != null" class='material-icons' data-s>{{ icon }}</span>
-    <span v-else class='material-icons'>list</span>
-    <a href='#'>{{ name }}</a>
+    <span v-if="icon != null" class="material-icons">{{ icon }}</span>
+    <span v-else class="material-icons">list</span>
+    <p>{{ name }}</p>
   </li>
 </template>
 
@@ -20,27 +20,44 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .project {
   display: flex;
   align-items: center;
-  gap: 3%;
-  padding: 4%;
-  margin: 1%;
+  gap: 0.5em;
+  padding: 0.75em;
   border-radius: 5px;
-  background-color: blueviolet;
+  background-color: transparent;
   cursor: pointer;
 }
 
-.project:hover, .project:active {
-  background-color: green;
+.material-icons {
+  font-size: 13pt;
+}
+
+p {
+  font-size: 11pt;
+}
+
+.project:hover {
+  background-color: yellow;
+}
+
+.project:not([data-theme="dark"]) {
+  color: black;
 }
 
 .project[data-theme="dark"] {
   color: white;
 }
 
-.project.active {
+.project:not([data-theme="dark"]).active {
+  color: white;
+  background-color: blue;
+}
+
+.project[data-theme="dark"].active {
+  color: white;
   background-color: blue;
 }
 </style>

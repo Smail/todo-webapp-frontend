@@ -92,9 +92,12 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
-a, a:visited {
-  color: inherit;
-  text-decoration: none;
+hr {
+  width: 80%;
+  background-color: black;
+  height: 1px;
+  border: 0;
+  align-self: center;
 }
 
 #app {
@@ -106,19 +109,21 @@ a, a:visited {
 }
 
 #sidebar {
+  display: flex;
+  flex-direction: column;
   background: aqua;
-  flex: 2;
+  flex: 1;
 }
 
 #middle-section {
   background: red;
-  flex: 7;
+  flex: 6;
   height: 100vh;
   overflow-y: auto;
 }
 
 #right-section {
   background: green;
-  flex: 7;
+  flex: 6;
 }
 </style>

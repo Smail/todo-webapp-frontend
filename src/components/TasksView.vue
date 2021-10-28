@@ -172,9 +172,9 @@ li > input::placeholder {
 }
 
 li > hr {
-  border-color: black;
-  border-width: 1px;
-  margin: 0.5em 0;
+  background-color: black;
+  height: 1px;
+  border: none;
 }
 
 #new-task {

@@ -54,7 +54,7 @@ export default {
         url: 'http://api.todo.smail.de/ajax.php',
         data: {
           // TODO add bearer token, username or simply some form of user authentication
-          'action': 'get_all_projects',
+          'action': 'get_user_projects',
         },
         success: (response) => {
           const json = $.parseJSON(response);

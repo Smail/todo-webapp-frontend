@@ -13,7 +13,7 @@
   </div>
 
   <div id="right-section" :data-theme="theme">
-
+    <ContentPanel></ContentPanel>
   </div>
 </template>
 
@@ -21,10 +21,12 @@
 import Project from "@/components/Project";
 import ProjectList from "@/components/ProjectList";
 import TasksView from "@/components/TasksView";
+import ContentPanel from "@/components/ContentPanel";
 
 export default {
   name: 'App',
   components: {
+    ContentPanel,
     TasksView,
     ProjectList,
     Project,

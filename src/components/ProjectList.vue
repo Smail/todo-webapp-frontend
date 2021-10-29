@@ -1,10 +1,14 @@
 <template>
   <section v-if="projects.length > 0">
-    <h2 v-if="sectionTitle === null">{{ sectionTitle }}</h2>
-    <ul class="projects">
+    <h5 v-if="sectionTitle != null && sectionTitle.length > 0" :data-theme="theme">
+      {{ sectionTitle }}
+    </h5>
+    <ul :data-theme="theme" class="projects">
       <Project v-for="project in projects" :id="project.id" :icon="project.icon"
-               :is-active="activeProjectId === project.id"
-               :name="project.name" @click="$emit('update:activeProjectId', project.id)"></Project>
+               :data-theme="theme" :is-active="activeProjectId === project.id"
+               :name="project.name" :theme.prop="theme"
+               @click="$emit('update:activeProjectId', project.id)">
+      </Project>
     </ul>
   </section>
 </template>
@@ -20,16 +24,21 @@ export default {
     activeProjectId: Number,
     // [{id: Number, icon: String, name: String}]
     projects: Array,
+    theme: String,
   },
   emits: ['update:activeProjectId'],
   methods: {},
 }
 </script>
 
-<style>
+<style scoped>
+h5 {
+  padding: 0 1em;
+}
+
 .projects {
   display: flex;
   flex-direction: column;
-  padding: 0.5em;
+  padding: 0.5em 0.5em 0 0.5em;
 }
 </style>

@@ -1,17 +1,18 @@
-<template id="app">
+<template id="app" :data-theme="theme">
   <!-- eslint-disable -->
-  <div id="sidebar">
-    <ProjectList v-model:active-project-id="activeProjectId" :projects="defaultProjects"></ProjectList>
-    <hr v-if="userProjects.length > 0">
-    <ProjectList v-model:active-project-id="activeProjectId" :projects="userProjects"
-                 section-title="Projects"></ProjectList>
+  <div id="left-section" :data-theme="theme" class="border-right">
+    <ProjectList v-model:active-project-id="activeProjectId" :data-theme="theme"
+                 :projects="defaultProjects" :theme="theme"></ProjectList>
+    <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
+    <ProjectList v-model:active-project-id="activeProjectId" :data-theme="theme"
+                 :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
   </div>
 
-  <div id="middle-section">
-    <TasksView :project="activeProjectName"></TasksView>
+  <div id="middle-section" :data-theme="theme" class="border-right">
+    <TasksView :data-theme="theme" :project="activeProjectName" :theme="theme"></TasksView>
   </div>
 
-  <div id="right-section">
+  <div id="right-section" :data-theme="theme">
 
   </div>
 </template>
@@ -38,6 +39,7 @@ export default {
         {id: 220, icon: 'upcoming', name: 'Upcoming'},
       ],
       userProjects: [],
+      theme: 'dark',
     }
   },
   computed: {
@@ -98,6 +100,15 @@ hr {
   height: 1px;
   border: 0;
   align-self: center;
+  margin: 0.5em;
+}
+
+.divisor[data-theme="light"] {
+  background-color: black;
+}
+
+.divisor[data-theme="dark"] {
+  background-color: #323232;
 }
 
 #app {
@@ -108,22 +119,59 @@ hr {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sidebar {
+#left-section {
   display: flex;
   flex-direction: column;
-  background: aqua;
   flex: 1;
 }
 
+#left-section[data-theme="light"] {
+  color: black;
+  background: white;
+}
+
+#left-section[data-theme="dark"] {
+  color: white;
+  background: #1a1a1a;
+}
+
 #middle-section {
-  background: red;
   flex: 6;
   height: 100vh;
   overflow-y: auto;
 }
 
-#right-section {
-  background: green;
-  flex: 6;
+#middle-section:not([data-theme="dark"]) {
+  color: black;
+  background: white;
 }
+
+#middle-section[data-theme="dark"] {
+  color: white;
+  background: #1e1e1e;
+}
+
+#right-section {
+  flex: 6;
+  background: #1a1a1a;
+}
+
+#right-section:not([data-theme="dark"]) {
+  color: black;
+  background: white;
+}
+
+#right-section[data-theme="dark"] {
+  color: white;
+  background: #1a1a1a;
+}
+
+.border-right[data-theme="light"] {
+  border-right: 1px black solid;
+}
+
+.border-right[data-theme="dark"] {
+  border-right: 1px #323232 solid;
+}
+
 </style>

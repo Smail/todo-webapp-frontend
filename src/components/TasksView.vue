@@ -1,18 +1,20 @@
 <template>
   <section>
-    <h1>{{ project.name }}</h1>
+    <h1 :data-theme="theme">{{ project.name }}</h1>
     <ul>
-      <li v-for="(task, index) in tasks">
+      <li v-for="(task, index) in tasks" :data-theme="theme">
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
         <!-- <input v-model="task.name" @focusout="updateTask"/> -->
-        <div class="task">
-          <input type="checkbox"/>
-          <input v-model="task.name" type="text" @input="updateTaskName(task, $event.target.value)"/>
+        <div :data-theme="theme" class="task">
+          <input :data-theme="theme" type="checkbox"/>
+          <input v-model="task.name" :data-theme="theme" type="text"
+                 @input="updateTaskName(task, $event.target.value)"/>
         </div>
-        <hr v-if="index < tasks.length - 1">
+        <hr v-if="index < tasks.length - 1" :data-theme="theme">
       </li>
       <li>
-        <input id="new-task" placeholder="New task" type="text" @keypress.enter="createTask($event.target.value)"/>
+        <input id="new-task" :data-theme="theme" placeholder="New task" type="text"
+               @keypress.enter="createTask($event.target.value)"/>
       </li>
     </ul>
   </section>
@@ -23,6 +25,7 @@ export default {
   name: "TasksView",
   props: {
     project: {id: Number, icon: String, name: String},
+    theme: String,
   },
   data() {
     return {
@@ -183,33 +186,50 @@ input[type="text"] {
   width: 100%;
 }
 
-input[type="text"]::placeholder {
-  color: lightgray;
+input[type="text"][data-theme="dark"] {
+  color: white;
 }
 
-li > hr {
-  background-color: black;
+hr {
   height: 1px;
   border: none;
   margin: 0.25em 0;
+  background-color: black;
+}
+
+hr[data-theme="dark"] {
+  background-color: #494949;
 }
 
 #new-task {
-  background-color: #5e5e5e;
   padding: 0.5em;
   width: calc(100% - 2 * 0.5em);
   border-radius: 5px;
 }
 
-#new-task:focus {
-  outline: thin solid white;
+#new-task:not([data-theme="dark"]) {
+  color: white;
+  background-color: #1a1a1a;
 }
 
-/*#new-task[data-theme="light"]::placeholder {*/
-/*  color: ;*/
-/*}*/
+#new-task[data-theme="dark"] {
+  color: white;
+  background-color: #2a2a2a;
+}
 
-/*#new-task[data-theme="dark"]::placeholder {*/
-/*  color: ;*/
-/*}*/
+#new-task::placeholder {
+  color: lightgray;
+}
+
+#new-task[data-theme="dark"]::placeholder {
+  color: #7e7e7e;
+}
+
+#new-task:not([data-theme="dark"]):focus {
+  outline: thin solid #1a1a1a;
+}
+
+#new-task[data-theme="dark"]:focus {
+  outline: thin solid #323232;
+}
 </style>

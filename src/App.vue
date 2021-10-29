@@ -94,9 +94,29 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
-hr {
-  width: 80%;
-  background-color: black;
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.divisor {
+  width: 90%;
   height: 1px;
   border: 0;
   align-self: center;

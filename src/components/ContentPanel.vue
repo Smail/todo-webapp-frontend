@@ -2,7 +2,8 @@
   <section v-if="activeTask != null">
     <h1 :data-theme="theme">{{ activeTask.name }}</h1>
     <textarea :value="activeTask.content"
-              @input="updateContent($event.target.value)">
+              @focusout="updateServer"
+              @input="setContent($event.target.value)">
       {{ activeTask.content }}
     </textarea>
   </section>
@@ -15,28 +16,40 @@ export default {
     theme: String,
     activeTask: Object,
   },
+  data: function () {
+    return {
+      // Will be read by syncServer function to determine if it should update the server
+      didContentChange: false,
+    }
+  },
   methods: {
-    updateContent(newContentStr) {
-      $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
-        data: {
-          'action': 'update_task',
-          'taskId': this.activeTask.id,
-          'taskContent': newContentStr,
-        },
-        headers: {
-          'Authorization': localStorage.getItem('token'),
-        },
-        success: () => {
-          this.activeTask.content = newContentStr;
-          this.$emit('update:activeTask', this.activeTask);
-        },
-        error: (response) => {
-          alert("Error while saving :/ We could not save your task's content")
-          console.log(response);
-        }
-      });
+    setContent(newContentStr) {
+      this.activeTask.content = newContentStr;
+      this.$emit('update:activeTask', this.activeTask);
+      this.didContentChange = true;
+    },
+    updateServer() {
+      if (this.didContentChange) {
+        $.ajax({
+          type: 'POST',
+          url: 'http://192.168.2.165:8082/ajax.php',
+          data: {
+            'action': 'update_task',
+            'taskId': this.activeTask.id,
+            'taskContent': this.activeTask.content,
+          },
+          headers: {
+            'Authorization': localStorage.getItem('token'),
+          },
+          success: () => {
+            this.didContentChange = false;
+          },
+          error: (response) => {
+            alert("Error while saving :/ We could not save your task's content")
+            console.error(response);
+          }
+        });
+      }
     }
   },
 }

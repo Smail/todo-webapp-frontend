@@ -2,7 +2,7 @@
   <section v-if="activeTask != null">
     <h1 :data-theme="theme">{{ activeTask.name }}</h1>
     <textarea :value="activeTask.content"
-              @input="activeTask.content = $event.target.value; $emit('update:activeTask', activeTask);">
+              @input="updateContent($event.target.value)">
       {{ activeTask.content }}
     </textarea>
   </section>
@@ -16,27 +16,26 @@ export default {
     activeTask: Object,
   },
   methods: {
-    /**
-     * Gets the task content from the server.
-     */
-    getTaskContent(taskId) {
+    updateContent(newContentStr) {
       $.ajax({
         type: 'POST',
         url: 'http://api.todo.smail.de/ajax.php',
         data: {
           // TODO add bearer token, username or simply some form of user authentication
-          'action': 'get_task',
-          'taskId': taskId,
+          'action': 'update_task',
+          'taskId': this.activeTask.id,
+          'taskContent': newContentStr,
         },
         success: (response) => {
-          const task = JSON.parse(response);
-          console.log(task);
+          this.activeTask.content = newContentStr;
+          this.$emit('update:activeTask', this.activeTask);
         },
         error: (response) => {
+          alert("Error while saving :/ We could not save your task's content")
           console.log(response);
         }
       });
-    },
+    }
   },
 }
 </script>

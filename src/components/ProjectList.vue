@@ -3,7 +3,7 @@
     <h5 v-if="sectionTitle != null && sectionTitle.length > 0" :data-theme="theme">
       {{ sectionTitle }}
     </h5>
-    <ul :data-theme="theme" class="projects">
+    <ul :data-theme="theme">
       <Project v-for="project in projects" :id="project.id" :icon="project.icon"
                :data-theme="theme" :is-active="activeProjectId === project.id"
                :name="project.name" :theme.prop="theme"
@@ -36,7 +36,7 @@ h5 {
   padding: 0 1em;
 }
 
-.projects {
+ul {
   display: flex;
   flex-direction: column;
   padding: 0.5em 0.5em 0 0.5em;

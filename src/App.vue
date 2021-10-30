@@ -9,11 +9,12 @@
   </div>
 
   <div id="middle-section" :data-theme="theme" class="border-right">
-    <TasksView :data-theme="theme" :project="activeProjectName" :theme="theme"></TasksView>
+    <TasksView v-model:active-task="activeTask" :data-theme="theme" :project="activeProjectName"
+               :theme="theme"></TasksView>
   </div>
 
   <div id="right-section" :data-theme="theme">
-
+    <ContentPanel v-model:active-task="activeTask" :theme="theme"></ContentPanel>
   </div>
 </template>
 
@@ -21,10 +22,12 @@
 import Project from "@/components/Project";
 import ProjectList from "@/components/ProjectList";
 import TasksView from "@/components/TasksView";
+import ContentPanel from "@/components/ContentPanel";
 
 export default {
   name: 'App',
   components: {
+    ContentPanel,
     TasksView,
     ProjectList,
     Project,
@@ -39,6 +42,7 @@ export default {
         {id: 220, icon: 'upcoming', name: 'Upcoming'},
       ],
       userProjects: [],
+      activeTask: null,
       theme: 'dark',
     }
   },
@@ -51,7 +55,7 @@ export default {
     loadUserProjects() {
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           // TODO add bearer token, username or simply some form of user authentication
           'action': 'get_user_projects',
@@ -62,6 +66,9 @@ export default {
             this.userProjects.push(obj);
           }
         },
+        error: (response) => {
+          console.log(response);
+        }
       });
     },
   },
@@ -74,7 +81,7 @@ export default {
     });
 
     // Login
-    $.post('http://api.todo.smail.de/login.php', {username: 'Smail', password: 'secure'}, function (response) {
+    $.post('http://192.168.2.165:8082/login.php', {username: 'Smail', password: 'secure'}, function (response) {
       // console.log(response);
     }).fail(function (response) {
       console.error(response);
@@ -134,6 +141,9 @@ export default {
 #app {
   min-width: 100vw;
   min-height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
   display: flex;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -174,6 +184,8 @@ export default {
 #right-section {
   flex: 6;
   background: #1a1a1a;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 #right-section:not([data-theme="dark"]) {

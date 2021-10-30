@@ -5,7 +5,7 @@
       <li v-for="(task, index) in tasks" :data-theme="theme">
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
         <!-- <input v-model="task.name" @focusout="updateTask"/> -->
-        <div :data-theme="theme" class="task">
+        <div :data-theme="theme" class="task" @click="$emit('update:activeTask', task)">
           <input :data-theme="theme" type="checkbox"/>
           <input v-model="task.name" :data-theme="theme" type="text"
                  @input="updateTaskName(task, $event.target.value)"/>
@@ -26,17 +26,19 @@ export default {
   props: {
     project: {id: Number, icon: String, name: String},
     theme: String,
+    activeTask: Object,
   },
+  emits: ["update:activeTask"],
   data() {
     return {
-      // [{id: String, name: String, content: String, duration: int, dueDate: String}] TODO change id to int
+      // [{id: int, name: String, content: String, duration: int, dueDate: String}]
       tasks: [],
     }
   },
   watch: {
     // TODO We maybe need immediate: true (https://stackoverflow.com/a/51176290/9258134), because of the Inbox maybe not loading the tasks when the website is first loaded. Other option: add this.loadData to created hook
     project: function () {
-      this.loadData();
+      this.loadTasks();
     }
   },
   methods: {
@@ -44,12 +46,12 @@ export default {
      * Request tasks for the currently selected project. After the successful server request, the tasks array will only
      * contain the new values, i.e. it will be cleared first.
      */
-    loadData() {
+    loadTasks() {
       // TODO change URL to HTTPS when SSL is activated on the server
       // Note: I changed my /etc/hosts file to redirect smail.de to localhost
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           'action': 'get_tasks',
           'projectId': this.project.id,
@@ -80,7 +82,7 @@ export default {
       // Note: Server doesn't accept PATCH or PUT, so this is currently unnecessary.
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           'action': 'update_task_name',
           'taskId': task.id,
@@ -88,7 +90,6 @@ export default {
         },
         success: () => {
           // task.name will be automatically updated by v-model
-          console.log(task.name);
         },
         error: (response) => {
           alert('Could not update task name');
@@ -107,7 +108,7 @@ export default {
     createTask(taskName, taskContent = '', taskDuration = null, taskDueDate = null) {
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           'action': 'create_task',
           'projectId': this.project.id,

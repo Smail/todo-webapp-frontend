@@ -38,7 +38,7 @@ export default {
   watch: {
     // TODO We maybe need immediate: true (https://stackoverflow.com/a/51176290/9258134), because of the Inbox maybe not loading the tasks when the website is first loaded. Other option: add this.loadData to created hook
     project: function () {
-      this.loadData();
+      this.loadTasks();
     }
   },
   methods: {
@@ -46,7 +46,7 @@ export default {
      * Request tasks for the currently selected project. After the successful server request, the tasks array will only
      * contain the new values, i.e. it will be cleared first.
      */
-    loadData() {
+    loadTasks() {
       // TODO change URL to HTTPS when SSL is activated on the server
       // Note: I changed my /etc/hosts file to redirect smail.de to localhost
       $.ajax({

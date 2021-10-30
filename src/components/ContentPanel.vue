@@ -21,7 +21,6 @@ export default {
         type: 'POST',
         url: 'http://192.168.2.165:8082/ajax.php',
         data: {
-          // TODO add bearer token, username or simply some form of user authentication
           'action': 'update_task',
           'taskId': this.activeTask.id,
           'taskContent': newContentStr,
@@ -29,7 +28,7 @@ export default {
         headers: {
           'Authorization': localStorage.getItem('token'),
         },
-        success: (response) => {
+        success: () => {
           this.activeTask.content = newContentStr;
           this.$emit('update:activeTask', this.activeTask);
         },

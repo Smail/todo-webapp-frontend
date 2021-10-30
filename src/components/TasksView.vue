@@ -5,7 +5,7 @@
       <li v-for="(task, index) in tasks" :data-theme="theme">
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
         <!-- <input v-model="task.name" @focusout="updateTask"/> -->
-        <div :data-theme="theme" class="task">
+        <div :data-theme="theme" class="task" @click="$emit('update:activeTask', task)">
           <input :data-theme="theme" type="checkbox"/>
           <input v-model="task.name" :data-theme="theme" type="text"
                  @input="updateTaskName(task, $event.target.value)"/>
@@ -26,10 +26,12 @@ export default {
   props: {
     project: {id: Number, icon: String, name: String},
     theme: String,
+    activeTask: Object,
   },
+  emits: ["update:activeTask"],
   data() {
     return {
-      // [{id: String, name: String, content: String, duration: int, dueDate: String}] TODO change id to int
+      // [{id: int, name: String, content: String, duration: int, dueDate: String}]
       tasks: [],
     }
   },
@@ -88,7 +90,6 @@ export default {
         },
         success: () => {
           // task.name will be automatically updated by v-model
-          console.log(task.name);
         },
         error: (response) => {
           alert('Could not update task name');

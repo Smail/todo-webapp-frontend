@@ -26,6 +26,9 @@ export default {
           'taskId': this.activeTask.id,
           'taskContent': newContentStr,
         },
+        headers: {
+          'Authorization': localStorage.getItem('token'),
+        },
         success: (response) => {
           this.activeTask.content = newContentStr;
           this.$emit('update:activeTask', this.activeTask);

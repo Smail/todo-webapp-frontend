@@ -57,6 +57,9 @@ export default {
           'projectId': this.project.id,
           // TODO add bearer token, username or simply some form of authentication
         },
+        headers: {
+          'Authorization': localStorage.getItem('token'),
+        },
         success: (response) => {
           const json = $.parseJSON(response);
           // Don't use this.tasks = []; because it dereferences the current array
@@ -88,6 +91,9 @@ export default {
           'taskId': task.id,
           'taskName': newTaskName,
         },
+        headers: {
+          'Authorization': localStorage.getItem('token'),
+        },
         success: () => {
           // task.name will be automatically updated by v-model
         },
@@ -116,6 +122,9 @@ export default {
           'taskContent': taskContent,
           'taskDuration': taskDuration,
           'taskDueDate': taskDueDate,
+        },
+        headers: {
+          'Authorization': localStorage.getItem('token'),
         },
         success: (response) => {
           console.log(response);

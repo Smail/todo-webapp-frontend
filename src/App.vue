@@ -52,13 +52,34 @@ export default {
     },
   },
   methods: {
-    loadUserProjects() {
+    login() {
       $.ajax({
         type: 'POST',
         url: 'http://192.168.2.165:8082/ajax.php',
         data: {
-          // TODO add bearer token, username or simply some form of user authentication
+          'action': 'create_token',
+          'username': 'Smail',
+          'password': 'secure',
+        },
+        success: (response) => {
+          localStorage.setItem('token', 'Bearer ' + response);
+          this.loadUserProjects();
+        },
+        error: (response) => {
+          console.log(response);
+        }
+      });
+    },
+    loadUserProjects() {
+      console.log("load")
+      $.ajax({
+        type: 'POST',
+        url: 'http://192.168.2.165:8082/ajax.php',
+        data: {
           'action': 'get_user_projects',
+        },
+        headers: {
+          'Authorization': localStorage.getItem('token'),
         },
         success: (response) => {
           const json = $.parseJSON(response);
@@ -72,24 +93,8 @@ export default {
       });
     },
   },
-  beforeCreate() {
-    $.ajaxSetup({
-      crossDomain: true,
-      xhrFields: {
-        withCredentials: true,
-      }
-    });
-
-    // Login
-    $.post('http://192.168.2.165:8082/login.php', {username: 'Smail', password: 'secure'}, function (response) {
-      // console.log(response);
-    }).fail(function (response) {
-      console.error(response);
-      alert("Could not log in. See console errors for more");
-    });
-  },
   created() {
-    this.loadUserProjects();
+    this.login();
   },
 }
 </script>

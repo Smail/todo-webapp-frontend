@@ -55,7 +55,7 @@ export default {
     loadUserProjects() {
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           // TODO add bearer token, username or simply some form of user authentication
           'action': 'get_user_projects',
@@ -81,7 +81,7 @@ export default {
     });
 
     // Login
-    $.post('http://api.todo.smail.de/login.php', {username: 'Smail', password: 'secure'}, function (response) {
+    $.post('http://192.168.2.165:8082/login.php', {username: 'Smail', password: 'secure'}, function (response) {
       // console.log(response);
     }).fail(function (response) {
       console.error(response);

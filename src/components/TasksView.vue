@@ -51,7 +51,7 @@ export default {
       // Note: I changed my /etc/hosts file to redirect smail.de to localhost
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           'action': 'get_tasks',
           'projectId': this.project.id,
@@ -82,7 +82,7 @@ export default {
       // Note: Server doesn't accept PATCH or PUT, so this is currently unnecessary.
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           'action': 'update_task_name',
           'taskId': task.id,
@@ -108,7 +108,7 @@ export default {
     createTask(taskName, taskContent = '', taskDuration = null, taskDueDate = null) {
       $.ajax({
         type: 'POST',
-        url: 'http://api.todo.smail.de/ajax.php',
+        url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           'action': 'create_task',
           'projectId': this.project.id,

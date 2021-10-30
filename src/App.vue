@@ -141,6 +141,9 @@ export default {
 #app {
   min-width: 100vw;
   min-height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
   display: flex;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -181,6 +184,8 @@ export default {
 #right-section {
   flex: 6;
   background: #1a1a1a;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 #right-section:not([data-theme="dark"]) {

@@ -138,6 +138,16 @@ export default {
   background-color: #323232;
 }
 
+body[data-theme="light"] {
+  color: black;
+  background: white;
+}
+
+body[data-theme="dark"] {
+  color: white;
+  background: #1a1a1a;
+}
+
 #app {
   min-width: 100vw;
   min-height: 100vh;

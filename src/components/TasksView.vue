@@ -6,7 +6,7 @@
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
         <!-- <input v-model="task.name" @focusout="updateTask"/> -->
         <div :data-theme="theme" class="task" @click="setActiveTask(task)">
-          <input :data-theme="theme" type="checkbox"/>
+          <input :data-theme="theme" class="material-icons-outlined" type="checkbox"/>
           <input v-model="task.name" :data-theme="theme" type="text"
                  @contextmenu="updateContextMenu($event, true, task)"
                  @input="setTaskName(task, $event.target.value)"/>
@@ -109,7 +109,6 @@ export default {
         data: {
           'action': 'get_tasks',
           'projectId': this.project.id,
-          // TODO add bearer token, username or simply some form of authentication
         },
         headers: {
           'Authorization': localStorage.getItem('token'),
@@ -314,10 +313,35 @@ div.task {
 
 input[type="checkbox"] {
   margin: 0 0.5em;
-  border: 0 none;
-  height: 1.5em;
-  width: 1.5em;
-  background-color: red;
+  height: 1em;
+  width: 1em;
+  padding: 0.5em;
+  font-size: 12pt;
+  background-color: transparent;
+  border: 1px #323232 solid;
+  border-radius: 2px;
+  appearance: none;
+  position: relative;
+}
+
+input[type="checkbox"]:checked::before {
+  content: 'check';
+  font-size: inherit;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+input[type="checkbox"][data-theme="light"]:checked::before {
+  color: white;
+  background-color: black;
+}
+
+input[type="checkbox"][data-theme="dark"]:checked::before {
+  color: #2a2a2a;
+  background-color: #4a4a4a;
 }
 
 input[type="text"] {

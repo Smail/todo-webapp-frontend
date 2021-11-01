@@ -1,14 +1,20 @@
 <template>
-  <section>
+  <section @focusout="updateContextMenu($event, false, null)">
     <h1 :data-theme="theme">{{ project.name }}</h1>
     <ul>
       <li v-for="(task, index) in tasks" :data-theme="theme">
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
         <!-- <input v-model="task.name" @focusout="updateTask"/> -->
-        <div :data-theme="theme" class="task" @click="$emit('update:activeTask', task)">
+        <div :data-theme="theme" class="task" @click="setActiveTask(task)">
           <input :data-theme="theme" type="checkbox"/>
           <input v-model="task.name" :data-theme="theme" type="text"
-                 @input="updateTaskName(task, $event.target.value)"/>
+                 @contextmenu="updateContextMenu($event, true, task)"
+                 @input="setTaskName(task, $event.target.value)"/>
+          <button :data-theme="theme"
+                  @click.left="updateContextMenu($event, true, task)"
+                  @click.right="updateContextMenu($event, true, task)">
+            <span class="material-icons">more_horiz</span>
+          </button>
         </div>
         <hr v-if="index < tasks.length - 1" :data-theme="theme">
       </li>
@@ -17,12 +23,53 @@
                @keypress.enter="createTask($event.target.value)"/>
       </li>
     </ul>
+    <ContextMenu v-show="showContextMenu" id="context-menu" :pos-x="contextMenuPosX"
+                 :pos-y="contextMenuPosY" :task="contextMenuTask">
+      <div class="flex-column">
+        <h5 :data-theme="theme" class="color-primary padding-05em">Priority</h5>
+        <ul class="flex-row">
+          <li :data-theme="theme" class="cm-item color-primary">
+            <span class="material-icons">
+              !!!
+            </span>
+          </li>
+          <li :data-theme="theme" class="cm-item color-primary material-icons">!!</li>
+          <li :data-theme="theme" class="cm-item color-primary material-icons">!</li>
+          <li :data-theme="theme" class="cm-item color-primary">0</li>
+        </ul>
+        <hr :data-theme="theme">
+        <ul class="flex-column align-flex-start">
+          <li :data-theme="theme" class="cm-item color-primary">
+            <span class="material-icons-outlined">exit_to_app</span>
+            <p>Move to</p>
+          </li>
+          <li :data-theme="theme" class="cm-item color-primary">
+            <span class="material-icons-outlined">label</span>
+            <p>Tags</p>
+          </li>
+        </ul>
+        <hr :data-theme="theme">
+        <ul class="flex-column align-flex-start">
+          <li :data-theme="theme" class="cm-item color-primary">
+            <span class="material-icons-outlined">file_copy</span>
+            <p>Duplicate</p>
+          </li>
+          <li :data-theme="theme" class="cm-item color-primary">
+            <span class="material-icons-outlined" style="color:#ff0000;">delete</span>
+            <p>Delete</p>
+          </li>
+        </ul>
+      </div>
+    </ContextMenu>
   </section>
 </template>
 
 <script>
+import ContextMenu from "@/components/ContextMenu";
+
 export default {
   name: "TasksView",
+  components: {ContextMenu},
   props: {
     project: {id: Number, icon: String, name: String},
     theme: String,
@@ -33,6 +80,10 @@ export default {
     return {
       // [{id: int, name: String, content: String, duration: int, dueDate: String}]
       tasks: [],
+      showContextMenu: false,
+      contextMenuPosX: 0,
+      contextMenuPosY: 0,
+      contextMenuTask: null,
     }
   },
   watch: {
@@ -72,13 +123,13 @@ export default {
       });
     },
     /**
-     * Update a task name on both the client and server.
+     * Set a new task name for a task on client and server.
      * This function will only update the client if the server update was successful.
      *
      * @param task The task, which should be updated.
      * @param newTaskName The new task name for the parameter task.
      */
-    updateTaskName(task, newTaskName) {
+    setTaskName(task, newTaskName) {
       // TODO putting the task object has unnecessary overhead if we only update the name or content, etc. because we
       // are sending also unchanged data to the server. We should either create individual functions or check for change
       // and then use PATCH instead of PUT.
@@ -149,11 +200,94 @@ export default {
         }
       });
     },
+    setActiveTask(newActiveTask) {
+      this.$emit('update:activeTask', newActiveTask);
+    },
+    updateContextMenu(event, showContextMenu, task) {
+      event.preventDefault();
+      // Check if we lost focus to the context menu. If so don't hide or do anything
+      if (event instanceof FocusEvent &&
+          document.getElementById("context-menu").contains(event.relatedTarget)) {
+        return;
+      }
+      if (this.showContextMenu === showContextMenu && !showContextMenu) {
+        return;
+      }
+      this.contextMenuPosX = event.clientX;
+      this.contextMenuPosY = event.clientY;
+      this.contextMenuTask = task;
+      this.showContextMenu = showContextMenu;
+    },
   }
 }
 </script>
 
 <style scoped>
+.cm-item {
+  padding: .5em;
+  font-size: 11pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cm-item > .material-icons,
+.cm-item > .material-icons-outlined {
+  padding: 0 0.25em 0 0;
+}
+
+.material-icons,
+.material-icons-outlined {
+  color: inherit;
+  font-size: inherit;
+}
+
+.padding-05em {
+  padding: .5em;
+}
+
+.font-size-11pt {
+  font-size: 11pt;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.align-flex-start {
+  align-items: flex-start;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.color-primary[data-theme="light"] {
+  color: black;
+}
+
+.color-primary[data-theme="dark"] {
+  color: white;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  border: 0 none;
+  background-color: transparent;
+  padding: 0 0.5em;
+}
+
+button[data-theme="light"] {
+  color: #1e1e1e;
+}
+
+button[data-theme="dark"] {
+  color: white;
+}
+
 section {
   padding: 1em;
 }

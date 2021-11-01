@@ -313,8 +313,6 @@ div.task {
 
 input[type="checkbox"] {
   margin: 0 0.5em;
-  height: 1em;
-  width: 1em;
   padding: 0.5em;
   font-size: 12pt;
   background-color: transparent;

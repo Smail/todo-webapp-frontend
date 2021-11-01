@@ -1,10 +1,10 @@
 <template id="app" :data-theme="theme">
   <!-- eslint-disable -->
   <div id="left-section" :data-theme="theme" class="border-right">
-    <ProjectList v-model:active-project-id="activeProjectId" :data-theme="theme"
+    <ProjectList v-model:active-project-id="activeProjectId"
                  :projects="defaultProjects" :theme="theme"></ProjectList>
     <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
-    <ProjectList v-model:active-project-id="activeProjectId" :data-theme="theme"
+    <ProjectList v-model:active-project-id="activeProjectId"
                  :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
   </div>
 

@@ -246,10 +246,6 @@ export default {
   padding: .5em;
 }
 
-.font-size-11pt {
-  font-size: 11pt;
-}
-
 .flex-column {
   display: flex;
   flex-direction: column;

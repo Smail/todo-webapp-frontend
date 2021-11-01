@@ -330,6 +330,9 @@ input[type="checkbox"]:checked::before {
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input[type="checkbox"][data-theme="light"]:checked::before {

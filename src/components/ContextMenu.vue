@@ -23,13 +23,13 @@ export default {
   watch: {
     posX: {
       immediate: true,
-      handler(newValue, oldValue) {
+      handler(newValue) {
         $("#context-menu").css("left", newValue);
       }
     },
     posY: {
       immediate: true,
-      handler(newValue, oldValue) {
+      handler(newValue) {
         $("#context-menu").css("top", newValue);
       }
     }

@@ -39,14 +39,6 @@ export default {
 </script>
 
 <style scoped>
-.material-icons {
-  font-size: 13pt;
-}
-
-p {
-  font-size: 11pt;
-}
-
 .project {
   display: flex;
   align-items: center;
@@ -83,5 +75,17 @@ p {
 .project[data-theme="dark"].active {
   color: white;
   background-color: #484848;
+}
+
+.material-icons {
+  font-size: 12pt;
+}
+
+.material-icons[data-theme="dark"] {
+  color: #7a7a7a;
+}
+
+p {
+  font-size: 11pt;
 }
 </style>

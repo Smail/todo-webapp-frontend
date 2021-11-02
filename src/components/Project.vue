@@ -10,6 +10,7 @@
 export default {
   name: "Project",
   props: {
+    // {id: int, name: String, icon: String?}
     project: Object,
     isActive: Boolean,
     theme: String,

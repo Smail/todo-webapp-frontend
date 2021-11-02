@@ -39,9 +39,10 @@ export default {
   },
   data() {
     return {
-      // TODO We still need to create the default projects and insert them into the database. For now we'll use high IDs to not get a conflict
       activeProjectId: Number,
+      // [{id: Number, name: String, icon: String?}]
       projects: [],
+      // {id: int, name: String, content: String, duration: int, dueDate: String}
       activeTask: null,
       theme: 'dark',
       hasLoaded: false,

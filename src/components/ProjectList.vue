@@ -23,7 +23,7 @@ export default {
   props: {
     sectionTitle: String,
     activeProjectId: Number,
-    // [{id: Number, icon: String, name: String}]
+    // [{id: Number, name: String, icon: String?}]
     projects: Array,
     theme: String,
   },

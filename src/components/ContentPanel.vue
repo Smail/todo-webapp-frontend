@@ -75,5 +75,6 @@ textarea {
   color: inherit;
   background-color: transparent;
   border: none;
+  font-size: 11pt;
 }
 </style>

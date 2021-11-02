@@ -20,7 +20,7 @@
       </li>
       <li>
         <input id="new-task" :data-theme="theme" placeholder="New task" type="text"
-               @keypress.enter="createTask($event.target.value)"/>
+               @keypress.enter="createTask($event.target.value); clearNewTaskInputField();"/>
       </li>
     </ul>
     <ContextMenu v-show="showContextMenu" id="context-menu" :pos-x="contextMenuPosX"
@@ -97,6 +97,9 @@ export default {
     }
   },
   methods: {
+    clearNewTaskInputField() {
+      $("#new-task").val("");
+    },
     /**
      * Request tasks for the currently selected project. After the successful server request, the tasks array will only
      * contain the new values, i.e. it will be cleared first.

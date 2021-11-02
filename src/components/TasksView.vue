@@ -87,7 +87,6 @@ export default {
     }
   },
   watch: {
-    // TODO We maybe need immediate: true (https://stackoverflow.com/a/51176290/9258134), because of the Inbox maybe not loading the tasks when the website is first loaded. Other option: add this.loadData to created hook
     project: {
       immediate: true,
       handler() {

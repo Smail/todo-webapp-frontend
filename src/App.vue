@@ -1,20 +1,25 @@
-<template id="app" :data-theme="theme">
+<template>
   <!-- eslint-disable -->
-  <div id="left-section" :data-theme="theme" class="border-right">
-    <ProjectList v-model:active-project-id="activeProjectId"
-                 :projects="defaultProjects" :theme="theme"></ProjectList>
-    <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
-    <ProjectList v-model:active-project-id="activeProjectId"
-                 :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
-  </div>
+  <div v-if="hasLoaded" id="app" :data-theme="theme">
+    <div id="left-section" :data-theme="theme" class="border-right">
+      <ProjectList v-model:active-project-id="activeProjectId"
+                   :projects="defaultProjects" :theme="theme"></ProjectList>
+      <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
+      <ProjectList v-model:active-project-id="activeProjectId"
+                   :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
+      <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
+      <ProjectList v-model:active-project-id="activeProjectId"
+                   :projects="otherProjects" :theme="theme"></ProjectList>
+    </div>
 
-  <div id="middle-section" :data-theme="theme" class="border-right">
-    <TasksView v-model:active-task="activeTask" :data-theme="theme" :project="activeProjectName"
-               :theme="theme"></TasksView>
-  </div>
+    <div id="middle-section" :data-theme="theme" class="border-right">
+      <TasksView v-model:active-task="activeTask"
+                 :data-theme="theme" :project="activeProject" :theme="theme"></TasksView>
+    </div>
 
-  <div id="right-section" :data-theme="theme">
-    <ContentPanel v-model:active-task="activeTask" :theme="theme"></ContentPanel>
+    <div id="right-section" :data-theme="theme">
+      <ContentPanel v-model:active-task="activeTask" :theme="theme"></ContentPanel>
+    </div>
   </div>
 </template>
 
@@ -35,44 +40,67 @@ export default {
   data() {
     return {
       // TODO We still need to create the default projects and insert them into the database. For now we'll use high IDs to not get a conflict
-      activeProjectId: 200,
-      defaultProjects: [
-        {id: 200, icon: 'inbox', name: 'Inbox'},
-        {id: 210, icon: 'calendar_today', name: 'Today'},
-        {id: 220, icon: 'upcoming', name: 'Upcoming'},
-      ],
-      userProjects: [],
+      activeProjectId: Number,
+      projects: [],
       activeTask: null,
       theme: 'dark',
+      hasLoaded: false,
     }
   },
   computed: {
-    activeProjectName() {
-      return this.defaultProjects.concat(this.userProjects).find(value => value.id === this.activeProjectId);
+    activeProject() {
+      return this.projects
+          .find(p => p.id === this.activeProjectId);
+    },
+    inboxProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === 'inbox');
+    },
+    defaultProjects() {
+      return this.projects
+          .filter(value => {
+            const str = value.name.toLowerCase();
+            return str === 'inbox' || str === 'today' || str === 'upcoming';
+          });
+    },
+    userProjects() {
+      return this.projects
+          .filter(x => !this.defaultProjects.includes(x) && !this.otherProjects.includes(x));
+    },
+    otherProjects() {
+      return this.projects
+          .filter(value => {
+            const str = value.name.toLowerCase();
+            return str === 'deleted' || str === 'completed';
+          });
     },
   },
   methods: {
-    login() {
-      $.ajax({
+    /**
+     * Creates a new token and returns it in a promise.
+     * @returns {Promise<{getAllResponseHeaders: function(): *|null, abort: function(*=): this, setRequestHeader: function(*=, *): this, readyState: number, getResponseHeader: function(*): null|*, overrideMimeType: function(*): this, statusCode: function(*=): this}|*|jQuery>}
+     */
+    async createToken(username, password) {
+      return $.ajax({
         type: 'POST',
         url: 'http://192.168.2.165:8082/ajax.php',
         data: {
           'action': 'create_token',
-          'username': 'Smail',
-          'password': 'secure',
+          'username': username,
+          'password': password,
         },
-        success: (response) => {
-          localStorage.setItem('token', 'Bearer ' + response);
-          this.loadUserProjects();
-        },
-        error: (response) => {
-          console.log(response);
-        }
       });
     },
-    loadUserProjects() {
-      console.log("load")
-      $.ajax({
+    /**
+     * Log the user in
+     * @returns {Promise<void>}
+     */
+    async login(username, password) {
+      const token = await this.createToken(username, password);
+      localStorage.setItem('token', 'Bearer ' + token);
+    },
+    async loadUserProjects() {
+      const response = await $.ajax({
         type: 'POST',
         url: 'http://192.168.2.165:8082/ajax.php',
         data: {
@@ -81,20 +109,29 @@ export default {
         headers: {
           'Authorization': localStorage.getItem('token'),
         },
-        success: (response) => {
-          const json = $.parseJSON(response);
-          for (const obj of json) {
-            this.userProjects.push(obj);
-          }
-        },
-        error: (response) => {
-          console.log(response);
-        }
       });
+
+      // Add received projects into the projects array
+      const json = $.parseJSON(response);
+      for (const obj of json) {
+        this.projects.push(obj);
+      }
     },
   },
-  created() {
-    this.login();
+  async created() {
+    try {
+      await this.login("smail", "smail1234");
+      await this.loadUserProjects();
+      console.log(this.projects)
+      if (this.inboxProject != null) {
+        this.activeProjectId = this.inboxProject.id;
+        this.hasLoaded = true;
+      } else {
+        console.warn("User has no projects. Not even defaults. Won't continue loading");
+      }
+    } catch (e) {
+      console.log("Could not log in." + e);
+    }
   },
 }
 </script>

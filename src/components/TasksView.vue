@@ -71,9 +71,9 @@ export default {
   name: "TasksView",
   components: {ContextMenu},
   props: {
-    project: {id: Number, icon: String, name: String},
-    theme: String,
+    project: Object,
     activeTask: Object,
+    theme: String,
   },
   emits: ["update:activeTask"],
   data() {

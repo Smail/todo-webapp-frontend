@@ -18,7 +18,7 @@ export default {
   },
   data: function () {
     return {
-      // Will be read by syncServer function to determine if it should update the server
+      // Will be read by updateServer() function to determine if it should update the server
       didContentChange: false,
     }
   },

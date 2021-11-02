@@ -281,7 +281,6 @@ button {
   justify-content: center;
   border: 0 none;
   background-color: transparent;
-  padding: 0 0.5em;
 }
 
 button[data-theme="light"] {
@@ -308,14 +307,14 @@ ul {
 
 li {
   list-style: none;
-  font-size: 12pt;
+  font-size: 11pt;
 }
 
 div.task {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.25em 0;
+  padding: 0.25em 0.5em;
 }
 
 div.task[data-theme="light"]:hover {

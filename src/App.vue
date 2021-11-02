@@ -123,7 +123,7 @@ export default {
     try {
       await this.login("smail", "smail1234");
       await this.loadUserProjects();
-      console.log(this.projects)
+
       if (this.inboxProject != null) {
         this.activeProjectId = this.inboxProject.id;
         this.hasLoaded = true;

@@ -100,6 +100,10 @@ export default {
      * contain the new values, i.e. it will be cleared first.
      */
     loadTasks() {
+      if (this.project == null) {
+        throw new Error("Project is null in TasksView");
+      }
+
       $.ajax({
         type: 'POST',
         url: 'http://192.168.2.165:8082/ajax.php',

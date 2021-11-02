@@ -100,8 +100,6 @@ export default {
      * contain the new values, i.e. it will be cleared first.
      */
     loadTasks() {
-      // TODO change URL to HTTPS when SSL is activated on the server
-      // Note: I changed my /etc/hosts file to redirect smail.de to localhost
       $.ajax({
         type: 'POST',
         url: 'http://192.168.2.165:8082/ajax.php',

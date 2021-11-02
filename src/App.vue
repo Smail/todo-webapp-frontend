@@ -144,6 +144,10 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
+ul {
+  list-style-position: inside;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 5px;

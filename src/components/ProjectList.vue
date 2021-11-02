@@ -4,9 +4,10 @@
       {{ sectionTitle }}
     </h5>
     <ul :data-theme="theme">
-      <Project v-for="project in projects" :id="project.id" :icon="project.icon"
+      <Project v-for="project in projects"
+               :project="project"
+               :theme="theme"
                :is-active="activeProjectId === project.id"
-               :name="project.name" :theme="theme"
                @click="$emit('update:activeProjectId', project.id)">
       </Project>
     </ul>

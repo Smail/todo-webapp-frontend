@@ -1,9 +1,8 @@
 <template>
   <li :class="{ active: isActive }" :data-theme="theme" class="project" draggable="true">
     <!-- Draw the normal list icon if there was no specific icon passed -->
-    <span v-if="icon != null" :data-theme="theme" class="material-icons">{{ icon }}</span>
-    <span v-else :data-theme="theme" class="material-icons">list</span>
-    <p :data-theme="theme">{{ name }}</p>
+    <span :data-theme="theme" class="material-icons">{{ icon }}</span>
+    <p :data-theme="theme">{{ project.name }}</p>
   </li>
 </template>
 
@@ -11,13 +10,31 @@
 export default {
   name: "Project",
   props: {
-    id: Number,
-    icon: String,
-    name: String,
+    project: Object,
     isActive: Boolean,
     theme: String,
   },
-  methods: {}
+  computed: {
+    icon() {
+      // TODO Instead of hard coding the icons here, add an icon column to the database
+      switch (this.project.name.toLowerCase()) {
+        case "inbox":
+          return "inbox";
+        case "today":
+          return "calendar_today";
+        case "upcoming":
+          return "upcoming";
+        case "completed":
+          return "check_box";
+        case "deleted":
+        case "trash":
+          return "delete";
+        default:
+          return "list";
+      }
+    }
+  },
+  methods: {},
 }
 </script>
 

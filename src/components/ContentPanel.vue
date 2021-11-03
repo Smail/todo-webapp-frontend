@@ -3,8 +3,8 @@
     <div id="header">
       <h1 :data-theme="theme">{{ activeTask.name }}</h1>
       <button id="markdown-btn" :data-theme="theme"
-              @click="setMarkdown(!this.displayAsMarkdown)"
-      >Markdown
+              @click="this.displayAsMarkdown = !this.displayAsMarkdown">
+        Markdown
       </button>
     </div>
     <div v-if="displayAsMarkdown" id="markdown-container" tabindex="-1"
@@ -51,9 +51,6 @@ export default {
     }
   },
   methods: {
-    setMarkdown(displayAsMarkdown) {
-      this.displayAsMarkdown = displayAsMarkdown;
-    },
     setContent(newContentStr) {
       this.activeTask.content = newContentStr;
       this.$emit('update:activeTask', this.activeTask);

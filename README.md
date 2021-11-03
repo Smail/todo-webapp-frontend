@@ -1,11 +1,16 @@
-# todo-vue
+# Task Management Application
+
+This a personal project primarily to learn Vue.js and PHP. This project will give you a blank page without the (
+currently private) backend repository. :/
 
 ## Project setup
+
 ```
 yarn install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 yarn serve
 ```

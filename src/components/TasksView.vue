@@ -54,7 +54,8 @@
             <span class="material-icons-outlined">file_copy</span>
             <p>Duplicate</p>
           </li>
-          <li :data-theme="theme" class="cm-item color-primary">
+          <li :data-theme="theme" class="cm-item color-primary"
+              @click="deleteTask(contextMenuTask)">
             <span class="material-icons-outlined" style="color:#ff0000;">delete</span>
             <p>Delete</p>
           </li>
@@ -204,6 +205,48 @@ export default {
         },
         error: (response) => {
           alert('Could not create task :/');
+          console.error(response);
+        }
+      });
+    },
+    deleteTask(task) {
+      if (task == null) {
+        return;
+      }
+      console.log("delete task:");
+      console.log(task);
+      $.ajax({
+        type: 'POST',
+        url: 'http://192.168.2.165:8082/ajax.php',
+        data: {
+          'action': 'delete_task',
+          'taskId': task.id,
+          'deletePermanently': false,
+        },
+        headers: {
+          'Authorization': localStorage.getItem('token'),
+        },
+        success: (response) => {
+          // task.name will be automatically updated by v-model
+          const json = $.parseJSON(response);
+
+          if (json.wasSuccessful) {
+            const index = this.tasks.indexOf(task);
+
+            if (index !== -1) {
+              this.tasks.splice(index, 1);
+              console.log("Successfully removed task: " + task.name + " ID: " + task.id);
+              console.log(this.tasks);
+            } else {
+              console.warn("Could not find element in array," +
+                  "but it was successfully deleted on the server. Weird");
+            }
+          } else {
+            alert('Could not delete task: ' + task.name);
+          }
+        },
+        error: (response) => {
+          alert("Unknown error occurred while deleting task: " + task.name);
           console.error(response);
         }
       });

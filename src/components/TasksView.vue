@@ -25,42 +25,44 @@
     </ul>
     <ContextMenu v-show="showContextMenu" id="context-menu" :pos-x="contextMenuPosX"
                  :pos-y="contextMenuPosY" :task="contextMenuTask">
-      <div class="flex-column">
-        <h5 :data-theme="theme" class="color-primary padding-05em">Priority</h5>
-        <ul class="flex-row">
-          <li :data-theme="theme" class="cm-item color-primary">
+      <ul id="cm-container" :data-theme="theme">
+        <li>
+          <h5 :data-theme="theme" class="color-primary">Priority</h5>
+          <ul id="priority-list" :data-theme="theme">
+            <li :data-theme="theme" class="cm-item color-primary">
             <span class="material-icons">
               !!!
             </span>
-          </li>
-          <li :data-theme="theme" class="cm-item color-primary material-icons">!!</li>
-          <li :data-theme="theme" class="cm-item color-primary material-icons">!</li>
-          <li :data-theme="theme" class="cm-item color-primary">0</li>
-        </ul>
-        <hr :data-theme="theme">
-        <ul class="flex-column align-flex-start">
-          <li :data-theme="theme" class="cm-item color-primary">
-            <span class="material-icons-outlined">exit_to_app</span>
-            <p>Move to</p>
-          </li>
-          <li :data-theme="theme" class="cm-item color-primary">
-            <span class="material-icons-outlined">label</span>
-            <p>Tags</p>
-          </li>
-        </ul>
-        <hr :data-theme="theme">
-        <ul class="flex-column align-flex-start">
-          <li :data-theme="theme" class="cm-item color-primary">
-            <span class="material-icons-outlined">file_copy</span>
-            <p>Duplicate</p>
-          </li>
-          <li :data-theme="theme" class="cm-item color-primary"
-              @click="deleteTask(contextMenuTask); hideContextMenu();">
-            <span class="material-icons-outlined" style="color:#ff0000;">delete</span>
-            <p>Delete</p>
-          </li>
-        </ul>
-      </div>
+            </li>
+            <li :data-theme="theme" class="cm-item color-primary material-icons">!!</li>
+            <li :data-theme="theme" class="cm-item color-primary material-icons">!</li>
+            <li :data-theme="theme" class="cm-item color-primary">0</li>
+          </ul>
+        </li>
+        <li>
+          <hr :data-theme="theme" class="cm-hr">
+        </li>
+        <li :data-theme="theme" class="cm-item color-primary">
+          <span class="material-icons-outlined">exit_to_app</span>
+          <p>Move to</p>
+        </li>
+        <li :data-theme="theme" class="cm-item color-primary">
+          <span class="material-icons-outlined">label</span>
+          <p>Tags</p>
+        </li>
+        <li>
+          <hr :data-theme="theme" class="cm-hr">
+        </li>
+        <li :data-theme="theme" class="cm-item color-primary">
+          <span class="material-icons-outlined">file_copy</span>
+          <p>Duplicate</p>
+        </li>
+        <li :data-theme="theme" class="cm-item color-primary"
+            @click="deleteTask(contextMenuTask); hideContextMenu();">
+          <span class="material-icons-outlined" style="color:#ff0000;">delete</span>
+          <p>Delete</p>
+        </li>
+      </ul>
     </ContextMenu>
   </section>
 </template>
@@ -281,12 +283,29 @@ export default {
 </script>
 
 <style scoped>
+#cm-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#cm-container * {
+  padding: .25em;
+}
+
+#cm-container hr {
+  padding: 0;
+}
+
 .cm-item {
-  padding: .5em;
   font-size: 11pt;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
+}
+
+.cm-item[data-theme="dark"]:hover {
+  background-color: #404040;
 }
 
 .cm-item > .material-icons,
@@ -300,22 +319,11 @@ export default {
   font-size: inherit;
 }
 
-.padding-05em {
-  padding: .5em;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.align-flex-start {
-  align-items: flex-start;
-}
-
-.flex-row {
+#priority-list {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .color-primary[data-theme="light"] {

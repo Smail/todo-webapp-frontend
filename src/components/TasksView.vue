@@ -42,13 +42,34 @@
         <li>
           <hr :data-theme="theme" class="cm-hr">
         </li>
-        <li :data-theme="theme" class="cm-item color-primary">
+        <li :data-theme="theme" class="cm-item color-primary"
+            @mouseenter="displaySubmenu($event.target, true)"
+            @mouseleave="displaySubmenu($event.target, false)">
           <span class="material-icons-outlined">exit_to_app</span>
-          <p>Move to</p>
+          <p>Move tossssssssssssssssssssssss</p>
+
+          <ul class="cm-submenu">
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+          </ul>
         </li>
-        <li :data-theme="theme" class="cm-item color-primary">
+        <li :data-theme="theme" class="cm-item color-primary"
+            @mouseenter="displaySubmenu($event.target, true)"
+            @mouseleave="displaySubmenu($event.target, false)">
           <span class="material-icons-outlined">label</span>
           <p>Tags</p>
+          <ul class="cm-submenu">
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+          </ul>
         </li>
         <li>
           <hr :data-theme="theme" class="cm-hr">
@@ -100,6 +121,10 @@ export default {
     }
   },
   methods: {
+    displaySubmenu(menu, shouldDisplay) {
+      console.log(menu)
+      $(menu).find(".cm-submenu").css("display", shouldDisplay ? "block" : "none");
+    },
     hideContextMenu() {
       this.updateContextMenu(null, false, null);
     },
@@ -283,6 +308,16 @@ export default {
 </script>
 
 <style scoped>
+.cm-submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: calc(100%);
+  background-color: #2a2a2a;
+  border-radius: 0 5px 5px;
+  border: thin solid #4a4a4a;
+}
+
 #cm-container {
   display: flex;
   flex-direction: column;
@@ -297,11 +332,13 @@ export default {
 }
 
 .cm-item {
-  font-size: 11pt;
+  flex: 1 1 100%;
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
+  font-size: 11pt;
 }
 
 .cm-item[data-theme="dark"]:hover {

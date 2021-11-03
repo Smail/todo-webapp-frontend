@@ -13,8 +13,9 @@
     </div>
 
     <div id="middle-section" :data-theme="theme" class="border-right">
-      <TasksView v-model:active-task="activeTask"
-                 :data-theme="theme" :project="activeProject" :theme="theme"></TasksView>
+      <TasksView v-model:active-task="activeTask" :data-theme="theme"
+                 :project="activeProject" :projects="projects"
+                 :theme="theme"></TasksView>
     </div>
 
     <div id="right-section" :data-theme="theme">

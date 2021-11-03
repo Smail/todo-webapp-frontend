@@ -46,30 +46,20 @@
             @mouseenter="displaySubmenu($event.target, true)"
             @mouseleave="displaySubmenu($event.target, false)">
           <span class="material-icons-outlined">exit_to_app</span>
-          <p>Move tossssssssssssssssssssssss</p>
+          <p>Move to different project</p>
 
           <ul class="cm-submenu">
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
+            <Project v-for="p in projects.filter(proj => proj !== project)"
+                     :is-active="false"
+                     :project="p"
+                     :theme="theme"
+                     @click="moveTaskToProject(contextMenuTask, p); hideContextMenu();">
+            </Project>
           </ul>
         </li>
-        <li :data-theme="theme" class="cm-item color-primary"
-            @mouseenter="displaySubmenu($event.target, true)"
-            @mouseleave="displaySubmenu($event.target, false)">
+        <li :data-theme="theme" class="cm-item color-primary">
           <span class="material-icons-outlined">label</span>
           <p>Tags</p>
-          <ul class="cm-submenu">
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-            <li>Hello</li>
-          </ul>
         </li>
         <li>
           <hr :data-theme="theme" class="cm-hr">
@@ -90,13 +80,15 @@
 
 <script>
 import ContextMenu from "@/components/ContextMenu";
+import Project from "@/components/Project";
 
 export default {
   name: "TasksView",
-  components: {ContextMenu},
+  components: {ContextMenu, Project},
   props: {
     // {id: int, name: String, icon: String?}
     project: Object,
+    projects: Array,
     // {id: int, name: String, content: String, duration: int, dueDate: String}
     activeTask: Object,
     theme: String,
@@ -121,8 +113,46 @@ export default {
     }
   },
   methods: {
+    moveTaskToProject(task, newProject) {
+      $.ajax({
+        type: 'POST',
+        url: 'http://192.168.2.165:8082/ajax.php',
+        data: {
+          'action': 'move_task',
+          'taskId': task.id,
+          // TODO remove hard coding
+          // Delete the task permanently if it was already moved into the 'Deleted' project
+          'newProjectId': newProject.id,
+        },
+        headers: {
+          'Authorization': localStorage.getItem('token'),
+        },
+        success: (response) => {
+          // task.name will be automatically updated by v-model
+          const json = $.parseJSON(response);
+
+          if (json.wasSuccessful) {
+            const index = this.tasks.indexOf(task);
+
+            if (index !== -1) {
+              this.tasks.splice(index, 1);
+              console.log("Successfully moved task: " + task.name + " ID: " + task.id);
+              console.log(this.tasks);
+            } else {
+              console.warn("Could not find element in array," +
+                  "but it was successfully moved on the server. Weird");
+            }
+          } else {
+            alert("Could not move task: " + task.name);
+          }
+        },
+        error: (response) => {
+          alert("Unknown error occurred while deleting task: " + task.name);
+          console.error(response);
+        }
+      });
+    },
     displaySubmenu(menu, shouldDisplay) {
-      console.log(menu)
       $(menu).find(".cm-submenu").css("display", shouldDisplay ? "block" : "none");
     },
     hideContextMenu() {
@@ -316,6 +346,7 @@ export default {
   background-color: #2a2a2a;
   border-radius: 0 5px 5px;
   border: thin solid #4a4a4a;
+  white-space: nowrap;
 }
 
 #cm-container {

@@ -8,6 +8,7 @@
       </button>
     </div>
     <div v-if="displayAsMarkdown" id="markdown-container" tabindex="-1"
+         :data-theme="theme"
          @focusin="this.displayAsMarkdown = false"
          v-html="markdown">
     </div>
@@ -104,6 +105,14 @@ export default {
 
 #markdown-container * {
   margin: 1em;
+}
+
+#markdown-container[data-theme="dark"] a {
+  color: hotpink;
+}
+
+#markdown-container[data-theme="dark"] a:hover {
+  color: deeppink;
 }
 
 #header {

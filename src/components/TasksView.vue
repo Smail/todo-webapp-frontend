@@ -5,14 +5,14 @@
       <li v-for="(task, index) in tasks" :data-theme="theme">
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
         <!-- <input v-model="task.name" @focusout="updateTask"/> -->
-        <div :data-theme="theme" class="task" @click="setActiveTask(task)">
+        <div :data-theme="theme" class="task"
+             @click="setActiveTask(task)"
+             @contextmenu="updateContextMenu($event, true, task)">
           <input :data-theme="theme" class="material-icons-outlined" type="checkbox"/>
           <input v-model="task.name" :data-theme="theme" type="text"
-                 @contextmenu="updateContextMenu($event, true, task)"
                  @input="setTaskName(task, $event.target.value)"/>
           <button :data-theme="theme"
-                  @click.left="updateContextMenu($event, true, task)"
-                  @click.right="updateContextMenu($event, true, task)">
+                  @click="updateContextMenu($event, true, task)">
             <span class="material-icons">more_horiz</span>
           </button>
         </div>

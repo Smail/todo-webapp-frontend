@@ -55,7 +55,7 @@
             <p>Duplicate</p>
           </li>
           <li :data-theme="theme" class="cm-item color-primary"
-              @click="deleteTask(contextMenuTask)">
+              @click="deleteTask(contextMenuTask); hideContextMenu();">
             <span class="material-icons-outlined" style="color:#ff0000;">delete</span>
             <p>Delete</p>
           </li>
@@ -98,6 +98,9 @@ export default {
     }
   },
   methods: {
+    hideContextMenu() {
+      this.updateContextMenu(null, false, null);
+    },
     clearNewTaskInputField() {
       $("#new-task").val("");
     },
@@ -257,17 +260,19 @@ export default {
       this.$emit('update:activeTask', newActiveTask);
     },
     updateContextMenu(event, showContextMenu, task) {
-      event.preventDefault();
-      // Check if we lost focus to the context menu. If so don't hide or do anything
-      if (event instanceof FocusEvent &&
-          document.getElementById("context-menu").contains(event.relatedTarget)) {
-        return;
+      if (event != null) {
+        event.preventDefault();
+        // Check if we lost focus to the context menu. If so don't hide or do anything
+        if (event instanceof FocusEvent &&
+            document.getElementById("context-menu").contains(event.relatedTarget)) {
+          return;
+        }
+        if (this.showContextMenu === showContextMenu && !showContextMenu) {
+          return;
+        }
+        this.contextMenuPosX = event.clientX;
+        this.contextMenuPosY = event.clientY;
       }
-      if (this.showContextMenu === showContextMenu && !showContextMenu) {
-        return;
-      }
-      this.contextMenuPosX = event.clientX;
-      this.contextMenuPosY = event.clientY;
       this.contextMenuTask = task;
       this.showContextMenu = showContextMenu;
     },

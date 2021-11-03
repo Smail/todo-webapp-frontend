@@ -221,7 +221,9 @@ export default {
         data: {
           'action': 'delete_task',
           'taskId': task.id,
-          'deletePermanently': false,
+          // TODO remove hard coding
+          // Delete the task permanently if it was already moved into the 'Deleted' project
+          'deletePermanently': this.project.name.toLowerCase() === 'deleted',
         },
         headers: {
           'Authorization': localStorage.getItem('token'),

@@ -7,7 +7,8 @@
       >Markdown
       </button>
     </div>
-    <div v-if="displayAsMarkdown" id="markdown-container"
+    <div v-if="displayAsMarkdown" id="markdown-container" tabindex="-1"
+         @focusin="this.displayAsMarkdown = false"
          v-html="markdown">
     </div>
     <!--    <div v-else contenteditable="true" class="content-area"-->
@@ -18,7 +19,7 @@
     <textarea v-else id="content-textarea"
               :value="activeTask.content"
               class="content-area"
-              @focusout="updateServer"
+              @focusout="updateServer(); this.displayAsMarkdown = true"
               @input="setContent($event.target.value)">
       {{ activeTask.content }}
     </textarea>

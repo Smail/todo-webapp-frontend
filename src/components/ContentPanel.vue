@@ -3,24 +3,23 @@
     <div id="header">
       <h1 :data-theme="theme">{{ activeTask.name }}</h1>
       <button id="markdown-btn" :data-theme="theme"
-              @click="this.displayAsMarkdown = !this.displayAsMarkdown">
-        Markdown
+              @mousedown.prevent="setDisplayAsMarkdown(!this.displayAsMarkdown);"
+      >Markdown
       </button>
     </div>
-    <div v-if="displayAsMarkdown" id="markdown-container" tabindex="-1"
+    <div v-show="displayAsMarkdown"
+         id="markdown-container"
+         tabindex="-1"
          :data-theme="theme"
-         @focusin="this.displayAsMarkdown = false"
+         @focusin="setDisplayAsMarkdown(false);"
          v-html="markdown">
     </div>
-    <!--    <div v-else contenteditable="true" class="content-area"-->
-    <!--         @focusout="updateServer"-->
-    <!--         @input="setContent($event.target.value)">-->
-    <!--      {{activeTask.content}}-->
-    <!--    </div>-->
-    <textarea v-else id="content-textarea"
+    <textarea v-show="!displayAsMarkdown"
+              id="content-textarea"
+              tabindex="4"
               :value="activeTask.content"
               class="content-area"
-              @focusout="updateServer(); this.displayAsMarkdown = true"
+              @focusout="updateServer(); setDisplayAsMarkdown(true)"
               @input="setContent($event.target.value)">
       {{ activeTask.content }}
     </textarea>
@@ -52,6 +51,16 @@ export default {
     }
   },
   methods: {
+    setDisplayAsMarkdown(displayAsMarkdown) {
+      this.displayAsMarkdown = displayAsMarkdown;
+
+      if (!this.displayAsMarkdown) {
+        setTimeout(() => $(document).ready(function () {
+          // Doesn't work with jQuery for whatever reason
+          document.getElementById("content-textarea").focus();
+        }), 0);
+      }
+    },
     setContent(newContentStr) {
       this.activeTask.content = newContentStr;
       this.$emit('update:activeTask', this.activeTask);

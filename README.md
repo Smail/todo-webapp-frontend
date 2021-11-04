@@ -3,6 +3,10 @@
 This a personal project primarily to learn Vue.js and PHP. This project will give you a blank page without the (
 currently private) backend repository. :/
 
+Here is a demo:
+
+![Demo played in a GIF](DEMO.gif)
+
 ## Project setup
 
 ```

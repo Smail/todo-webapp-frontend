@@ -13,7 +13,7 @@
       </h2>
 
       <div v-for="_ in Array(7).fill(1).map((x, y) => x + y)" class="day">
-        <div v-for="index in Array(24).fill(1).map((x, y) => x + y)" class="hour">
+        <div v-for="index in Array(24).fill(0).map((x, y) => x + y)" class="hour">
           <p>{{ index > 9 ? index : ("0" + index) }}:00</p>
           Hello
         </div>

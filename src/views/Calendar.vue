@@ -31,7 +31,7 @@
 
       <div v-for="day in Array(6).fill(0).map((x, y) => x + y)" class="day">
         <div v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
-             :id="'timeSlot-' + day + '-' + hour"
+             :id="'timeSlot-' + day.toLowerCase().substr(0,3) + '-' + hour"
              class="cell">
           <!-- Injection point -->
         </div>

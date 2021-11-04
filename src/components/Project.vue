@@ -22,7 +22,9 @@ export default {
         case "inbox":
           return "inbox";
         case "today":
-          return "calendar_today";
+          return "today";
+        case "calendar":
+          return "date_range";
         case "upcoming":
           return "upcoming";
         case "completed":
@@ -39,12 +41,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .project {
   display: flex;
   align-items: center;
   gap: 0.5em;
   padding: 0.75em 0.5em;
+  margin: 0 0.5em;
   border-radius: 5px;
   cursor: pointer;
   background-color: transparent;

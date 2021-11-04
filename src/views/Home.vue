@@ -4,6 +4,11 @@
     <div id="left-section" :data-theme="theme" class="border-right">
       <ProjectList v-model:active-project-id="activeProjectId"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
+      <hr :data-theme="theme" class="divisor">
+      <router-link :data-theme="theme" class="project" to="/calendar">
+        <span :data-theme="theme" class="material-icons">date_range</span>
+        <p>Calendar</p>
+      </router-link>
       <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
       <ProjectList v-model:active-project-id="activeProjectId"
                    :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
@@ -216,6 +221,7 @@ body[data-theme="dark"] {
   display: flex;
   flex-direction: column;
   flex: 1;
+  margin-top: 0.5em;
 }
 
 #left-section[data-theme="light"] {

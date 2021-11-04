@@ -7,15 +7,31 @@
       </nav>
     </header>
     <div id="week-view">
+      <h2></h2>
       <h2 v-for="dayName in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']"
-          class="day-name">
+          :style="'grid-area:' + dayName.toLowerCase().substr(0, 3) + ';'" class="day-name">
         {{ dayName.charAt(0).toUpperCase() + dayName.slice(1, 3) }}
       </h2>
 
-      <div v-for="_ in Array(7).fill(1).map((x, y) => x + y)" class="day">
-        <div v-for="index in Array(24).fill(0).map((x, y) => x + y)" class="hour">
-          <p>{{ index > 9 ? index : ("0" + index) }}:00</p>
-          Content
+      <!-- Time table -->
+
+      <div id="time-container" style="grid-area: d01;">
+        <div v-for="index in Array(24).fill(0).map((x, y) => x + y)"
+             style="grid-area: d01;">
+          <div style="display:flex;flex-direction: row;align-items: flex-start;">
+            <p class="time">
+              {{ index > 9 ? index : ("0" + index) }}:00
+            </p>
+            <div class="cell" style="flex: 1;">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-for="_ in Array(6).fill(0).map((x, y) => x + y)" class="day">
+        <div v-for="index in Array(24).fill(0).map((x, y) => x + y)" class="cell">
+
         </div>
       </div>
     </div>
@@ -89,12 +105,19 @@ export default {
 #week-view {
   flex: 1;
   display: grid;
-  column-gap: 0.5rem;
-  grid-template-columns: repeat(7, 1fr);
+  /*column-gap: 0.5rem;*/
+  grid-template-columns: min-content repeat(7, 5fr);
   grid-template-rows: min-content auto;
   margin: 0.5em;
   padding: 0;
   overflow-y: auto;
+
+  grid-template-areas:
+    ".   mon tue wed thu fri sat sun"
+    "d01 d01 d02 d03 d04 d05 d06 d07";
+
+  border-right: 1px #494949 solid;
+  border-bottom: 1px #494949 solid;
 }
 
 .day-name {
@@ -107,17 +130,33 @@ export default {
 .day {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  /*gap: 0.5rem;*/
   margin: 0;
   padding: 0;
 }
 
-.hour {
+#time-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.time {
+  font-size: 8pt;
+  margin: 0 1em 0 0;
+  position: relative;
+  top: -0.5em;
+}
+
+.cell {
   padding: 0.5em;
   margin: 0;
-  min-height: 1em;
+  min-height: 2em;
   border: 1px #494949 solid;
-  border-radius: 5px;
+  border-bottom: none;
+  border-right: none;
+  /*border-radius: 5px;*/
   background-color: #1e1e1e;
 }
 </style>

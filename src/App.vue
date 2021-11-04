@@ -143,14 +143,11 @@ export default {
   margin: 0;
   padding: 0;
   font-family: Roboto, sans-serif;
+  list-style-position: inside;
 }
 
 a {
   text-decoration: none;
-}
-
-ul {
-  list-style-position: inside;
 }
 
 /* width */

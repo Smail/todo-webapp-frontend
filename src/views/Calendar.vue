@@ -22,25 +22,26 @@
             <p class="time">
               {{ hour > 9 ? hour : ("0" + hour) }}:00
             </p>
-            <div :id="'timeSlot-mon-' + hour" class="cell" style="flex: 1;">
+            <TimeSlot :hour="hour" class="cell" day="mon" style="flex: 1;">
               <!-- Injection point -->
-            </div>
+            </TimeSlot>
           </div>
         </div>
       </div>
 
       <div v-for="day in Array(6).fill(0).map((x, y) => x + y)" class="day">
-        <div v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
-             :id="'timeSlot-' + day.toLowerCase().substr(0,3) + '-' + hour"
-             class="cell">
+        <TimeSlot v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
+                  :day="String(day)" :hour="hour">
           <!-- Injection point -->
-        </div>
+        </TimeSlot>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import TimeSlot from "@/components/Calendar/TimeSlot";
+
 const CalendarViewMode = {
   DAY: "day",
   WEEK: "week",
@@ -50,6 +51,7 @@ const CalendarViewMode = {
 
 export default {
   name: "Calendar",
+  components: {TimeSlot},
   props: {
     theme: String,
   },
@@ -149,16 +151,5 @@ export default {
   margin: 0 1em 0 0;
   position: relative;
   top: -0.5em;
-}
-
-.cell {
-  padding: 0.5em;
-  margin: 0;
-  min-height: 2em;
-  border: 1px #494949 solid;
-  border-bottom: none;
-  border-right: none;
-  /*border-radius: 5px;*/
-  background-color: #1e1e1e;
 }
 </style>

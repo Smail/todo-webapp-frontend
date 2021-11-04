@@ -90,6 +90,8 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
 #content-textarea {
@@ -101,10 +103,12 @@ export default {
   background-color: transparent;
   border: none;
   font-size: 11pt;
+  margin: 0;
 }
 
-#markdown-container * {
-  margin: 1em;
+#markdown-container {
+  margin: 0 1em;
+  height: 100%;
 }
 
 #markdown-container[data-theme="dark"] a {
@@ -121,6 +125,12 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  margin: 0;
+}
+
+#header * {
+  margin: 0;
+  padding: 0;
 }
 
 #markdown-btn {
@@ -131,7 +141,7 @@ export default {
   padding: .75em;
   background-color: #323232;
   border: none;
-  border-radius: 2.5px;
+  border-radius: 3px;
 }
 
 #markdown-btn:active {

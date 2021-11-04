@@ -45,5 +45,7 @@ export default {
   border-radius: 5px;
   background-color: #2a2a2a;
   filter: drop-shadow(0 0 0.25em black);
+  padding: 0;
+  margin: 0;
 }
 </style>

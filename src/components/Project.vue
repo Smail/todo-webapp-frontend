@@ -88,5 +88,6 @@ export default {
 
 p {
   font-size: 11pt;
+  margin: 0;
 }
 </style>

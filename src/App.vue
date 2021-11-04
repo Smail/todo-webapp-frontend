@@ -140,10 +140,13 @@ export default {
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
   font-family: Roboto, sans-serif;
   list-style-position: inside;
+}
+
+body {
+  padding: 0;
+  margin: 0;
 }
 
 a {
@@ -202,6 +205,7 @@ body[data-theme="dark"] {
   min-height: 100vh;
   max-width: 100vw;
   max-height: 100vh;
+  margin: 0;
   overflow: hidden;
   display: flex;
   -webkit-font-smoothing: antialiased;

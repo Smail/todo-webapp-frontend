@@ -352,10 +352,13 @@ export default {
 #cm-container {
   display: flex;
   flex-direction: column;
+  padding: 0;
+  margin: 0;
 }
 
 #cm-container * {
   padding: .25em;
+  margin: 0;
 }
 
 #cm-container hr {
@@ -370,6 +373,8 @@ export default {
   align-items: center;
   cursor: pointer;
   font-size: 11pt;
+  padding: 0;
+  margin: 0;
 }
 
 .cm-item[data-theme="dark"]:hover {
@@ -423,17 +428,21 @@ section {
 
 h1 {
   text-transform: capitalize;
-  margin-bottom: 0.5em;
+  margin: 0 0 0.5em 0;
 }
 
 ul {
   display: flex;
   flex-direction: column;
+  padding: 0;
+  margin: 0;
 }
 
 li {
   list-style: none;
   font-size: 11pt;
+  padding: 0;
+  margin: 0;
 }
 
 div.task {
@@ -441,6 +450,7 @@ div.task {
   justify-content: space-between;
   align-items: center;
   padding: 0.25em 0.5em;
+  margin: 0;
 }
 
 div.task[data-theme="light"]:hover {

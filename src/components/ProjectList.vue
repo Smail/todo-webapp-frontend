@@ -35,11 +35,13 @@ export default {
 <style scoped>
 h5 {
   padding: 0 1em;
+  margin: 0;
 }
 
 ul {
   display: flex;
   flex-direction: column;
   padding: 0.5em 0.5em 0 0.5em;
+  margin: 0;
 }
 </style>

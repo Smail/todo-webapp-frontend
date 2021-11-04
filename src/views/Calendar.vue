@@ -15,7 +15,7 @@
 
       <!-- Time table -->
 
-      <div id="time-container" style="grid-area: d01;">
+      <div class="day" style="grid-area: d01;">
         <div v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
              style="grid-area: d01;">
           <div style="display:flex;flex-direction: row;align-items: flex-start;">
@@ -135,13 +135,6 @@ export default {
   display: flex;
   flex-direction: column;
   /*gap: 0.5rem;*/
-  margin: 0;
-  padding: 0;
-}
-
-#time-container {
-  display: flex;
-  flex-direction: column;
   margin: 0;
   padding: 0;
 }

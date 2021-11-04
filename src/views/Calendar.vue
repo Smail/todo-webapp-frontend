@@ -29,9 +29,9 @@
         </div>
       </div>
 
-      <div v-for="day in Array(6).fill(0).map((x, y) => x + y)" class="day">
+      <div v-for="day in ['tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']" class="day">
         <TimeSlot v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
-                  :day="String(day)" :hour="hour">
+                  :day="day" :hour="hour">
           <!-- Injection point -->
         </TimeSlot>
       </div>

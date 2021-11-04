@@ -16,22 +16,24 @@
       <!-- Time table -->
 
       <div id="time-container" style="grid-area: d01;">
-        <div v-for="index in Array(24).fill(0).map((x, y) => x + y)"
+        <div v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
              style="grid-area: d01;">
           <div style="display:flex;flex-direction: row;align-items: flex-start;">
             <p class="time">
-              {{ index > 9 ? index : ("0" + index) }}:00
+              {{ hour > 9 ? hour : ("0" + hour) }}:00
             </p>
-            <div class="cell" style="flex: 1;">
-
+            <div :id="'timeSlot-mon-' + hour" class="cell" style="flex: 1;">
+              <!-- Injection point -->
             </div>
           </div>
         </div>
       </div>
 
-      <div v-for="_ in Array(6).fill(0).map((x, y) => x + y)" class="day">
-        <div v-for="index in Array(24).fill(0).map((x, y) => x + y)" class="cell">
-
+      <div v-for="day in Array(6).fill(0).map((x, y) => x + y)" class="day">
+        <div v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
+             :id="'timeSlot-' + day + '-' + hour"
+             class="cell">
+          <!-- Injection point -->
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@
         </TimeSlot>
 
         <div v-for="task in tasks.filter(t => t.startDay === day)"
-             :style="'top:' + (task.startHour * cellHeight) + 'px;height:' + (100/24 * (task.endHour - task.startHour)) + '%;'"
+             :style="'top:' + (100/24 * task.startHour) + '%;height:' + (100/24 * (task.endHour - task.startHour)) + '%;'"
              class="cal-task">
           <div class="cal-task-container">
             <h5 class="cal-task-header">{{ task.name }}</h5>
@@ -86,49 +86,6 @@ export default {
       cellHeight: 0,
     }
   },
-  mounted() {
-    // const element = document.getElementById('image_1');
-    // const style = window.getComputedStyle(element);
-    // const top = style.getPropertyValue('top');
-
-    const getHeight = function () {
-      const element = document.getElementsByClassName("cell").item(0);
-
-      if (element == null) {
-        console.error("no element with class cell")
-        return 0;
-      }
-
-      const style = window.getComputedStyle(element);
-      const heightStr = style.getPropertyValue("height");
-      const borderTopWidthStr = style.getPropertyValue("border-top-width");
-      const borderBottomWidthStr = style.getPropertyValue("border-bottom-width");
-      const marginTopWidthStr = style.getPropertyValue("margin-top-width");
-      const marginBottomWidthStr = style.getPropertyValue("margin-bottom-width");
-
-      if (heightStr != null && borderTopWidthStr != null && borderBottomWidthStr != null
-          && marginTopWidthStr != null && marginBottomWidthStr != null) {
-        function convert(str) {
-          return Number(str.replace("px", ""));
-        }
-
-        return convert(heightStr) + convert(borderTopWidthStr) + convert(borderBottomWidthStr)
-            + convert(marginTopWidthStr) + convert(marginBottomWidthStr);
-      }
-      return 0;
-    }
-    this.cellHeight = getHeight();
-
-    // $(".cell").ready(function () {
-    //   console.log($(".cell").css("height"));
-    //
-    //   const heightStr = $(".cell").css("height");
-    //   if (heightStr != null) {
-    //     return Number(heightStr.replace("px", ""));
-    //   }
-    //   return -1;
-    // })
-  },
   methods: {
     existsTask(day, hour) {
       const v = this.tasks.find(task => task.id === this.getTimeSlotId(day, hour));
@@ -154,12 +111,6 @@ export default {
       return 'timeSlot-' + day.toLowerCase().substr(0, 3) + '-' + hour;
     }
   },
-  // created() {
-  //   const heightStr = $(".cell").css("height");
-  //   if (heightStr != null) {
-  //     this.cellHeight = Number(heightStr.replace("px", ""));
-  //   }
-  // },
 }
 </script>
 

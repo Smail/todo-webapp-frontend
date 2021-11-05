@@ -39,7 +39,7 @@
         </TimeSlot>
 
         <div v-for="task in tasks.filter(t => t.startDay === day)"
-             :style="'top:' + (task.startHour * cellHeight) + 'px;height:' + Math.floor(100/24 * (task.endHour - task.startHour)) + '%;'"
+             :style="'top:' + (task.startHour * cellHeight) + 'px;height:' + (100/24 * (task.endHour - task.startHour)) + '%;'"
              class="cal-task">
           <div class="cal-task-container">
             <h5 class="cal-task-header">{{ task.name }}</h5>

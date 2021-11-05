@@ -82,8 +82,14 @@ export default {
         startDay: "tuesday",
         startHour: 3,
         endHour: 5,
-      }],
-      cellHeight: 0,
+      },
+        {
+          id: "timeSlot-tue-7",
+          name: "test",
+          startDay: "tuesday",
+          startHour: 7,
+          endHour: 10,
+        }],
     }
   },
   methods: {

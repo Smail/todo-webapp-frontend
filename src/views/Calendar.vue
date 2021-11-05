@@ -211,6 +211,7 @@ export default {
 
   border: 1px #008B8BFF solid;
   border-radius: 5px;
+  padding: 0;
 }
 
 .cal-task-container {

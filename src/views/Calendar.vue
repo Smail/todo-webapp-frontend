@@ -6,7 +6,9 @@
         <router-link id="home" to="/"><span id="home" class="material-icons">home</span></router-link>
       </nav>
     </header>
-    <div id="week-view" @mouseup="finishTaskCreation($event.target)">
+    <div id="week-view"
+         @mouseup="finishTaskCreation($event.target.getAttribute('data-day'),
+            Number($event.target.getAttribute('data-hour')) + 1)">
       <h2></h2>
       <h2 v-for="dayName in weekDays"
           :style="'grid-area:' + dayName.toLowerCase().substr(0, 3) + ';'" class="day-name">
@@ -85,10 +87,10 @@ export default {
       // Display shadow task initially as an one hour long task
       this.shadowTask = this.createTask("New Task", day, hour, day, Math.min(hour + 1, 24));
     },
-    finishTaskCreation(element) {
+    finishTaskCreation(endDay, endHour) {
       if (this.shadowTask != null) {
-        this.shadowTask.endDay = $(element).attr("data-day");
-        this.shadowTask.endHour = Number($(element).attr("data-hour")) + 1;
+        this.shadowTask.endDay = endDay;
+        this.shadowTask.endHour = Number(endHour);
         this.tasks.push(this.shadowTask);
         this.shadowTask = null;
       }

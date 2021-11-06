@@ -3,12 +3,9 @@
        class="cal-task" draggable="true">
     <div class="cal-task-container">
       <h5 class="cal-task-header">{{ task.name }}</h5>
-      <p class="cal-task-desc">{{ task.name }}: {{ task.startDay }} : {{ task.endHour - task.startHour }}
-
-        One cell has the height 1/24 * 100 = 4.16%. Multiply that with the number of cells to span over
-
-        TODO fix midnight time wrap
-        TODO disallow going back in time</p>
+      <p class="cal-task-desc">
+        {{ task.content }}
+      </p>
     </div>
   </div>
 </template>

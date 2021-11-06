@@ -32,6 +32,11 @@
         <!-- Tasks -->
         <calendar-task v-for="task in tasks.filter(t => t.startDay === day)"
                        :task="task"></calendar-task>
+
+        <!-- Shadow task: The view to show while a user is creating a new task -->
+        <calendar-task v-if="shadowTask != null && shadowTask.startDay === day" :task="shadowTask"
+                       class="shadow-task" draggable="false">
+        </calendar-task>
       </div>
     </div>
   </div>
@@ -58,6 +63,7 @@ export default {
     return {
       view: CalendarViewMode.WEEK,
       weekDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+      shadowTask: null,
       tasks: [
         {
           name: "test",
@@ -76,35 +82,25 @@ export default {
   },
   methods: {
     initTaskCreation(day, hour) {
-      this.taskToCreate = {
-        startDay: day,
-        startHour: hour,
-      };
+      // Display shadow task initially as an one hour long task
+      this.shadowTask = this.createTask("New Task", day, hour, day, Math.min(hour + 1, 24));
     },
     finishTaskCreation(element) {
-      if (this.taskToCreate == null) {
-        return;
+      if (this.shadowTask != null) {
+        this.shadowTask.endDay = $(element).attr("data-day");
+        this.shadowTask.endHour = Number($(element).attr("data-hour")) + 1;
+        this.tasks.push(this.shadowTask);
+        this.shadowTask = null;
       }
-
-      function getEndDate(element) {
-        const day = $(element).attr("data-day");
-        const hour = Number($(element).attr("data-hour")) + 1;
-        return {day: day, hour: hour};
-      }
-
-      const endTime = getEndDate(element)
-      const t = this.taskToCreate;
-      this.createTask("New Task", t.startDay, t.startHour, endTime.day, endTime.hour);
-      this.taskToCreate = null;
     },
     createTask(name, startDay, startHour, endDay, endHour) {
-      this.tasks.push({
+      return {
         name: name,
         startDay: startDay,
-        startHour: startHour,
+        startHour: Math.max(startHour, 0),
         endDay: endDay,
-        endHour: endHour,
-      })
+        endHour: Math.min(endHour, 24),
+      };
     },
   },
 }
@@ -200,5 +196,9 @@ export default {
   position: relative;
   height: calc(100% / 24); /* 100 * (1 / 24) = 4.1666% */
   font-size: inherit;
+}
+
+.shadow-task {
+  opacity: 50%;
 }
 </style>

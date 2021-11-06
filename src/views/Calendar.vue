@@ -121,18 +121,13 @@ export default {
         return;
       }
 
-      function parseId(element) {
-        const id = element.id;
-        let index = id.indexOf("-");
-        const dayHour = id.substring(index + 1);
-        index = dayHour.indexOf("-");
-        const day = dayHour.substring(0, index);
-        const hour = Number(dayHour.substring(index + 1)) + 1;
-
+      function getEndDate(element) {
+        const day = $(element).attr("data-day");
+        const hour = Number($(element).attr("data-hour")) + 1;
         return {day: day, hour: hour};
       }
 
-      const endTime = parseId(element)
+      const endTime = getEndDate(element)
       console.log("finish: " + endTime.day + " " + endTime.hour);
       const t = this.taskToCreate;
       this.createTask(t.startDay, t.startHour, endTime.day, endTime.hour);

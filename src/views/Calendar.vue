@@ -23,8 +23,7 @@
             </p>
             <TimeSlot :hour="hour" :tasks="tasks" class="cell"
                       day="mon" style="flex: 1;"
-                      @mousedown="initTaskCreation('mon', hour)"
-                      @mouseup="test">
+                      @mousedown="initTaskCreation('mon', hour)">
             </TimeSlot>
           </div>
         </div>
@@ -40,8 +39,7 @@
         <!-- Task -->
         <div v-for="task in tasks.filter(t => t.startDay === day)"
              :style="'top:' + (100/24 * task.startHour) + '%;height:' + (100/24 * Math.abs(task.endHour - task.startHour)) + '%;'"
-             class="cal-task" draggable="true"
-             @drag="dragTask($event, task)">
+             class="cal-task" draggable="true">
           <div class="cal-task-container">
             <h5 class="cal-task-header">{{ task.name }}</h5>
             <p class="cal-task-desc">{{ task.name }}: {{ task.startDay }} : {{ task.endHour - task.startHour }}
@@ -97,18 +95,10 @@ export default {
     dragTask(event, task) {
       event.preventDefault();
     },
-    existsTask(day, hour) {
-      const v = this.tasks.find(task => task.id === this.getTimeSlotId(day, hour));
-      console.log(v)
-      return v !== undefined;
-    },
     test() {
       // console.log("lök")
     },
     initTaskCreation(day, hour) {
-      // this.timeSlotStart = timeSlotStart;
-      // console.log($(timeSlotStart))
-      // console.log(this.tasks.find(task => task.id === this.getTimeSlotId('tuesday', 3)));
       this.taskToCreate = {
         startDay: day,
         startHour: hour,
@@ -143,9 +133,6 @@ export default {
         endHour: endHour,
       })
     },
-    getTimeSlotId(day, hour) {
-      return 'timeSlot-' + day.toLowerCase().substr(0, 3) + '-' + hour;
-    }
   },
 }
 </script>

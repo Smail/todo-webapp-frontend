@@ -1,9 +1,6 @@
 <template>
   <div :id="'timeSlot-' + day.toLowerCase().substr(0,3) + '-' + hour"
-       class="cell"
-       @mousedown="mark"
-       @mousemove="test"
-       @mouseup="$emit('unmarkCell', this);">
+       class="cell">
     <!-- Injection point -->
 
     <!--    <div v-if="existsTask(day, hour)"-->

@@ -1,6 +1,5 @@
 <template>
-  <div v-for="task in tasks.filter(t => t.startDay === day)"
-       :style="'top:' + calcTop(task) + ';height:' +  calcHeight(task)"
+  <div :style="'top:' + top + ';height:' +  height"
        class="cal-task" draggable="true">
     <div class="cal-task-container">
       <h5 class="cal-task-header">{{ task.name }}</h5>
@@ -16,17 +15,17 @@
 
 <script>
 export default {
-  name: "CalendarTasks",
+  name: "CalendarTask",
   props: {
     day: String,
-    tasks: Array,
+    task: Object,
   },
-  methods: {
-    calcTop(task) {
-      return "calc(100% / 24 * " + task.startHour + ");";
+  computed: {
+    top() {
+      return "calc(100% / 24 * " + this.task.startHour + ");";
     },
-    calcHeight(task) {
-      return "calc(100% / 24 * " + Math.abs(task.endHour - task.startHour) + " - 1px);";
+    height() {
+      return "calc(100% / 24 * " + Math.abs(this.task.endHour - this.task.startHour) + " - 1px);";
     }
   }
 }

@@ -30,7 +30,8 @@
         </TimeSlot>
 
         <!-- Tasks -->
-        <CalendarTasks :day="day" :tasks="tasks"></CalendarTasks>
+        <calendar-task v-for="task in tasks.filter(t => t.startDay === day)"
+                       :day="day" :task="task"></calendar-task>
       </div>
     </div>
   </div>
@@ -38,7 +39,7 @@
 
 <script>
 import TimeSlot from "@/components/Calendar/TimeSlot";
-import CalendarTasks from "@/components/Calendar/CalendarTasks";
+import CalendarTask from "@/components/Calendar/CalendarTask";
 
 const CalendarViewMode = {
   DAY: "day",
@@ -49,7 +50,7 @@ const CalendarViewMode = {
 
 export default {
   name: "Calendar",
-  components: {CalendarTasks, TimeSlot},
+  components: {CalendarTask, TimeSlot},
   props: {
     theme: String,
   },

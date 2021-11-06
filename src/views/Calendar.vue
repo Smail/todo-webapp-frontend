@@ -92,12 +92,6 @@ export default {
     }
   },
   methods: {
-    dragTask(event, task) {
-      event.preventDefault();
-    },
-    test() {
-      // console.log("lök")
-    },
     initTaskCreation(day, hour) {
       this.taskToCreate = {
         startDay: day,

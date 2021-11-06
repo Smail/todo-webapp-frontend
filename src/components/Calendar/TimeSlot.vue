@@ -1,6 +1,6 @@
 <template>
   <div :id="'timeSlot-' + day.toLowerCase().substr(0,3) + '-' + hour"
-       class="cell">
+       :data-day="day" :data-hour="hour" class="cell">
     <!-- Injection point -->
 
     <!--    <div v-if="existsTask(day, hour)"-->

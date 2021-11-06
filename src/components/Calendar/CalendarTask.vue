@@ -30,31 +30,41 @@ export default {
 <style scoped>
 .cal-task {
   position: absolute;
-  left: 0;
+  left: 1px;
   right: 0;
-  margin: 0 0.5em 0 0;
 
-  background-color: rgba(0, 139, 139, 0.5);
+  background-color: inherit;
 
   text-overflow: ellipsis;
 
   white-space: break-spaces;
-  overflow: auto;
 
-  border: 1px #008B8BFF solid;
+  border: 1px solid;
+  border-color: inherit;
   border-radius: 5px;
+  margin: 0;
   padding: 0;
 
   cursor: pointer;
+
+  transition: height ease-out 100ms,
+  background-color ease-out 500ms,
+  border-top-color ease-out 500ms,
+  border-right-color ease-out 500ms,
+  border-left-color ease-out 500ms,
+  border-bottom-color ease-out 500ms;
 }
 
 .cal-task-container {
-  padding: 0.5em;
+  margin: 0;
+  padding: 0.25em;
+  font-size: inherit;
 }
 
 .cal-task-header {
-  margin: 0 0 0.5em;
+  margin: 0;
   padding: 0;
+  white-space: nowrap;
 }
 
 .cal-task-desc {

@@ -31,7 +31,7 @@
 
         <!-- Tasks -->
         <calendar-task v-for="task in tasks.filter(t => t.startDay === day)"
-                       :day="day" :task="task"></calendar-task>
+                       :task="task"></calendar-task>
       </div>
     </div>
   </div>

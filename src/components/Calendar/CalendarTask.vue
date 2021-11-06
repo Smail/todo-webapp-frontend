@@ -17,7 +17,6 @@
 export default {
   name: "CalendarTask",
   props: {
-    day: String,
     task: Object,
   },
   computed: {

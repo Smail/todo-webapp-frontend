@@ -6,9 +6,7 @@
         <router-link id="home" to="/"><span id="home" class="material-icons">home</span></router-link>
       </nav>
     </header>
-    <div id="week-view"
-         @mouseup="finishTaskCreation($event.target.getAttribute('data-day'),
-            Number($event.target.getAttribute('data-hour')) + 1)">
+    <div id="week-view">
       <h2></h2>
       <h2 v-for="dayName in weekDays"
           :style="'grid-area:' + dayName.toLowerCase().substr(0, 3) + ';'" class="day-name">
@@ -25,10 +23,14 @@
 
       <!-- Content -->
       <div v-for="(day, index) in weekDays"
-           :style="'grid-area:d0' + (index + 1) + ';'" class="day">
+           id="week-container" :style="'grid-area:d0' + (index + 1) + ';'"
+           class="day"
+           @mousemove="resizeTask($event, this.shadowTask)">
         <TimeSlot v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
                   :day="day" :hour="hour" :tasks="tasks"
-                  @mousedown="initTaskCreation(day, hour)">
+                  @mousedown="initTaskCreation(day, hour)"
+                  @mouseup="finishTaskCreation($event.target.getAttribute('data-day'),
+                                        Number($event.target.getAttribute('data-hour')) + 1)">
         </TimeSlot>
 
         <!-- Tasks -->
@@ -37,7 +39,8 @@
 
         <!-- Shadow task: The view to show while a user is creating a new task -->
         <calendar-task v-if="shadowTask != null && shadowTask.startDay === day" :task="shadowTask"
-                       class="shadow-task" draggable="false">
+                       class="shadow-task" draggable="false"
+                       @mouseup="finishTaskCreation">
         </calendar-task>
       </div>
     </div>
@@ -89,10 +92,45 @@ export default {
     },
     finishTaskCreation(endDay, endHour) {
       if (this.shadowTask != null) {
-        this.shadowTask.endDay = endDay;
-        this.shadowTask.endHour = Number(endHour);
+        if (endDay != null) {
+          this.shadowTask.endDay = endDay;
+        }
+        if (endHour != null) {
+          this.shadowTask.endHour = Number(endHour);
+        }
         this.tasks.push(this.shadowTask);
         this.shadowTask = null;
+      }
+    },
+    resizeTask(event, task) {
+      if (task != null) {
+        // The number of regions in which the calendar is divided into,
+        // e.g. a grid that is divided into 24 1-hour sections
+        const numRegions = 24;
+        const rect = document.getElementsByClassName("day")[0].getBoundingClientRect();
+        const posY = event.clientY;
+        const containerTopY = rect.y;
+        const containerHeight = rect.height;
+        const regionHeight = Math.round(containerHeight / numRegions);
+
+        // Set the endHour of task to the region in which the mouse pointer is currently located
+        // a is the lower bound of the region rectangle and b the upper one.
+        // Example: let rect be of height 1056 and let numRegions be 24.
+        //     (0) 00:00 - 01:00: [a=0px, b=44px],
+        //     (1) 01:00 - 02:00: [a=44px, b=88px],
+        //     ...,
+        //     (24) 23:00 - 00:00: [a=1012px, b=1056]
+        let a = 0;
+        for (let i = 1; i < numRegions + 1; i++) {
+          const b = i * regionHeight + containerTopY;
+          if (posY > a && posY < b) {
+            if (task.endHour !== i) {
+              task.endHour = i;
+            }
+            break;
+          }
+          a = b;
+        }
       }
     },
     createTask(name, startDay, startHour, endDay, endHour) {
@@ -165,8 +203,7 @@ export default {
     ".    mon tue wed thu fri sat sun"
     "time d01 d02 d03 d04 d05 d06 d07";
 
-  /*border-right: 1px #494949 solid;*/
-  border-bottom: 1px #494949 solid;
+  max-height: 50%;
 }
 
 .day-name {
@@ -182,11 +219,17 @@ export default {
   margin: 0;
   padding: 0;
   position: relative;
+  border-bottom: 1px #494949 solid;
+}
+
+.day:last-child {
+  border-right: 1px #494949 solid;
 }
 
 .time-container {
   top: -0.5em;
   position: relative;
+  margin: 0 0.25em 0 0;
   font-size: 8pt;
   display: flex;
   flex-direction: column;

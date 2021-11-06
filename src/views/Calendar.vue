@@ -21,9 +21,9 @@
             <p class="time">
               {{ hour > 9 ? hour : ("0" + hour) }}:00
             </p>
-            <TimeSlot :hour="hour" :tasks="tasks"
-                      class="cell" day="mon" style="flex: 1;"
-                      @mousedown="initTaskCreation($event.target)"
+            <TimeSlot :hour="hour" :tasks="tasks" class="cell"
+                      day="mon" style="flex: 1;"
+                      @mousedown="initTaskCreation('mon', hour)"
                       @mouseup="test">
             </TimeSlot>
           </div>

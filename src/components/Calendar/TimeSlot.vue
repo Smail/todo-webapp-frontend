@@ -25,27 +25,7 @@ export default {
     endTimeSlot: null,
     // isMarked
   },
-  methods: {
-    existsTask(day, hour) {
-      console.log(this.tasks);
-      const v = this.tasks.find(task => task.id === this.getTimeSlotId(day, hour));
-      console.log(v)
-      return v !== undefined;
-    },
-    mark(e) {
-      console.log(e)
-      this.$emit("markCell", this);
-    },
-    test() {
-      // console.log("move")
-    },
-    createTask() {
-
-    },
-    getTimeSlotId(day, hour) {
-      return 'timeSlot-' + day.toLowerCase().substr(0, 3) + '-' + hour;
-    }
-  },
+  methods: {},
 }
 </script>
 

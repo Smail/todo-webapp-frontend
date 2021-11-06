@@ -6,50 +6,31 @@
         <router-link id="home" to="/"><span id="home" class="material-icons">home</span></router-link>
       </nav>
     </header>
-    <div id="week-view" @mousemove="test" @mouseup="finishTaskCreation($event.target)">
+    <div id="week-view" @mouseup="finishTaskCreation($event.target)">
       <h2></h2>
       <h2 v-for="dayName in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']"
           :style="'grid-area:' + dayName.toLowerCase().substr(0, 3) + ';'" class="day-name">
         {{ dayName.charAt(0).toUpperCase() + dayName.slice(1, 3) }}
       </h2>
 
-      <!-- Monday -->
-      <div class="day" style="grid-area: d01;">
+      <!-- Time annotation -->
+      <div class="time-container">
         <div v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
-             style="grid-area: d01;">
-          <div style="display:flex;flex-direction: row;align-items: flex-start;">
-            <p class="time">
-              {{ hour > 9 ? hour : ("0" + hour) }}:00
-            </p>
-            <TimeSlot :hour="hour" :tasks="tasks" class="cell"
-                      day="mon" style="flex: 1;"
-                      @mousedown="initTaskCreation('mon', hour)">
-            </TimeSlot>
-          </div>
+             class="time" style="grid-area: time;">
+          {{ hour > 9 ? hour : ("0" + hour) }}:00
         </div>
       </div>
 
-      <!-- Rest of the week -->
-      <div v-for="day in ['tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']" class="day">
+      <!-- Content -->
+      <div v-for="(day, index) in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']"
+           :style="'grid-area:d0' + (index + 1) + ';'" class="day">
         <TimeSlot v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
                   :day="day" :hour="hour" :tasks="tasks"
                   @mousedown="initTaskCreation(day, hour)">
         </TimeSlot>
 
-        <!-- Task -->
-        <div v-for="task in tasks.filter(t => t.startDay === day)"
-             :style="'top:' + (100/24 * task.startHour) + '%;height:' + (100/24 * Math.abs(task.endHour - task.startHour)) + '%;'"
-             class="cal-task" draggable="true">
-          <div class="cal-task-container">
-            <h5 class="cal-task-header">{{ task.name }}</h5>
-            <p class="cal-task-desc">{{ task.name }}: {{ task.startDay }} : {{ task.endHour - task.startHour }}
-
-              One cell has the height 1/24 * 100 = 4.16%. Multiply that with the number of cells to span over
-
-              TODO fix midnight time wrap
-              TODO disallow going back in time</p>
-          </div>
-        </div>
+        <!-- Tasks -->
+        <CalendarTasks :day="day" :tasks="tasks"></CalendarTasks>
       </div>
     </div>
   </div>
@@ -57,6 +38,7 @@
 
 <script>
 import TimeSlot from "@/components/Calendar/TimeSlot";
+import CalendarTasks from "@/components/Calendar/CalendarTasks";
 
 const CalendarViewMode = {
   DAY: "day",
@@ -67,7 +49,7 @@ const CalendarViewMode = {
 
 export default {
   name: "Calendar",
-  components: {TimeSlot},
+  components: {CalendarTasks, TimeSlot},
   props: {
     theme: String,
   },
@@ -181,10 +163,10 @@ export default {
   overflow-y: auto;
 
   grid-template-areas:
-    ".   mon tue wed thu fri sat sun"
-    "d01 d01 d02 d03 d04 d05 d06 d07";
+    ".    mon tue wed thu fri sat sun"
+    "time d01 d02 d03 d04 d05 d06 d07";
 
-  border-right: 1px #494949 solid;
+  /*border-right: 1px #494949 solid;*/
   border-bottom: 1px #494949 solid;
 }
 
@@ -198,55 +180,24 @@ export default {
 .day {
   display: flex;
   flex-direction: column;
-  /*gap: 0.5rem;*/
   margin: 0;
   padding: 0;
   position: relative;
 }
 
-.cal-task {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  /*height: 10px;*/
-
-  /* Minus 1px because of border */
-  margin: 0 0.5em 0 0;
-
-  background-color: rgba(0, 139, 139, 0.5);
-
-  text-overflow: ellipsis;
-
-  /* Required for text-overflow to do anything */
-  white-space: break-spaces;
-  overflow: auto;
-
-  border: 1px #008B8BFF solid;
-  border-radius: 5px;
-  padding: 0;
-
-  cursor: pointer;
-}
-
-.cal-task-container {
-  padding: 0.5em;
-}
-
-.cal-task-header {
-  margin: 0 0 0.5em;
-  padding: 0;
-}
-
-.cal-task-desc {
-  margin: 0;
-  padding: 0;
+.time-container {
+  top: -0.5em;
+  position: relative;
+  font-size: 8pt;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .time {
-  font-size: 8pt;
-  margin: 0 1em 0 0;
+  top: 0;
   position: relative;
-  top: -0.5em;
+  height: calc(100% / 24); /* 100 * (1 / 24) = 4.1666% */
+  font-size: inherit;
 }
 </style>

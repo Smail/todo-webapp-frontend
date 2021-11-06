@@ -1,0 +1,69 @@
+<template>
+  <div v-for="task in tasks.filter(t => t.startDay === day)"
+       :style="'top:' + calcTop(task) + ';height:' +  calcHeight(task)"
+       class="cal-task" draggable="true">
+    <div class="cal-task-container">
+      <h5 class="cal-task-header">{{ task.name }}</h5>
+      <p class="cal-task-desc">{{ task.name }}: {{ task.startDay }} : {{ task.endHour - task.startHour }}
+
+        One cell has the height 1/24 * 100 = 4.16%. Multiply that with the number of cells to span over
+
+        TODO fix midnight time wrap
+        TODO disallow going back in time</p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "CalendarTasks",
+  props: {
+    day: String,
+    tasks: Array,
+  },
+  methods: {
+    calcTop(task) {
+      return "calc(100% / 24 * " + task.startHour + ");";
+    },
+    calcHeight(task) {
+      return "calc(100% / 24 * " + Math.abs(task.endHour - task.startHour) + " - 1px);";
+    }
+  }
+}
+</script>
+
+<style scoped>
+.cal-task {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 0.5em 0 0;
+
+  background-color: rgba(0, 139, 139, 0.5);
+
+  text-overflow: ellipsis;
+
+  white-space: break-spaces;
+  overflow: auto;
+
+  border: 1px #008B8BFF solid;
+  border-radius: 5px;
+  padding: 0;
+
+  cursor: pointer;
+}
+
+.cal-task-container {
+  padding: 0.5em;
+}
+
+.cal-task-header {
+  margin: 0 0 0.5em;
+  padding: 0;
+}
+
+.cal-task-desc {
+  margin: 0;
+  padding: 0;
+}
+</style>

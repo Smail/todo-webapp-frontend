@@ -1,12 +1,6 @@
 <template>
   <div :id="'timeSlot-' + day.toLowerCase().substr(0,3) + '-' + hour"
        :data-day="day" :data-hour="hour" class="cell">
-    <!-- Injection point -->
-
-    <!--    <div v-if="existsTask(day, hour)"-->
-    <!--         class="task">-->
-    <!--      htkkkasdhdfaklsdjhf-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -30,13 +24,10 @@ export default {
 .cell {
   padding: 0.5em;
   margin: 0;
-  min-height: 2em;
+  height: calc(100% / 24);
   border: 1px #494949 solid;
   border-bottom: none;
   border-right: none;
-  /*border-radius: 5px;*/
   background-color: #1e1e1e;
-
-  position: relative;
 }
 </style>

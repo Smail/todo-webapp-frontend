@@ -8,7 +8,7 @@
     </header>
     <div id="week-view" @mouseup="finishTaskCreation($event.target)">
       <h2></h2>
-      <h2 v-for="dayName in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']"
+      <h2 v-for="dayName in weekDays"
           :style="'grid-area:' + dayName.toLowerCase().substr(0, 3) + ';'" class="day-name">
         {{ dayName.charAt(0).toUpperCase() + dayName.slice(1, 3) }}
       </h2>
@@ -22,7 +22,7 @@
       </div>
 
       <!-- Content -->
-      <div v-for="(day, index) in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']"
+      <div v-for="(day, index) in weekDays"
            :style="'grid-area:d0' + (index + 1) + ';'" class="day">
         <TimeSlot v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
                   :day="day" :hour="hour" :tasks="tasks"
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       view: CalendarViewMode.WEEK,
-      taskToCreate: null,
+      weekDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
       tasks: [
         {
           name: "test",

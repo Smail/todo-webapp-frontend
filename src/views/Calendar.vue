@@ -103,8 +103,6 @@ export default {
         startDay: day,
         startHour: hour,
       };
-
-      console.log("init")
     },
     finishTaskCreation(element) {
       if (this.taskToCreate == null) {
@@ -118,15 +116,13 @@ export default {
       }
 
       const endTime = getEndDate(element)
-      console.log("finish: " + endTime.day + " " + endTime.hour);
       const t = this.taskToCreate;
-      this.createTask(t.startDay, t.startHour, endTime.day, endTime.hour);
+      this.createTask("New Task", t.startDay, t.startHour, endTime.day, endTime.hour);
       this.taskToCreate = null;
     },
-    createTask(startDay, startHour, endDay, endHour) {
-      console.log("create")
+    createTask(name, startDay, startHour, endDay, endHour) {
       this.tasks.push({
-        name: "added",
+        name: name,
         startDay: startDay,
         startHour: startHour,
         endDay: endDay,

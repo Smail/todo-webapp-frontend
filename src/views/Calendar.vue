@@ -6,7 +6,7 @@
         <router-link id="home" to="/"><span id="home" class="material-icons">home</span></router-link>
       </nav>
     </header>
-    <div id="week-view" @mouseup="finishTaskCreation($event.target)">
+    <div id="week-view" @mousemove="test" @mouseup="finishTaskCreation($event.target)">
       <h2></h2>
       <h2 v-for="dayName in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']"
           :style="'grid-area:' + dayName.toLowerCase().substr(0, 3) + ';'" class="day-name">
@@ -23,8 +23,8 @@
             </p>
             <TimeSlot :hour="hour" :tasks="tasks"
                       class="cell" day="mon" style="flex: 1;"
-                      @mousedown="initTaskCreation">
-              <!-- Injection point -->
+                      @mousedown="initTaskCreation($event.target)"
+                      @mouseup="test">
             </TimeSlot>
           </div>
         </div>
@@ -34,13 +34,14 @@
       <div v-for="day in ['tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']" class="day">
         <TimeSlot v-for="hour in Array(24).fill(0).map((x, y) => x + y)"
                   :day="day" :hour="hour" :tasks="tasks"
-                  @mousedown="initTaskCreation($event.target)">
-          <!-- Injection point -->
+                  @mousedown="initTaskCreation(day, hour)">
         </TimeSlot>
 
+        <!-- Task -->
         <div v-for="task in tasks.filter(t => t.startDay === day)"
              :style="'top:' + (100/24 * task.startHour) + '%;height:' + (100/24 * Math.abs(task.endHour - task.startHour)) + '%;'"
-             class="cal-task">
+             class="cal-task" draggable="true"
+             @drag="dragTask($event, task)">
           <div class="cal-task-container">
             <h5 class="cal-task-header">{{ task.name }}</h5>
             <p class="cal-task-desc">{{ task.name }}: {{ task.startDay }} : {{ task.endHour - task.startHour }}
@@ -75,43 +76,77 @@ export default {
   data() {
     return {
       view: CalendarViewMode.WEEK,
-      timeSlotStart: null,
-      tasks: [{
-        id: "timeSlot-tue-3",
-        name: "test",
-        startDay: "tuesday",
-        startHour: 3,
-        endHour: 5,
-      },
+      taskToCreate: null,
+      tasks: [
         {
-          id: "timeSlot-tue-7",
           name: "test",
           startDay: "tuesday",
-          startHour: 7,
-          endHour: 10,
-        }],
+          startHour: 3,
+          endHour: 5,
+        },
+        {
+          name: "test",
+          startDay: "tuesday",
+          startHour: 10,
+          endHour: 7,
+        },
+      ],
     }
   },
   methods: {
+    dragTask(event, task) {
+      event.preventDefault();
+    },
     existsTask(day, hour) {
       const v = this.tasks.find(task => task.id === this.getTimeSlotId(day, hour));
       console.log(v)
       return v !== undefined;
     },
-    test(cell) {
-      console.log("lök")
-      console.log(cell)
+    test() {
+      // console.log("lök")
     },
-    initTaskCreation(timeSlotStart) {
-      this.timeSlotStart = timeSlotStart;
-      console.log(this.tasks.find(task => task.id === this.getTimeSlotId('tuesday', 3)));
-    },
-    finishTaskCreation(timeSlotEnd) {
-      console.log($(timeSlotEnd))
-      this.timeSlotStart = null;
-    },
-    createTask(timeSlotStart, timeSlotEnd) {
+    initTaskCreation(day, hour) {
+      // this.timeSlotStart = timeSlotStart;
+      // console.log($(timeSlotStart))
+      // console.log(this.tasks.find(task => task.id === this.getTimeSlotId('tuesday', 3)));
+      this.taskToCreate = {
+        startDay: day,
+        startHour: hour,
+      };
 
+      console.log("init")
+    },
+    finishTaskCreation(element) {
+      if (this.taskToCreate == null) {
+        return;
+      }
+
+      function parseId(element) {
+        const id = element.id;
+        let index = id.indexOf("-");
+        const dayHour = id.substring(index + 1);
+        index = dayHour.indexOf("-");
+        const day = dayHour.substring(0, index);
+        const hour = Number(dayHour.substring(index + 1)) + 1;
+
+        return {day: day, hour: hour};
+      }
+
+      const endTime = parseId(element)
+      console.log("finish: " + endTime.day + " " + endTime.hour);
+      const t = this.taskToCreate;
+      this.createTask(t.startDay, t.startHour, endTime.day, endTime.hour);
+      this.taskToCreate = null;
+    },
+    createTask(startDay, startHour, endDay, endHour) {
+      console.log("create")
+      this.tasks.push({
+        name: "added",
+        startDay: startDay,
+        startHour: startHour,
+        endDay: endDay,
+        endHour: endHour,
+      })
     },
     getTimeSlotId(day, hour) {
       return 'timeSlot-' + day.toLowerCase().substr(0, 3) + '-' + hour;
@@ -218,6 +253,8 @@ export default {
   border: 1px #008B8BFF solid;
   border-radius: 5px;
   padding: 0;
+
+  cursor: pointer;
 }
 
 .cal-task-container {

@@ -121,7 +121,7 @@ export default {
           newProjectId: newProject.id,
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
           // task.name will be automatically updated by v-model
@@ -170,7 +170,7 @@ export default {
         type: "GET",
         url: `http://192.168.2.165:8090/projects/${this.project.id}/tasks/`,
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (arr) => {
           // Don't use this.tasks = []; because it dereferences the current array
@@ -197,13 +197,13 @@ export default {
           "taskName": newTaskName,
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: () => {
           // task.name will be automatically updated by v-model
         },
         error: (response) => {
-          alert('Could not update task name');
+          alert("Could not update task name");
           console.error(response);
         }
       });
@@ -216,9 +216,9 @@ export default {
      * @param taskDuration
      * @param taskDueDate
      */
-    createTask(taskName, taskContent = '', taskDuration = null, taskDueDate = null) {
+    createTask(taskName, taskContent = "", taskDuration = null, taskDueDate = null) {
       $.ajax({
-        type: 'POST',
+        type: "POST",
         url: `http://192.168.2.165:8090/projects/${this.project.id}/task/`,
         data: {
           taskName,
@@ -227,7 +227,7 @@ export default {
           taskDueDate,
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
           console.log(response);
@@ -245,7 +245,7 @@ export default {
           }
         },
         error: (response) => {
-          alert('Could not create task :/');
+          alert("Could not create task :/");
           console.error(response);
         }
       });
@@ -264,7 +264,7 @@ export default {
           "deletePermanently": this.project.name.toLowerCase() === "deleted",
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
           // task.name will be automatically updated by v-model
@@ -282,7 +282,7 @@ export default {
                   "but it was successfully deleted on the server. Weird");
             }
           } else {
-            alert('Could not delete task: ' + task.name);
+            alert("Could not delete task: " + task.name);
           }
         },
         error: (response) => {
@@ -292,7 +292,7 @@ export default {
       });
     },
     setActiveTask(newActiveTask) {
-      this.$emit('update:activeTask', newActiveTask);
+      this.$emit("update:activeTask", newActiveTask);
     },
     updateContextMenu(event, showContextMenu, task) {
       if (event != null) {

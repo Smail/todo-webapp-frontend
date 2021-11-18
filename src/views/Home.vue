@@ -36,7 +36,7 @@ import TasksView from "@/components/TasksView";
 import ContentPanel from "@/components/ContentPanel";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     ContentPanel,
     TasksView,
@@ -50,20 +50,20 @@ export default {
       projects: [],
       // {id: int, name: String, content: String, duration: int, dueDate: String}
       activeTask: null,
-      theme: 'dark',
+      theme: "dark",
       hasLoaded: false,
     }
   },
   computed: {
     inboxProject() {
       return this.projects
-          .find(value => value.name.toLowerCase() === 'inbox');
+          .find(value => value.name.toLowerCase() === "inbox");
     },
     defaultProjects() {
       return this.projects
           .filter(value => {
             const str = value.name.toLowerCase();
-            return str === 'inbox' || str === 'today' || str === 'upcoming';
+            return str === "inbox" || str === "today" || str === "upcoming";
           });
     },
     userProjects() {
@@ -74,7 +74,7 @@ export default {
       return this.projects
           .filter(value => {
             const str = value.name.toLowerCase();
-            return str === 'deleted' || str === 'completed';
+            return str === "deleted" || str === "completed";
           });
     },
   },
@@ -85,7 +85,7 @@ export default {
           type: "POST",
           url: "http://192.168.2.165:8090/login",
           headers: {
-            "Authorization": "Basic " + Buffer.from(username + ":" + password, 'utf-8').toString('base64'),
+            "Authorization": "Basic " + Buffer.from(username + ":" + password, "utf-8").toString("base64"),
           }
         });
         localStorage.setItem("token", "Bearer " + response.token);

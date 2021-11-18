@@ -63,7 +63,7 @@ export default {
     },
     setContent(newContentStr) {
       this.activeTask.content = newContentStr;
-      this.$emit('update:activeTask', this.activeTask);
+      this.$emit("update:activeTask", this.activeTask);
       this.didContentChange = true;
     },
     updateServer() {
@@ -75,7 +75,7 @@ export default {
             "taskContent": this.activeTask.content,
           },
           headers: {
-            'Authorization': localStorage.getItem('token'),
+            "Authorization": localStorage.getItem("token"),
           },
           success: () => {
             this.didContentChange = false;

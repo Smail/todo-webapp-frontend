@@ -171,22 +171,17 @@ export default {
       }
 
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
-        data: {
-          'action': 'get_tasks',
-          'projectId': this.project.id,
-        },
+        type: "GET",
+        url: `http://192.168.2.165:8090/projects/${this.project.id}/tasks/`,
         headers: {
           'Authorization': localStorage.getItem('token'),
         },
-        success: (response) => {
-          const json = $.parseJSON(response);
+        success: (arr) => {
           // Don't use this.tasks = []; because it dereferences the current array
           this.tasks.length = 0;
 
-          for (const x of json) {
-            this.tasks.push(x);
+          for (const task of arr) {
+            this.tasks.push(task);
           }
         },
       });

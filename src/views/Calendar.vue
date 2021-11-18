@@ -140,8 +140,6 @@ export default {
 
       const color = c.substring(0, 7) + "80";
       const borderColor = pSBC(0.05, c);
-      console.log(color)
-      console.log(borderColor)
       $(".color-wrapper").css("background-color", color);
       $(".color-wrapper").css("border-color", borderColor);
 

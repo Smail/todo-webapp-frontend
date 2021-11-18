@@ -244,7 +244,7 @@ export default {
           // Create task here on the client as well
           const taskId = response.id;
 
-          if (taskId > 1) {
+          if (taskId > 0) {
             this.tasks.push({
               id: taskId,
               name: taskName,

@@ -115,14 +115,10 @@ export default {
   methods: {
     moveTaskToProject(task, newProject) {
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "PATCH",
+        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/${task.id}`, // /task/${task.id}/move/project/${newProject.id}
         data: {
-          'action': 'move_task',
-          'taskId': task.id,
-          // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the 'Deleted' project
-          'newProjectId': newProject.id,
+          newProjectId: newProject.id,
         },
         headers: {
           'Authorization': localStorage.getItem('token'),
@@ -194,17 +190,11 @@ export default {
      * @param newTaskName The new task name for the parameter task.
      */
     setTaskName(task, newTaskName) {
-      // TODO putting the task object has unnecessary overhead if we only update the name or content, etc. because we
-      // are sending also unchanged data to the server. We should either create individual functions or check for change
-      // and then use PATCH instead of PUT.
-      // Note: Server doesn't accept PATCH or PUT, so this is currently unnecessary.
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "PATCH",
+        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/${task.id}`,
         data: {
-          'action': 'update_task_name',
-          'taskId': task.id,
-          'taskName': newTaskName,
+          "taskName": newTaskName,
         },
         headers: {
           'Authorization': localStorage.getItem('token'),
@@ -267,14 +257,11 @@ export default {
       console.log("delete task:");
       console.log(task);
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "DELETE",
+        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/${task.id}`,
         data: {
-          'action': 'delete_task',
-          'taskId': task.id,
-          // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the 'Deleted' project
-          'deletePermanently': this.project.name.toLowerCase() === 'deleted',
+          // Delete the task permanently if it was already moved into the "Deleted" project
+          "deletePermanently": this.project.name.toLowerCase() === "deleted",
         },
         headers: {
           'Authorization': localStorage.getItem('token'),

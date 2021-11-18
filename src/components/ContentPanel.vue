@@ -69,12 +69,10 @@ export default {
     updateServer() {
       if (this.didContentChange) {
         $.ajax({
-          type: 'POST',
-          url: 'http://192.168.2.165:8082/ajax.php',
+          type: "PATCH",
+          url: `http://192.168.2.165:8090/tasks/${this.activeTask.id}`,
           data: {
-            'action': 'update_task',
-            'taskId': this.activeTask.id,
-            'taskContent': this.activeTask.content,
+            "taskContent": this.activeTask.content,
           },
           headers: {
             'Authorization': localStorage.getItem('token'),

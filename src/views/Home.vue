@@ -2,7 +2,7 @@
   <!-- eslint-disable -->
   <div v-if="hasLoaded" id="app" :data-theme="theme">
     <div id="left-section" :data-theme="theme" class="border-right">
-      <ProjectList v-model:active-project-id="activeProjectId"
+      <ProjectList v-model:active-project-id="activeProject.id"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
       <hr :data-theme="theme" class="divisor">
       <router-link :data-theme="theme" class="project" to="/calendar">
@@ -10,10 +10,10 @@
         <p>Calendar</p>
       </router-link>
       <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project-id="activeProjectId"
+      <ProjectList v-model:active-project-id="activeProject.id"
                    :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
       <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project-id="activeProjectId"
+      <ProjectList v-model:active-project-id="activeProject.id"
                    :projects="otherProjects" :theme="theme"></ProjectList>
     </div>
 
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      activeProjectId: Number,
+      activeProject: null,
       // [{id: Number, name: String, icon: String?}]
       projects: [],
       // {id: int, name: String, content: String, duration: int, dueDate: String}
@@ -55,10 +55,6 @@ export default {
     }
   },
   computed: {
-    activeProject() {
-      return this.projects
-          .find(p => p.id === this.activeProjectId);
-    },
     inboxProject() {
       return this.projects
           .find(value => value.name.toLowerCase() === 'inbox');
@@ -83,61 +79,50 @@ export default {
     },
   },
   methods: {
-    /**
-     * Creates a new token and returns it in a promise.
-     * @returns {Promise<{getAllResponseHeaders: function(): *|null, abort: function(*=): this, setRequestHeader: function(*=, *): this, readyState: number, getResponseHeader: function(*): null|*, overrideMimeType: function(*): this, statusCode: function(*=): this}|*|jQuery>}
-     */
-    async createToken(username, password) {
-      return $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
-        data: {
-          'action': 'create_token',
-          'username': username,
-          'password': password,
-        },
-      });
-    },
-    /**
-     * Log the user in
-     * @returns {Promise<void>}
-     */
     async login(username, password) {
-      const token = await this.createToken(username, password);
-      localStorage.setItem('token', 'Bearer ' + token);
+      try {
+        const response = await $.ajax({
+          type: "POST",
+          url: "http://192.168.2.165:8090/login",
+          headers: {
+            "Authorization": "Basic " + Buffer.from(username + ":" + password, 'utf-8').toString('base64'),
+          }
+        });
+        localStorage.setItem("token", "Bearer " + response.token);
+      } catch (e) {
+        console.error("Could not log in.");
+      }
     },
     async loadUserProjects() {
-      const response = await $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
-        data: {
-          'action': 'get_user_projects',
-        },
-        headers: {
-          'Authorization': localStorage.getItem('token'),
-        },
-      });
+      try {
+        const response = await $.ajax({
+          type: "GET",
+          url: "http://192.168.2.165:8090/projects",
+          headers: {
+            "Authorization": localStorage.getItem("token"),
+          },
+        });
 
-      // Add received projects into the projects array
-      const json = $.parseJSON(response);
-      for (const obj of json) {
-        this.projects.push(obj);
+        // Add received projects into the projects array
+        for (const obj of response) {
+          console.log(obj)
+          this.projects.push(obj);
+        }
+      } catch (e) {
+        console.error("Could not load projects.");
+        console.error(e.stack);
       }
     },
   },
   async created() {
-    try {
-      await this.login("smail", "smail1234");
-      await this.loadUserProjects();
+    await this.login("smail", "smail1234");
+    await this.loadUserProjects();
 
-      if (this.inboxProject != null) {
-        this.activeProjectId = this.inboxProject.id;
-        this.hasLoaded = true;
-      } else {
-        console.warn("User has no projects. Not even defaults. Won't continue loading");
-      }
-    } catch (e) {
-      console.log("Could not log in." + e);
+    if (this.projects != null && this.projects.length > 0) {
+      this.activeProject = this.inboxProject ?? this.projects[0];
+      this.hasLoaded = true;
+    } else {
+      console.warn("User has no projects (not even defaults). Stop loading.");
     }
   },
 }

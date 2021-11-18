@@ -229,14 +229,12 @@ export default {
     createTask(taskName, taskContent = '', taskDuration = null, taskDueDate = null) {
       $.ajax({
         type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/`,
         data: {
-          'action': 'create_task',
-          'projectId': this.project.id,
-          'taskName': taskName,
-          'taskContent': taskContent,
-          'taskDuration': taskDuration,
-          'taskDueDate': taskDueDate,
+          taskName,
+          taskContent,
+          taskDuration,
+          taskDueDate,
         },
         headers: {
           'Authorization': localStorage.getItem('token'),
@@ -244,17 +242,15 @@ export default {
         success: (response) => {
           console.log(response);
           // Create task here on the client as well
-          const json = JSON.parse(response);
-          const taskId = json['taskId'];
+          const taskId = response.id;
 
           if (taskId > 1) {
-            console.log('push')
             this.tasks.push({
-              'id': taskId,
-              'name': taskName,
-              'content': taskContent,
-              'duration': taskDuration,
-              'dueDate': taskDueDate,
+              id: taskId,
+              name: taskName,
+              content: taskContent,
+              duration: taskDuration,
+              dueDate: taskDueDate,
             });
           }
         },

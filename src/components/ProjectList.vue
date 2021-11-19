@@ -27,7 +27,7 @@ export default {
     projects: Array,
     theme: String,
   },
-  emits: ['update:activeProjectId'],
+  emits: ["update:activeProjectId"],
   methods: {},
 }
 </script>

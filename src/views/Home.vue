@@ -36,7 +36,7 @@ import TasksView from "@/components/TasksView";
 import ContentPanel from "@/components/ContentPanel";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     ContentPanel,
     TasksView,
@@ -50,7 +50,7 @@ export default {
       projects: [],
       // {id: int, name: String, content: String, duration: int, dueDate: String}
       activeTask: null,
-      theme: 'dark',
+      theme: "dark",
       hasLoaded: false,
     }
   },
@@ -61,13 +61,13 @@ export default {
     },
     inboxProject() {
       return this.projects
-          .find(value => value.name.toLowerCase() === 'inbox');
+          .find(value => value.name.toLowerCase() === "inbox");
     },
     defaultProjects() {
       return this.projects
           .filter(value => {
             const str = value.name.toLowerCase();
-            return str === 'inbox' || str === 'today' || str === 'upcoming';
+            return str === "inbox" || str === "today" || str === "upcoming";
           });
     },
     userProjects() {
@@ -78,7 +78,7 @@ export default {
       return this.projects
           .filter(value => {
             const str = value.name.toLowerCase();
-            return str === 'deleted' || str === 'completed';
+            return str === "deleted" || str === "completed";
           });
     },
   },
@@ -89,12 +89,12 @@ export default {
      */
     async createToken(username, password) {
       return $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "POST",
+        url: "http://192.168.2.165:8082/ajax.php",
         data: {
-          'action': 'create_token',
-          'username': username,
-          'password': password,
+          "action": "create_token",
+          "username": username,
+          "password": password,
         },
       });
     },
@@ -104,17 +104,17 @@ export default {
      */
     async login(username, password) {
       const token = await this.createToken(username, password);
-      localStorage.setItem('token', 'Bearer ' + token);
+      localStorage.setItem("token", "Bearer " + token);
     },
     async loadUserProjects() {
       const response = await $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "POST",
+        url: "http://192.168.2.165:8082/ajax.php",
         data: {
-          'action': 'get_user_projects',
+          "action": "get_user_projects",
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
       });
 

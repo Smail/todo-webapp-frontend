@@ -115,17 +115,17 @@ export default {
   methods: {
     moveTaskToProject(task, newProject) {
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "POST",
+        url: "http://192.168.2.165:8082/ajax.php",
         data: {
-          'action': 'move_task',
-          'taskId': task.id,
+          "action": "move_task",
+          "taskId": task.id,
           // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the 'Deleted' project
-          'newProjectId': newProject.id,
+          // Delete the task permanently if it was already moved into the "Deleted" project
+          "newProjectId": newProject.id,
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
           // task.name will be automatically updated by v-model
@@ -171,14 +171,14 @@ export default {
       }
 
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "POST",
+        url: "http://192.168.2.165:8082/ajax.php",
         data: {
-          'action': 'get_tasks',
-          'projectId': this.project.id,
+          "action": "get_tasks",
+          "projectId": this.project.id,
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
           const json = $.parseJSON(response);
@@ -204,21 +204,21 @@ export default {
       // and then use PATCH instead of PUT.
       // Note: Server doesn't accept PATCH or PUT, so this is currently unnecessary.
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "POST",
+        url: "http://192.168.2.165:8082/ajax.php",
         data: {
-          'action': 'update_task_name',
-          'taskId': task.id,
-          'taskName': newTaskName,
+          "action": "update_task_name",
+          "taskId": task.id,
+          "taskName": newTaskName,
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: () => {
           // task.name will be automatically updated by v-model
         },
         error: (response) => {
-          alert('Could not update task name');
+          alert("Could not update task name");
           console.error(response);
         }
       });
@@ -231,40 +231,40 @@ export default {
      * @param taskDuration
      * @param taskDueDate
      */
-    createTask(taskName, taskContent = '', taskDuration = null, taskDueDate = null) {
+    createTask(taskName, taskContent = "", taskDuration = null, taskDueDate = null) {
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "POST",
+        url: "http://192.168.2.165:8082/ajax.php",
         data: {
-          'action': 'create_task',
-          'projectId': this.project.id,
-          'taskName': taskName,
-          'taskContent': taskContent,
-          'taskDuration': taskDuration,
-          'taskDueDate': taskDueDate,
+          "action": "create_task",
+          "projectId": this.project.id,
+          "taskName": taskName,
+          "taskContent": taskContent,
+          "taskDuration": taskDuration,
+          "taskDueDate": taskDueDate,
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
           console.log(response);
           // Create task here on the client as well
           const json = JSON.parse(response);
-          const taskId = json['taskId'];
+          const taskId = json["taskId"];
 
           if (taskId > 1) {
-            console.log('push')
+            console.log("push")
             this.tasks.push({
-              'id': taskId,
-              'name': taskName,
-              'content': taskContent,
-              'duration': taskDuration,
-              'dueDate': taskDueDate,
+              "id": taskId,
+              "name": taskName,
+              "content": taskContent,
+              "duration": taskDuration,
+              "dueDate": taskDueDate,
             });
           }
         },
         error: (response) => {
-          alert('Could not create task :/');
+          alert("Could not create task :/");
           console.error(response);
         }
       });
@@ -276,17 +276,17 @@ export default {
       console.log("delete task:");
       console.log(task);
       $.ajax({
-        type: 'POST',
-        url: 'http://192.168.2.165:8082/ajax.php',
+        type: "POST",
+        url: "http://192.168.2.165:8082/ajax.php",
         data: {
-          'action': 'delete_task',
-          'taskId': task.id,
+          "action": "delete_task",
+          "taskId": task.id,
           // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the 'Deleted' project
-          'deletePermanently': this.project.name.toLowerCase() === 'deleted',
+          // Delete the task permanently if it was already moved into the "Deleted" project
+          "deletePermanently": this.project.name.toLowerCase() === "deleted",
         },
         headers: {
-          'Authorization': localStorage.getItem('token'),
+          "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
           // task.name will be automatically updated by v-model
@@ -304,7 +304,7 @@ export default {
                   "but it was successfully deleted on the server. Weird");
             }
           } else {
-            alert('Could not delete task: ' + task.name);
+            alert("Could not delete task: " + task.name);
           }
         },
         error: (response) => {
@@ -314,7 +314,7 @@ export default {
       });
     },
     setActiveTask(newActiveTask) {
-      this.$emit('update:activeTask', newActiveTask);
+      this.$emit("update:activeTask", newActiveTask);
     },
     updateContextMenu(event, showContextMenu, task) {
       if (event != null) {

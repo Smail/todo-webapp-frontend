@@ -63,21 +63,21 @@ export default {
     },
     setContent(newContentStr) {
       this.activeTask.content = newContentStr;
-      this.$emit('update:activeTask', this.activeTask);
+      this.$emit("update:activeTask", this.activeTask);
       this.didContentChange = true;
     },
     updateServer() {
       if (this.didContentChange) {
         $.ajax({
-          type: 'POST',
-          url: 'http://192.168.2.165:8082/ajax.php',
+          type: "POST",
+          url: "http://192.168.2.165:8082/ajax.php",
           data: {
-            'action': 'update_task',
-            'taskId': this.activeTask.id,
-            'taskContent': this.activeTask.content,
+            "action": "update_task",
+            "taskId": this.activeTask.id,
+            "taskContent": this.activeTask.content,
           },
           headers: {
-            'Authorization': localStorage.getItem('token'),
+            "Authorization": localStorage.getItem("token"),
           },
           success: () => {
             this.didContentChange = false;

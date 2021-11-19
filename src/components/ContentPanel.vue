@@ -68,25 +68,7 @@ export default {
     },
     updateServer() {
       if (this.didContentChange) {
-        $.ajax({
-          type: "POST",
-          url: "http://192.168.2.165:8082/ajax.php",
-          data: {
-            "action": "update_task",
-            "taskId": this.activeTask.id,
-            "taskContent": this.activeTask.content,
-          },
-          headers: {
-            "Authorization": localStorage.getItem("token"),
-          },
-          success: () => {
-            this.didContentChange = false;
-          },
-          error: (response) => {
-            alert("Error while saving :/ We could not save your task's content")
-            console.error(response);
-          }
-        });
+        this.didContentChange = false;
       }
     }
   },

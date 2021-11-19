@@ -83,46 +83,45 @@ export default {
     },
   },
   methods: {
-    /**
-     * Creates a new token and returns it in a promise.
-     */
-    async createToken(username, password) {
-      return $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "create_token",
-          "username": username,
-          "password": password,
-        },
-      });
-    },
-    async login(username, password) {
-      const token = await this.createToken(username, password);
-      localStorage.setItem("token", "Bearer " + token);
-    },
     async loadUserProjects() {
-      const response = await $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "get_user_projects",
+      const examples = [
+        {
+          id: 1,
+          name: "Inbox",
         },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
+        {
+          id: 2,
+          name: "Today",
         },
-      });
+        {
+          id: 1,
+          name: "Upcoming",
+        },
+        {
+          id: 5,
+          name: "GitHub Projects",
+        },
+        {
+          id: 7,
+          name: "Groceries",
+        },
+        {
+          id: 99,
+          name: "Completed",
+        },
+        {
+          id: 100,
+          name: "Deleted",
+        },
+      ];
 
-      // Add received projects into the projects array
-      const json = $.parseJSON(response);
-      for (const obj of json) {
+      for (const obj of examples) {
         this.projects.push(obj);
       }
     },
   },
   async created() {
     try {
-      await this.login("smail", "smail1234");
       await this.loadUserProjects();
 
       if (this.inboxProject != null) {

@@ -114,43 +114,17 @@ export default {
   },
   methods: {
     moveTaskToProject(task, newProject) {
-      $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "move_task",
-          "taskId": task.id,
-          // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the "Deleted" project
-          "newProjectId": newProject.id,
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-        success: (response) => {
-          // task.name will be automatically updated by v-model
-          const json = $.parseJSON(response);
+      // task.name will be automatically updated by v-model
+      const index = this.tasks.indexOf(task);
 
-          if (json.wasSuccessful) {
-            const index = this.tasks.indexOf(task);
-
-            if (index !== -1) {
-              this.tasks.splice(index, 1);
-              console.log("Successfully moved task: " + task.name + " ID: " + task.id);
-              console.log(this.tasks);
-            } else {
-              console.warn("Could not find element in array," +
-                  "but it was successfully moved on the server. Weird");
-            }
-          } else {
-            alert("Could not move task: " + task.name);
-          }
-        },
-        error: (response) => {
-          alert("Unknown error occurred while deleting task: " + task.name);
-          console.error(response);
-        }
-      });
+      if (index !== -1) {
+        this.tasks.splice(index, 1);
+        console.log("Successfully moved task: " + task.name + " ID: " + task.id);
+        console.log(this.tasks);
+      } else {
+        console.warn("Could not find element in array," +
+            "but it was successfully moved on the server. Weird");
+      }
     },
     displaySubmenu(menu, shouldDisplay) {
       $(menu).find(".cm-submenu").css("display", shouldDisplay ? "block" : "none");
@@ -170,26 +144,85 @@ export default {
         throw new Error("Project is null in TasksView");
       }
 
-      $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "get_tasks",
-          "projectId": this.project.id,
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-        success: (response) => {
-          const json = $.parseJSON(response);
-          // Don't use this.tasks = []; because it dereferences the current array
-          this.tasks.length = 0;
+      // Don't use this.tasks = []; because it dereferences the current array
+      this.tasks.length = 0;
 
-          for (const x of json) {
-            this.tasks.push(x);
-          }
+      const examples = [
+        {
+          id: Math.floor(Math.random() * 1000000),
+          name: "My first task",
+          content: `
+# Lucifero vocant ruent etiamnum ferisne tendit laetitiae
+
+## Homines saevitiae suorum remotis solacia ulla iunctissimus
+
+Lorem markdownum notavit cadit non dixit montes, vires quod posita votivi
+exstinctus. Sit subductaque mentae sicco, dum patriam, matrem aurum? Sponte
+inter iam rata equi origo, ferunt Dulichius croceis placetque terras ut silvis
+et Saturnia quodvis votis insonat novavit. Volvens nuntiet enim amor damnum
+senex fuit, et suae bracchia Icare! Haberet interdixit simul, auras exstabant,
+fixa rursus quanto poni illinc est fauces aperire recondita in, coniuge.
+
+- Exhortantur furoris carmina
+- Ponto frequentes pars talibus corpus est temptat
+- Putaret nec se quae
+- Omnes quae Ianthe repetenda dicunt sequitur pereunt
+- Liquet maneas et ruptis et segetem eratque
+
+## Fratres Apolline nepotibus siccatque
+
+Quondam neu motisque, altera! Inrita incenduntque quid mea Caystros et habenas
+potentia momordi erat clausa dicit, pondus tamen arbore. Tibia *ocior* tempora
+repulsa, sortitus mediis Thyoneus; cum suas traxere. Sive profundi praesensque
+dubitare carina morique furiisque, feroque lateat more cultor. Uno Cerastae vota
+est ad volenti neque truncus Samius lege, dea sua solantia optat adlevet falsa;
+praepositam tota!
+
+## Debere viis dignamque
+
+Ille quas hunc sollertia suis desint arcum venturaque, navis me vertice tulit
+releguntque caede praesagaque uterque eras! Cornua testantia terrae. Sunt illis
+quod qui, miserrima nec, et auras **nulla**, inter haec fortuna, Spercheides.
+Sacra postquam solverat sententia ferat Latiis loquentem Sicula dique morsibus
+congelat gentis ambiguo sunt Achilles quamvis.
+
+1. Fausto cum madidos canae me e nulla
+2. Boum Coronida exire
+3. Riget insequitur fulgore putetis distabat
+
+## Debere remove figentem pulsant si manum
+
+Undas invitaque enixa. Nomenque ipsaque, huc metum domant atque *nondum*
+extentam tunc verba lustratum credensque subvolat ipsa ille, more manus gravius.
+Venit *cur nocte* casu dextera in tamen Charopem, fecerat dignos habebit omnique
+inter, progenies! Quaerenti tempora, unum pro est precibus videt suas relevare
+genitor Erebi et res quae contermina excipit natum si inplent!
+
+## Nuper minus troia
+
+Adstitit vellent fovet **tu** cepi Cyparisse in inde nostris album facta.
+Montani inpulsu palato *fauces* tamen et adit delabor similisque simul, a et.
+Ibat fortiter perpetua crescitque se inmitis, ne fuit **iuvencae rogata**;
+manifesta superis timore aprorum quid, manus. Mihi concretaque Error retroque in
+et modo nec [ignes](http://vertice-curru.net/sedendo.aspx) virilem mortalis
+volucrum, toto.
+
+Prius nec simillimus, vultus non tibi cepi domus qui. In tecum latus, est
+flumine putes. Fere magis brevis artis vellent, caraeque obstaret: **ante** ver
+restabant gemuit, et bracchia urbes coniurata circum, geminis. Momordit
+sanguine; sanguine [quas positus Iovisque](http://vidit-excussit.io/vendit)
+narrasset eadem ausim. Submissa Baucis, fer dedit, labor cursu!
+            `,
         },
-      });
+        {
+          id: Math.floor(Math.random() * 1000000),
+          name: "Help"
+        },
+      ];
+
+      for (const x of examples) {
+        this.tasks.push(x);
+      }
     },
     /**
      * Set a new task name for a task on client and server.
@@ -199,29 +232,7 @@ export default {
      * @param newTaskName The new task name for the parameter task.
      */
     setTaskName(task, newTaskName) {
-      // TODO putting the task object has unnecessary overhead if we only update the name or content, etc. because we
-      // are sending also unchanged data to the server. We should either create individual functions or check for change
-      // and then use PATCH instead of PUT.
-      // Note: Server doesn't accept PATCH or PUT, so this is currently unnecessary.
-      $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "update_task_name",
-          "taskId": task.id,
-          "taskName": newTaskName,
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-        success: () => {
-          // task.name will be automatically updated by v-model
-        },
-        error: (response) => {
-          alert("Could not update task name");
-          console.error(response);
-        }
-      });
+      // Intentionally empty on this branch
     },
     /**
      * Create a new task on client and server
@@ -232,86 +243,35 @@ export default {
      * @param taskDueDate
      */
     createTask(taskName, taskContent = "", taskDuration = null, taskDueDate = null) {
-      $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "create_task",
-          "projectId": this.project.id,
-          "taskName": taskName,
-          "taskContent": taskContent,
-          "taskDuration": taskDuration,
-          "taskDueDate": taskDueDate,
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-        success: (response) => {
-          console.log(response);
-          // Create task here on the client as well
-          const json = JSON.parse(response);
-          const taskId = json["taskId"];
+      // Create task here on the client as well
+      const taskId = Math.floor(Math.random() * 1000000);
 
-          if (taskId > 1) {
-            console.log("push")
-            this.tasks.push({
-              "id": taskId,
-              "name": taskName,
-              "content": taskContent,
-              "duration": taskDuration,
-              "dueDate": taskDueDate,
-            });
-          }
-        },
-        error: (response) => {
-          alert("Could not create task :/");
-          console.error(response);
-        }
-      });
+      if (taskId > 0) {
+        this.tasks.push({
+          "id": taskId,
+          "name": taskName,
+          "content": taskContent,
+          "duration": taskDuration,
+          "dueDate": taskDueDate,
+        });
+      }
     },
     deleteTask(task) {
       if (task == null) {
         return;
       }
-      console.log("delete task:");
-      console.log(task);
-      $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "delete_task",
-          "taskId": task.id,
-          // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the "Deleted" project
-          "deletePermanently": this.project.name.toLowerCase() === "deleted",
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-        success: (response) => {
-          // task.name will be automatically updated by v-model
-          const json = $.parseJSON(response);
 
-          if (json.wasSuccessful) {
-            const index = this.tasks.indexOf(task);
+      // task.name will be automatically updated by v-model
+      const index = this.tasks.indexOf(task);
 
-            if (index !== -1) {
-              this.tasks.splice(index, 1);
-              console.log("Successfully removed task: " + task.name + " ID: " + task.id);
-              console.log(this.tasks);
-            } else {
-              console.warn("Could not find element in array," +
-                  "but it was successfully deleted on the server. Weird");
-            }
-          } else {
-            alert("Could not delete task: " + task.name);
-          }
-        },
-        error: (response) => {
-          alert("Unknown error occurred while deleting task: " + task.name);
-          console.error(response);
-        }
-      });
+      if (index !== -1) {
+        this.tasks.splice(index, 1);
+        console.log("Successfully removed task: " + task.name + " ID: " + task.id);
+        console.log(this.tasks);
+      } else {
+        console.warn("Could not find element in array," +
+            "but it was successfully deleted on the server. Weird");
+      }
     },
     setActiveTask(newActiveTask) {
       this.$emit("update:activeTask", newActiveTask);

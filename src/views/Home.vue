@@ -85,7 +85,6 @@ export default {
   methods: {
     /**
      * Creates a new token and returns it in a promise.
-     * @returns {Promise<{getAllResponseHeaders: function(): *|null, abort: function(*=): this, setRequestHeader: function(*=, *): this, readyState: number, getResponseHeader: function(*): null|*, overrideMimeType: function(*): this, statusCode: function(*=): this}|*|jQuery>}
      */
     async createToken(username, password) {
       return $.ajax({
@@ -98,10 +97,6 @@ export default {
         },
       });
     },
-    /**
-     * Log the user in
-     * @returns {Promise<void>}
-     */
     async login(username, password) {
       const token = await this.createToken(username, password);
       localStorage.setItem("token", "Bearer " + token);

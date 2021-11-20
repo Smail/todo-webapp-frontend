@@ -69,10 +69,9 @@ export default {
       if (this.didContentChange) {
         $.ajax({
           type: "PATCH",
-          url: `http://192.168.2.165:8090/tasks/${this.activeTask.id}`,
-          data: {
-            "taskContent": this.activeTask.content,
-          },
+          url: `http://192.168.2.165:8090/task/${this.activeTask.id}`,
+          data: JSON.stringify({content: this.activeTask.content}),
+          contentType: "application/json; charset=utf-8",
           headers: {
             "Authorization": localStorage.getItem("token"),
           },

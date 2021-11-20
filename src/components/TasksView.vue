@@ -116,35 +116,25 @@ export default {
     moveTaskToProject(task, newProject) {
       $.ajax({
         type: "PATCH",
-        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/${task.id}`, // /task/${task.id}/move/project/${newProject.id}
-        data: {
-          newProjectId: newProject.id,
-        },
+        url: `http://192.168.2.165:8090/moveTask/${task.id}/${newProject.id}`,
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
-        success: (response) => {
-          // task.name will be automatically updated by v-model
-          const json = $.parseJSON(response);
+        success: () => {
+          const index = this.tasks.indexOf(task);
 
-          if (json.wasSuccessful) {
-            const index = this.tasks.indexOf(task);
-
-            if (index !== -1) {
-              this.tasks.splice(index, 1);
-              console.log("Successfully moved task: " + task.name + " ID: " + task.id);
-              console.log(this.tasks);
-            } else {
-              console.warn("Could not find element in array," +
-                  "but it was successfully moved on the server. Weird");
-            }
+          if (index !== -1) {
+            this.tasks.splice(index, 1);
+            console.log(`Successfully moved task ${task.name} (ID: ${task.id}) into ${newProject.name} (ID: ${newProject.id})`);
           } else {
-            alert("Could not move task: " + task.name);
+            console.warn("Could not find element in array, but it was successfully moved on the server. Weird");
           }
         },
         error: (response) => {
-          alert("Unknown error occurred while deleting task: " + task.name);
-          console.error(response);
+          const errorMsg = `Could not move "${task.name}": ${response.responseText}`;
+          alert(errorMsg);
+          console.error(errorMsg);
+          console.log(response)
         }
       });
     },

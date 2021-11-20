@@ -9,16 +9,16 @@
     </div>
     <div v-show="displayAsMarkdown"
          id="markdown-container"
-         tabindex="-1"
          :data-theme="theme"
+         tabindex="-1"
          @focusin="setDisplayAsMarkdown(false);"
          v-html="markdown">
     </div>
     <textarea v-show="!displayAsMarkdown"
               id="content-textarea"
-              tabindex="4"
               :value="activeTask.content"
               class="content-area"
+              tabindex="4"
               @focusout="updateServer(); setDisplayAsMarkdown(true)"
               @input="setContent($event.target.value)">
       {{ activeTask.content }}
@@ -63,19 +63,15 @@ export default {
     },
     setContent(newContentStr) {
       this.activeTask.content = newContentStr;
-      this.$emit("update:activeTask", this.activeTask);
       this.didContentChange = true;
     },
     updateServer() {
       if (this.didContentChange) {
         $.ajax({
-          type: "POST",
-          url: "http://192.168.2.165:8082/ajax.php",
-          data: {
-            "action": "update_task",
-            "taskId": this.activeTask.id,
-            "taskContent": this.activeTask.content,
-          },
+          type: "PATCH",
+          url: `http://192.168.2.165:8090/task/${this.activeTask.id}`,
+          data: JSON.stringify({content: this.activeTask.content}),
+          contentType: "application/json; charset=utf-8",
           headers: {
             "Authorization": localStorage.getItem("token"),
           },
@@ -83,8 +79,9 @@ export default {
             this.didContentChange = false;
           },
           error: (response) => {
-            alert("Error while saving :/ We could not save your task's content")
-            console.error(response);
+            const errorMsg = "Could not save task content: " + response.responseText;
+            alert(errorMsg);
+            console.error(errorMsg);
           }
         });
       }
@@ -118,6 +115,7 @@ export default {
 #markdown-container {
   margin: 0 1em;
   height: 100%;
+  overflow-wrap: anywhere;
 }
 
 #markdown-container[data-theme="dark"] a {

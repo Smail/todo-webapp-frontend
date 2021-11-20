@@ -115,40 +115,26 @@ export default {
   methods: {
     moveTaskToProject(task, newProject) {
       $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "move_task",
-          "taskId": task.id,
-          // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the "Deleted" project
-          "newProjectId": newProject.id,
-        },
+        type: "PATCH",
+        url: `http://192.168.2.165:8090/moveTask/${task.id}/${newProject.id}`,
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
-        success: (response) => {
-          // task.name will be automatically updated by v-model
-          const json = $.parseJSON(response);
+        success: () => {
+          const index = this.tasks.indexOf(task);
 
-          if (json.wasSuccessful) {
-            const index = this.tasks.indexOf(task);
-
-            if (index !== -1) {
-              this.tasks.splice(index, 1);
-              console.log("Successfully moved task: " + task.name + " ID: " + task.id);
-              console.log(this.tasks);
-            } else {
-              console.warn("Could not find element in array," +
-                  "but it was successfully moved on the server. Weird");
-            }
+          if (index !== -1) {
+            this.tasks.splice(index, 1);
+            console.log(`Successfully moved task ${task.name} (ID: ${task.id}) into ${newProject.name} (ID: ${newProject.id})`);
           } else {
-            alert("Could not move task: " + task.name);
+            console.warn("Could not find element in array, but it was successfully moved on the server. Weird");
           }
         },
         error: (response) => {
-          alert("Unknown error occurred while deleting task: " + task.name);
-          console.error(response);
+          const errorMsg = `Could not move "${task.name}": ${response.responseText}`;
+          alert(errorMsg);
+          console.error(errorMsg);
+          console.log(response)
         }
       });
     },
@@ -171,147 +157,144 @@ export default {
       }
 
       $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "get_tasks",
-          "projectId": this.project.id,
-        },
+        type: "GET",
+        url: `http://192.168.2.165:8090/project/${this.project.id}/tasks`,
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
-        success: (response) => {
-          const json = $.parseJSON(response);
+        success: (arr) => {
           // Don't use this.tasks = []; because it dereferences the current array
           this.tasks.length = 0;
 
-          for (const x of json) {
-            this.tasks.push(x);
+          for (const task of arr) {
+            this.tasks.push(task);
           }
         },
+        error: (response) => {
+          const errorMsg = "Could not load projects: " + response.responseText;
+          alert(errorMsg);
+          console.error(errorMsg);
+
+        }
       });
     },
     /**
      * Set a new task name for a task on client and server.
-     * This function will only update the client if the server update was successful.
+     * This function will also update the client if the server update was NOT successful.
      *
      * @param task The task, which should be updated.
      * @param newTaskName The new task name for the parameter task.
      */
     setTaskName(task, newTaskName) {
-      // TODO putting the task object has unnecessary overhead if we only update the name or content, etc. because we
-      // are sending also unchanged data to the server. We should either create individual functions or check for change
-      // and then use PATCH instead of PUT.
-      // Note: Server doesn't accept PATCH or PUT, so this is currently unnecessary.
+      // The task name will be automatically updated on the client by v-model
+      if (task === undefined || task == null) {
+        console.error("Invalid argument: task is undefined or null");
+        console.error(task);
+        return;
+      }
+
+      if (typeof (task.id) !== "number") {
+        console.error("Invalid argument: typeof (task.id) is " + typeof (task.id));
+        console.error(task);
+        return;
+      }
+
       $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "update_task_name",
-          "taskId": task.id,
-          "taskName": newTaskName,
-        },
+        type: "PATCH",
+        url: `http://192.168.2.165:8090/task/${task.id}`,
+        data: JSON.stringify({name: newTaskName}),
+        contentType: "application/json; charset=utf-8",
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
-        success: () => {
-          // task.name will be automatically updated by v-model
-        },
         error: (response) => {
-          alert("Could not update task name");
-          console.error(response);
+          const errorMsg = `Could not update task name "${task.name}": ${response}`;
+          alert(errorMsg);
+          console.error(errorMsg);
         }
       });
     },
     /**
      * Create a new task on client and server
      *
-     * @param taskName
-     * @param taskContent
-     * @param taskDuration
-     * @param taskDueDate
+     * @param name string, required
+     * @param content
+     * @param duration int
+     * @param dueDate
      */
-    createTask(taskName, taskContent = "", taskDuration = null, taskDueDate = null) {
+    createTask(name, content = "", duration = null, dueDate = null) {
+      if (name === undefined || name == null) {
+        return;
+      }
+
+      let task = {
+        name,
+        content,
+        duration,
+        dueDate,
+      };
+
       $.ajax({
         type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "create_task",
-          "projectId": this.project.id,
-          "taskName": taskName,
-          "taskContent": taskContent,
-          "taskDuration": taskDuration,
-          "taskDueDate": taskDueDate,
-        },
+        url: `http://192.168.2.165:8090/project/${this.project.id}/task`,
+        data: JSON.stringify(task),
+        contentType: "application/json; charset=utf-8",
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
-          console.log(response);
           // Create task here on the client as well
-          const json = JSON.parse(response);
-          const taskId = json["taskId"];
+          const taskId = response.id;
 
-          if (taskId > 1) {
-            console.log("push")
-            this.tasks.push({
-              "id": taskId,
-              "name": taskName,
-              "content": taskContent,
-              "duration": taskDuration,
-              "dueDate": taskDueDate,
-            });
+          if (taskId > 0) {
+            task.id = taskId;
+            this.tasks.push(task);
           }
         },
         error: (response) => {
-          alert("Could not create task :/");
-          console.error(response);
+          const errorMsg = `Could not create task "${task.name}": ${response}`;
+          alert(errorMsg);
+          console.error(errorMsg);
         }
       });
     },
     deleteTask(task) {
-      if (task == null) {
+      if (task === undefined || task == null) {
         return;
       }
-      console.log("delete task:");
-      console.log(task);
-      $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "delete_task",
-          "taskId": task.id,
-          // TODO remove hard coding
-          // Delete the task permanently if it was already moved into the "Deleted" project
-          "deletePermanently": this.project.name.toLowerCase() === "deleted",
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-        success: (response) => {
-          // task.name will be automatically updated by v-model
-          const json = $.parseJSON(response);
 
-          if (json.wasSuccessful) {
+      // Move the task into the "Deleted" project if it isn't already there, yet.
+      // Otherwise, delete it permanently.
+      if (this.project === this.$parent.deletedProject) {
+        $.ajax({
+          type: "DELETE",
+          url: `http://192.168.2.165:8090/task/${task.id}`,
+          headers: {
+            "Authorization": localStorage.getItem("token"),
+          },
+          success: () => {
             const index = this.tasks.indexOf(task);
 
             if (index !== -1) {
               this.tasks.splice(index, 1);
-              console.log("Successfully removed task: " + task.name + " ID: " + task.id);
-              console.log(this.tasks);
+              console.log(`Successfully permanently deleted task: ${task.name} (ID: ${task.id})`);
             } else {
               console.warn("Could not find element in array," +
                   "but it was successfully deleted on the server. Weird");
             }
-          } else {
-            alert("Could not delete task: " + task.name);
-          }
-        },
-        error: (response) => {
-          alert("Unknown error occurred while deleting task: " + task.name);
-          console.error(response);
-        }
-      });
+          },
+          error: (response) => {
+            const errorMsg = `Could not delete "${task.name}": ${response}`;
+            alert(errorMsg);
+            console.error(errorMsg);
+          },
+        });
+      } else {
+        this.moveTaskToProject(task, this.$parent.deletedProject);
+      }
+
+      // Make current task inactive. Without this the content panel would still show a permanently deleted task.
+      this.$emit("update:activeTask", null);
     },
     setActiveTask(newActiveTask) {
       this.$emit("update:activeTask", newActiveTask);

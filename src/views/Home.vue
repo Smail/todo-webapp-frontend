@@ -2,7 +2,7 @@
   <!-- eslint-disable -->
   <div v-if="hasLoaded" id="app" :data-theme="theme">
     <div id="left-section" :data-theme="theme" class="border-right">
-      <ProjectList v-model:active-project-id="activeProjectId"
+      <ProjectList v-model:active-project="activeProject"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
       <hr :data-theme="theme" class="divisor">
       <router-link :data-theme="theme" class="project" to="/calendar">
@@ -10,10 +10,10 @@
         <p>Calendar</p>
       </router-link>
       <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project-id="activeProjectId"
+      <ProjectList v-model:active-project="activeProject"
                    :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
       <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project-id="activeProjectId"
+      <ProjectList v-model:active-project="activeProject"
                    :projects="otherProjects" :theme="theme"></ProjectList>
     </div>
 
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      activeProjectId: Number,
+      activeProject: null,
       // [{id: Number, name: String, icon: String?}]
       projects: [],
       // {id: int, name: String, content: String, duration: int, dueDate: String}
@@ -55,13 +55,25 @@ export default {
     }
   },
   computed: {
-    activeProject() {
-      return this.projects
-          .find(p => p.id === this.activeProjectId);
-    },
     inboxProject() {
       return this.projects
           .find(value => value.name.toLowerCase() === "inbox");
+    },
+    todayProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "today");
+    },
+    upcomingProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "upcoming");
+    },
+    deletedProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "deleted");
+    },
+    completedProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "completed");
     },
     defaultProjects() {
       return this.projects
@@ -83,56 +95,54 @@ export default {
     },
   },
   methods: {
-    /**
-     * Creates a new token and returns it in a promise.
-     */
-    async createToken(username, password) {
-      return $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "create_token",
-          "username": username,
-          "password": password,
-        },
-      });
-    },
     async login(username, password) {
-      const token = await this.createToken(username, password);
-      localStorage.setItem("token", "Bearer " + token);
-    },
-    async loadUserProjects() {
-      const response = await $.ajax({
-        type: "POST",
-        url: "http://192.168.2.165:8082/ajax.php",
-        data: {
-          "action": "get_user_projects",
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-      });
+      try {
+        const response = await $.ajax({
+          type: "POST",
+          url: "http://192.168.2.165:8090/login",
+          headers: {
+            "Authorization": "Basic " + Buffer.from(username + ":" + password, "utf-8").toString("base64"),
+          }
+        });
 
-      // Add received projects into the projects array
-      const json = $.parseJSON(response);
-      for (const obj of json) {
-        this.projects.push(obj);
+        localStorage.setItem("token", "Bearer " + response.token);
+        return true;
+      } catch (e) {
+        console.error("Could not log in.");
+
+        return false;
+      }
+    },
+    async loadProjects() {
+      try {
+        const response = await $.ajax({
+          type: "GET",
+          url: "http://192.168.2.165:8090/projects",
+          headers: {
+            "Authorization": localStorage.getItem("token"),
+          },
+        });
+
+        // Add received projects into the projects array
+        for (const obj of response) {
+          this.projects.push(obj);
+        }
+      } catch (e) {
+        console.error("Could not load projects.");
+        console.error(e.stack);
       }
     },
   },
   async created() {
-    try {
-      await this.login("smail", "smail1234");
-      await this.loadUserProjects();
+    if (await this.login("Smail", "secure")) {
+      await this.loadProjects();
 
-      if (this.inboxProject != null) {
-        this.activeProjectId = this.inboxProject.id;
+      if (this.projects != null && this.projects.length > 0) {
+        this.activeProject = this.inboxProject ?? this.projects[0];
         this.hasLoaded = true;
       } else {
-        console.warn("User has no projects. Not even defaults. Won't continue loading");
+        console.warn("User has no projects (not even defaults). Stop loading.");
       }
-    } catch (e) {
-      console.log("Could not log in." + e);
     }
   },
 }

@@ -104,9 +104,13 @@ export default {
             "Authorization": "Basic " + Buffer.from(username + ":" + password, "utf-8").toString("base64"),
           }
         });
+
         localStorage.setItem("token", "Bearer " + response.token);
+        return true;
       } catch (e) {
         console.error("Could not log in.");
+
+        return false;
       }
     },
     async loadUserProjects() {
@@ -131,14 +135,15 @@ export default {
     },
   },
   async created() {
-    await this.login("smail", "smail1234");
-    await this.loadUserProjects();
+    if (await this.login("Smail", "secure")) {
+      await this.loadUserProjects();
 
-    if (this.projects != null && this.projects.length > 0) {
-      this.activeProject = this.inboxProject ?? this.projects[0];
-      this.hasLoaded = true;
-    } else {
-      console.warn("User has no projects (not even defaults). Stop loading.");
+      if (this.projects != null && this.projects.length > 0) {
+        this.activeProject = this.inboxProject ?? this.projects[0];
+        this.hasLoaded = true;
+      } else {
+        console.warn("User has no projects (not even defaults). Stop loading.");
+      }
     }
   },
 }

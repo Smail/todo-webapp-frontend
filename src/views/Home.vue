@@ -125,7 +125,6 @@ export default {
 
         // Add received projects into the projects array
         for (const obj of response) {
-          console.log(obj)
           this.projects.push(obj);
         }
       } catch (e) {

@@ -79,8 +79,9 @@ export default {
             this.didContentChange = false;
           },
           error: (response) => {
-            alert("Error while saving :/ We could not save your task's content")
-            console.error(response);
+            const errorMsg = "Could not save task content: " + response.responseText;
+            alert(errorMsg);
+            console.error(errorMsg);
           }
         });
       }

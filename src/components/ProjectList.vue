@@ -5,10 +5,10 @@
     </h5>
     <ul :data-theme="theme">
       <Project v-for="project in projects"
+               :is-active="activeProject === project"
                :project="project"
                :theme="theme"
-               :is-active="activeProjectId === project.id"
-               @click="$emit('update:activeProjectId', project.id)">
+               @click="$emit('update:activeProject', project)">
       </Project>
     </ul>
   </section>
@@ -22,12 +22,12 @@ export default {
   components: {Project},
   props: {
     sectionTitle: String,
-    activeProjectId: Number,
+    activeProject: Object,
     // [{id: Number, name: String, icon: String?}]
     projects: Array,
     theme: String,
   },
-  emits: ["update:activeProjectId"],
+  emits: ["update:activeProject"],
   methods: {},
 }
 </script>

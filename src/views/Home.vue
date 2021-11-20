@@ -2,7 +2,7 @@
   <!-- eslint-disable -->
   <div v-if="hasLoaded" id="app" :data-theme="theme">
     <div id="left-section" :data-theme="theme" class="border-right">
-      <ProjectList v-model:active-project-id="activeProject.id"
+      <ProjectList v-model:active-project="activeProject"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
       <hr :data-theme="theme" class="divisor">
       <router-link :data-theme="theme" class="project" to="/calendar">
@@ -10,10 +10,10 @@
         <p>Calendar</p>
       </router-link>
       <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project-id="activeProject.id"
+      <ProjectList v-model:active-project="activeProject"
                    :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
       <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project-id="activeProject.id"
+      <ProjectList v-model:active-project="activeProject"
                    :projects="otherProjects" :theme="theme"></ProjectList>
     </div>
 

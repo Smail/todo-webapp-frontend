@@ -116,6 +116,7 @@ export default {
 #markdown-container {
   margin: 0 1em;
   height: 100%;
+  overflow-wrap: anywhere;
 }
 
 #markdown-container[data-theme="dark"] a {

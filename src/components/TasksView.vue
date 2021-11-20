@@ -217,42 +217,45 @@ export default {
     /**
      * Create a new task on client and server
      *
-     * @param taskName
-     * @param taskContent
-     * @param taskDuration
-     * @param taskDueDate
+     * @param name string, required
+     * @param content
+     * @param duration int
+     * @param dueDate
      */
-    createTask(taskName, taskContent = "", taskDuration = null, taskDueDate = null) {
+    createTask(name, content = "", duration = null, dueDate = null) {
+      if (name === undefined || name == null) {
+        return;
+      }
+
+      let task = {
+        name,
+        content,
+        duration,
+        dueDate,
+      };
+
       $.ajax({
         type: "POST",
-        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/`,
-        data: {
-          taskName,
-          taskContent,
-          taskDuration,
-          taskDueDate,
-        },
+        url: `http://192.168.2.165:8090/project/${this.project.id}/task`,
+        data: JSON.stringify(task),
+        contentType: "application/json; charset=utf-8",
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
         success: (response) => {
-          console.log(response);
           // Create task here on the client as well
           const taskId = response.id;
 
           if (taskId > 0) {
-            this.tasks.push({
-              id: taskId,
-              name: taskName,
-              content: taskContent,
-              duration: taskDuration,
-              dueDate: taskDueDate,
-            });
+            task.id = taskId;
+            this.tasks.push(task);
           }
         },
         error: (response) => {
-          alert("Could not create task :/");
-          console.error(response);
+          const errorMsg = `Could not create task "${task.name}": ${response}`;
+          alert(errorMsg);
+          console.error(errorMsg);
+
         }
       });
     },

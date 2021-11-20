@@ -260,45 +260,42 @@ export default {
       });
     },
     deleteTask(task) {
-      if (task == null) {
+      if (task === undefined || task == null) {
         return;
       }
-      console.log("delete task:");
-      console.log(task);
-      $.ajax({
-        type: "DELETE",
-        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/${task.id}`,
-        data: {
-          // Delete the task permanently if it was already moved into the "Deleted" project
-          "deletePermanently": this.project.name.toLowerCase() === "deleted",
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token"),
-        },
-        success: (response) => {
-          // task.name will be automatically updated by v-model
-          const json = $.parseJSON(response);
 
-          if (json.wasSuccessful) {
+      // Move the task into the "Deleted" project if it isn't already there, yet.
+      // Otherwise, delete it permanently.
+      if (this.project === this.$parent.deletedProject) {
+        $.ajax({
+          type: "DELETE",
+          url: `http://192.168.2.165:8090/task/${task.id}`,
+          headers: {
+            "Authorization": localStorage.getItem("token"),
+          },
+          success: () => {
             const index = this.tasks.indexOf(task);
 
             if (index !== -1) {
               this.tasks.splice(index, 1);
-              console.log("Successfully removed task: " + task.name + " ID: " + task.id);
-              console.log(this.tasks);
+              console.log(`Successfully permanently deleted task: ${task.name} (ID: ${task.id})`);
             } else {
               console.warn("Could not find element in array," +
                   "but it was successfully deleted on the server. Weird");
             }
-          } else {
-            alert("Could not delete task: " + task.name);
-          }
-        },
-        error: (response) => {
-          alert("Unknown error occurred while deleting task: " + task.name);
-          console.error(response);
-        }
-      });
+          },
+          error: (response) => {
+            const errorMsg = `Could not delete "${task.name}": ${response}`;
+            alert(errorMsg);
+            console.error(errorMsg);
+          },
+        });
+      } else {
+        this.moveTaskToProject(task, this.$parent.deletedProject);
+      }
+
+      // Make current task inactive. Without this the content panel would still show a permanently deleted task.
+      this.$emit("update:activeTask", null);
     },
     setActiveTask(newActiveTask) {
       this.$emit("update:activeTask", newActiveTask);

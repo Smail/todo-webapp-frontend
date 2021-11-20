@@ -113,7 +113,7 @@ export default {
         return false;
       }
     },
-    async loadUserProjects() {
+    async loadProjects() {
       try {
         const response = await $.ajax({
           type: "GET",
@@ -136,7 +136,7 @@ export default {
   },
   async created() {
     if (await this.login("Smail", "secure")) {
-      await this.loadUserProjects();
+      await this.loadProjects();
 
       if (this.projects != null && this.projects.length > 0) {
         this.activeProject = this.inboxProject ?? this.projects[0];

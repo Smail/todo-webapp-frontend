@@ -180,27 +180,37 @@ export default {
     },
     /**
      * Set a new task name for a task on client and server.
-     * This function will only update the client if the server update was successful.
+     * This function will also update the client if the server update was NOT successful.
      *
      * @param task The task, which should be updated.
      * @param newTaskName The new task name for the parameter task.
      */
     setTaskName(task, newTaskName) {
+      // The task name will be automatically updated on the client by v-model
+      if (task === undefined || task == null) {
+        console.error("Invalid argument: task is undefined or null");
+        console.error(task);
+        return;
+      }
+
+      if (typeof (task.id) !== "number") {
+        console.error("Invalid argument: typeof (task.id) is " + typeof (task.id));
+        console.error(task);
+        return;
+      }
+
       $.ajax({
         type: "PATCH",
-        url: `http://192.168.2.165:8090/projects/${this.project.id}/task/${task.id}`,
-        data: {
-          "taskName": newTaskName,
-        },
+        url: `http://192.168.2.165:8090/task/${task.id}`,
+        data: JSON.stringify({name: newTaskName}),
+        contentType: "application/json; charset=utf-8",
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
-        success: () => {
-          // task.name will be automatically updated by v-model
-        },
         error: (response) => {
-          alert("Could not update task name");
-          console.error(response);
+          const errorMsg = `Could not update task name "${task.name}": ${response}`;
+          alert(errorMsg);
+          console.error(errorMsg);
         }
       });
     },

@@ -9,16 +9,16 @@
     </div>
     <div v-show="displayAsMarkdown"
          id="markdown-container"
-         tabindex="-1"
          :data-theme="theme"
+         tabindex="-1"
          @focusin="setDisplayAsMarkdown(false);"
          v-html="markdown">
     </div>
     <textarea v-show="!displayAsMarkdown"
               id="content-textarea"
-              tabindex="4"
               :value="activeTask.content"
               class="content-area"
+              tabindex="4"
               @focusout="updateServer(); setDisplayAsMarkdown(true)"
               @input="setContent($event.target.value)">
       {{ activeTask.content }}

@@ -1,12 +1,12 @@
 # Task Management Application
 
-This a personal project primarily to learn Vue.js and PHP. This project will give you a blank page without the
-(currently private) backend repository. This project is also far from finished.
+This a personal project primarily to learn Vue.js. This project will give you a blank page without
+the [backend repository](https://github.com/Smail/todo-webapp-backend). This project is far from finished.
 
-There exists a [demo site](https://smail.github.io/todo-webapp-frontend/calendar) for this repository,
-but note that any server requests were removed and replaced by sample data, so that it can be served statically.
-This means that many functionalities like, task creation, deletion, etc. don't work as intended,
-e.g. creating a new task doesn't save the task and clicking onto another project, resets all tasks.
+There exists a [demo site](https://smail.github.io/todo-webapp-frontend/calendar) for this repository, but note that any
+server requests were removed and replaced by sample data, so that it can be served statically. This means that many
+functionalities like, task creation, deletion, etc. don't work as intended, e.g. creating a new task doesn't save the
+task and clicking onto another project, resets all tasks.
 
 Make sure to check out the markdown support in a task's content area, the context menu and the calendar!
 

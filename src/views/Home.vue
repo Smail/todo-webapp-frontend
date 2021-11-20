@@ -59,6 +59,22 @@ export default {
       return this.projects
           .find(value => value.name.toLowerCase() === "inbox");
     },
+    todayProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "today");
+    },
+    upcomingProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "upcoming");
+    },
+    deletedProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "deleted");
+    },
+    completedProject() {
+      return this.projects
+          .find(value => value.name.toLowerCase() === "completed");
+    },
     defaultProjects() {
       return this.projects
           .filter(value => {

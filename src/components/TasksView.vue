@@ -158,7 +158,7 @@ export default {
 
       $.ajax({
         type: "GET",
-        url: `http://192.168.2.165:8090/projects/${this.project.id}/tasks/`,
+        url: `http://192.168.2.165:8090/project/${this.project.id}/tasks`,
         headers: {
           "Authorization": localStorage.getItem("token"),
         },
@@ -170,6 +170,12 @@ export default {
             this.tasks.push(task);
           }
         },
+        error: (response) => {
+          const errorMsg = "Could not load projects: " + response.responseText;
+          alert(errorMsg);
+          console.error(errorMsg);
+
+        }
       });
     },
     /**

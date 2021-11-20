@@ -63,7 +63,6 @@ export default {
     },
     setContent(newContentStr) {
       this.activeTask.content = newContentStr;
-      this.$emit("update:activeTask", this.activeTask);
       this.didContentChange = true;
     },
     updateServer() {

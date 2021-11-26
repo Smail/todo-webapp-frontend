@@ -9,6 +9,10 @@
         <span :data-theme="theme" class="material-icons">date_range</span>
         <p>Calendar</p>
       </router-link>
+      <router-link :data-theme="theme" class="project" to="/fitness">
+        <span :data-theme="theme" class="material-icons">fitness_center</span>
+        <p>Fitness</p>
+      </router-link>
       <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
       <ProjectList v-model:active-project="activeProject"
                    :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>

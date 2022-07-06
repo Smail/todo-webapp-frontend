@@ -4,15 +4,15 @@
     <div id="left-section" class="flex flex-col flex-1 mt-2 bg-white dark:bg-[#1a1a1a] text-black dark:text-white border-r-[1px] border-solid border-black dark:border-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
-      <hr :data-theme="theme" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
+      <hr class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
       <router-link :data-theme="theme" class="project" to="/calendar">
         <span :data-theme="theme" class="material-icons">date_range</span>
         <p>Calendar</p>
       </router-link>
-      <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
+      <hr v-if="defaultProjects.length > 0" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
-      <hr v-if="userProjects.length > 0" :data-theme="theme" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
+      <hr v-if="userProjects.length > 0" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="otherProjects" :theme="theme"></ProjectList>
     </div>

@@ -23,7 +23,7 @@
                  :theme="theme"></TasksView>
     </div>
 
-    <div id="right-section" :data-theme="theme">
+    <div id="right-section" class="flex-[6] h-screen overflow-y-auto bg-white text-black dark:bg-[#1e1e1e] dark:text-white">
       <ContentPanel v-model:active-task="activeTask" :theme="theme"></ContentPanel>
     </div>
   </div>
@@ -205,22 +205,5 @@ body[data-theme="dark"] {
   display: flex;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#right-section {
-  flex: 6;
-  background: #1a1a1a;
-  height: 100vh;
-  overflow-y: auto;
-}
-
-#right-section:not([data-theme="dark"]) {
-  color: black;
-  background: white;
-}
-
-#right-section[data-theme="dark"] {
-  color: white;
-  background: #1a1a1a;
 }
 </style>

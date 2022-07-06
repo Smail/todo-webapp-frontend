@@ -4,15 +4,15 @@
     <div id="left-section" :data-theme="theme" class="border-r-[1px] border-solid border-black dark:border-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
-      <hr :data-theme="theme" class="divisor">
+      <hr :data-theme="theme" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
       <router-link :data-theme="theme" class="project" to="/calendar">
         <span :data-theme="theme" class="material-icons">date_range</span>
         <p>Calendar</p>
       </router-link>
-      <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
+      <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
-      <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
+      <hr v-if="userProjects.length > 0" :data-theme="theme" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="otherProjects" :theme="theme"></ProjectList>
     </div>
@@ -183,22 +183,6 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-.divisor {
-  width: 90%;
-  height: 1px;
-  border: 0;
-  align-self: center;
-  margin: 0.5em;
-}
-
-.divisor[data-theme="light"] {
-  background-color: black;
-}
-
-.divisor[data-theme="dark"] {
-  background-color: #323232;
 }
 
 body[data-theme="light"] {

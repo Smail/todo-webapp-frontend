@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable -->
-  <div v-if="hasLoaded" id="app" :data-theme="theme">
+  <div v-if="hasLoaded" class="flex overflow-hidden m-0">
     <div id="left-section" class="flex flex-col flex-1 mt-2 bg-white dark:bg-[#1a1a1a] text-black dark:text-white border-r-[1px] border-solid border-black dark:border-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
@@ -178,17 +178,5 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-#app {
-  min-width: 100vw;
-  min-height: 100vh;
-  max-width: 100vw;
-  max-height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  display: flex;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 </style>

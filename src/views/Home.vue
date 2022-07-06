@@ -113,6 +113,7 @@ export default {
         return true;
       } catch (e) {
         console.error("Could not log in.");
+        console.error(e.stack);
 
         return false;
       }

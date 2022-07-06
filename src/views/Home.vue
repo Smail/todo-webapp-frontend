@@ -17,7 +17,7 @@
                    :projects="otherProjects" :theme="theme"></ProjectList>
     </div>
 
-    <div id="middle-section" :data-theme="theme" class="border-r-[1px] border-solid border-black dark:border-[#323232]">
+    <div id="middle-section" class="flex-[6] h-screen overflow-y-auto bg-white text-black dark:bg-[#1e1e1e] dark:text-white border-r-[1px] border-solid border-black dark:border-[#323232]">
       <TasksView v-model:active-task="activeTask" :data-theme="theme"
                  :project="activeProject" :projects="projects"
                  :theme="theme"></TasksView>
@@ -205,22 +205,6 @@ body[data-theme="dark"] {
   display: flex;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#middle-section {
-  flex: 6;
-  height: 100vh;
-  overflow-y: auto;
-}
-
-#middle-section:not([data-theme="dark"]) {
-  color: black;
-  background: white;
-}
-
-#middle-section[data-theme="dark"] {
-  color: white;
-  background: #1e1e1e;
 }
 
 #right-section {

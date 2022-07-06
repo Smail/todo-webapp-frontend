@@ -1,7 +1,7 @@
 <template>
   <!-- eslint-disable -->
   <div v-if="hasLoaded" id="app" :data-theme="theme">
-    <div id="left-section" :data-theme="theme" class="border-right">
+    <div id="left-section" :data-theme="theme" class="border-r-[1px] border-solid border-black dark:border-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
       <hr :data-theme="theme" class="divisor">
@@ -17,7 +17,7 @@
                    :projects="otherProjects" :theme="theme"></ProjectList>
     </div>
 
-    <div id="middle-section" :data-theme="theme" class="border-right">
+    <div id="middle-section" :data-theme="theme" class="border-r-[1px] border-solid border-black dark:border-[#323232]">
       <TasksView v-model:active-task="activeTask" :data-theme="theme"
                  :project="activeProject" :projects="projects"
                  :theme="theme"></TasksView>
@@ -271,13 +271,5 @@ body[data-theme="dark"] {
 #right-section[data-theme="dark"] {
   color: white;
   background: #1a1a1a;
-}
-
-.border-right[data-theme="light"] {
-  border-right: 1px black solid;
-}
-
-.border-right[data-theme="dark"] {
-  border-right: 1px #323232 solid;
 }
 </style>

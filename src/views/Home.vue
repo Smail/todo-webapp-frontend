@@ -155,11 +155,6 @@ export default {
   list-style-position: inside;
 }
 
-body {
-  padding: 0;
-  margin: 0;
-}
-
 a {
   text-decoration: none;
 }
@@ -183,16 +178,6 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-body[data-theme="light"] {
-  color: black;
-  background: white;
-}
-
-body[data-theme="dark"] {
-  color: white;
-  background: #1a1a1a;
 }
 
 #app {

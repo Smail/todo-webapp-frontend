@@ -1,7 +1,7 @@
 <template>
   <!-- eslint-disable -->
   <div v-if="hasLoaded" id="app" :data-theme="theme">
-    <div id="left-section" :data-theme="theme" class="border-r-[1px] border-solid border-black dark:border-[#323232]">
+    <div id="left-section" class="flex flex-col flex-1 mt-2 bg-white dark:bg-[#1a1a1a] text-black dark:text-white border-r-[1px] border-solid border-black dark:border-[#323232]">
       <ProjectList v-model:active-project="activeProject"
                    :projects="defaultProjects" :theme="theme"></ProjectList>
       <hr :data-theme="theme" class="w-[90%] h-[1px] border-0 self-center m-2 bg-black dark:bg-[#323232]">
@@ -205,23 +205,6 @@ body[data-theme="dark"] {
   display: flex;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#left-section {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin-top: 0.5em;
-}
-
-#left-section[data-theme="light"] {
-  color: black;
-  background: white;
-}
-
-#left-section[data-theme="dark"] {
-  color: white;
-  background: #1a1a1a;
 }
 
 #middle-section {

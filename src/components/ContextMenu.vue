@@ -37,13 +37,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/variables.scss";
+
 #context-menu {
   display: block;
   position: absolute;
-  border: thin solid #4a4a4a;
+  border: thin solid hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1);
   border-radius: 5px;
-  background-color: #2a2a2a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
   filter: drop-shadow(0 0 0.25em black);
   padding: 0;
   margin: 0;

@@ -41,7 +41,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/variables.scss";
+
 .project {
   display: flex;
   align-items: center;
@@ -63,22 +65,22 @@ export default {
 
 .project[data-theme="light"]:hover {
   color: white;
-  background-color: #afafaf;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 59%, 1);
 }
 
 .project[data-theme="dark"]:hover {
   color: white;
-  background-color: #2a2a2a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
 }
 
 .project[data-theme="light"].active {
   color: white;
-  background-color: #1a1a1a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
 }
 
 .project[data-theme="dark"].active {
   color: white;
-  background-color: #484848;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 18%, 1);
 }
 
 .material-icons {
@@ -86,7 +88,7 @@ export default {
 }
 
 .material-icons[data-theme="dark"] {
-  color: #7a7a7a;
+  color: hsla(hue($theme), saturation($theme), lightness($theme) + 38%, 1);
 }
 
 p {

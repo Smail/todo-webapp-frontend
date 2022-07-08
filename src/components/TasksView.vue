@@ -320,15 +320,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/variables.scss";
+
 .cm-submenu {
   display: none;
   position: absolute;
   top: 0;
   left: calc(100%);
-  background-color: #2a2a2a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
   border-radius: 0 5px 5px;
-  border: thin solid #4a4a4a;
+  border: thin solid hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1);
   white-space: nowrap;
 }
 
@@ -361,7 +363,7 @@ export default {
 }
 
 .cm-item[data-theme="dark"]:hover {
-  background-color: #404040;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 15%, 1);
 }
 
 .cm-item > .material-icons,
@@ -398,7 +400,7 @@ button {
 }
 
 button[data-theme="light"] {
-  color: #1e1e1e;
+  color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
 }
 
 button[data-theme="dark"] {
@@ -441,7 +443,7 @@ div.task[data-theme="light"]:hover {
 }
 
 div.task[data-theme="dark"]:hover {
-  background-color: #2a2a2a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
 }
 
 div.task[data-theme="light"]:focus-within {
@@ -449,7 +451,7 @@ div.task[data-theme="light"]:focus-within {
 }
 
 div.task[data-theme="dark"]:focus-within {
-  background-color: #404040;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 15%, 1);
 }
 
 input[type="checkbox"] {
@@ -457,7 +459,7 @@ input[type="checkbox"] {
   padding: 0.5em;
   font-size: 10pt;
   background-color: transparent;
-  border: 1px #4a4a4a solid;
+  border: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1) solid;
   appearance: none;
   position: relative;
 }
@@ -482,7 +484,7 @@ input[type="checkbox"][data-theme="light"]:checked::before {
 
 input[type="checkbox"][data-theme="dark"]:checked::before {
   color: black;
-  background-color: #7a7a7a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 38%, 1);
 }
 
 input[type="text"] {
@@ -506,7 +508,7 @@ hr {
 }
 
 hr[data-theme="dark"] {
-  background-color: #494949;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 17%, 1);
 }
 
 #new-task {
@@ -517,12 +519,12 @@ hr[data-theme="dark"] {
 
 #new-task:not([data-theme="dark"]) {
   color: white;
-  background-color: #1a1a1a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
 }
 
 #new-task[data-theme="dark"] {
   color: white;
-  background-color: #2a2a2a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
 }
 
 #new-task::placeholder {
@@ -530,14 +532,14 @@ hr[data-theme="dark"] {
 }
 
 #new-task[data-theme="dark"]::placeholder {
-  color: #7e7e7e;
+  color: hsla(hue($theme), saturation($theme), lightness($theme) + 39%, 1);
 }
 
 #new-task:not([data-theme="dark"]):focus {
-  outline: thin solid #1a1a1a;
+  outline: thin solid hsla(hue($theme), saturation($theme), lightness($theme), 1);;
 }
 
 #new-task[data-theme="dark"]:focus {
-  outline: thin solid #323232;
+  outline: thin solid hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
 }
 </style>

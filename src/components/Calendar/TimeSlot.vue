@@ -20,14 +20,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/variables.scss";
+
 .cell {
   padding: 0.5em;
   margin: 0;
   height: calc(100% / 24);
-  border: 1px #494949 solid;
+  border: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1) solid;
   border-bottom: none;
   border-right: none;
-  background-color: #1e1e1e;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
 }
 </style>

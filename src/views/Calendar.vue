@@ -204,7 +204,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/variables.scss";
+
 #calendar {
   width: 100vw;
   max-width: 100vw;
@@ -229,11 +231,11 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #4a4a4a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1);
 }
 
 #home:hover {
-  background-color: #323232;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
 }
 
 #home.material-icons {
@@ -244,7 +246,7 @@ export default {
 }
 
 #home.material-icons:hover {
-  color: #e0e0e0;
+  color: hsla(hue($theme), saturation($theme), lightness($theme) + 78%, 1);
 }
 
 #week-view {
@@ -275,11 +277,11 @@ export default {
   margin: 0;
   padding: 0;
   position: relative;
-  border-bottom: 1px #494949 solid;
+  border-bottom: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1) solid;
 }
 
 .day:last-child {
-  border-right: 1px #494949 solid;
+  border-right: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1) solid;
 }
 
 .time-container {

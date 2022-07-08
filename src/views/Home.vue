@@ -2,25 +2,22 @@
   <!-- eslint-disable -->
   <div v-if="hasLoaded" id="app" :data-theme="theme">
     <div id="left-section" :data-theme="theme" class="border-right">
-      <ProjectList v-model:active-project="activeProject"
-                   :projects="defaultProjects" :theme="theme"></ProjectList>
+      <ProjectList v-model:active-project="activeProject" :projects="defaultProjects" :theme="theme"></ProjectList>
       <hr :data-theme="theme" class="divisor">
       <router-link :data-theme="theme" class="project" to="/calendar">
         <span :data-theme="theme" class="material-icons">date_range</span>
         <p>Calendar</p>
       </router-link>
       <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project="activeProject"
-                   :projects="userProjects" :theme="theme" section-title="Projects"></ProjectList>
+      <ProjectList v-model:active-project="activeProject" :projects="userProjects" :theme="theme"
+        section-title="Projects"></ProjectList>
       <hr v-if="userProjects.length > 0" :data-theme="theme" class="divisor">
-      <ProjectList v-model:active-project="activeProject"
-                   :projects="otherProjects" :theme="theme"></ProjectList>
+      <ProjectList v-model:active-project="activeProject" :projects="otherProjects" :theme="theme"></ProjectList>
     </div>
 
     <div id="middle-section" :data-theme="theme" class="border-right">
-      <TasksView v-model:active-task="activeTask" :data-theme="theme"
-                 :project="activeProject" :projects="projects"
-                 :theme="theme"></TasksView>
+      <TasksView v-model:active-task="activeTask" :data-theme="theme" :project="activeProject" :projects="projects"
+        :theme="theme"></TasksView>
     </div>
 
     <div id="right-section" :data-theme="theme">
@@ -57,41 +54,41 @@ export default {
   computed: {
     inboxProject() {
       return this.projects
-          .find(value => value.name.toLowerCase() === "inbox");
+        .find(value => value.name.toLowerCase() === "inbox");
     },
     todayProject() {
       return this.projects
-          .find(value => value.name.toLowerCase() === "today");
+        .find(value => value.name.toLowerCase() === "today");
     },
     upcomingProject() {
       return this.projects
-          .find(value => value.name.toLowerCase() === "upcoming");
+        .find(value => value.name.toLowerCase() === "upcoming");
     },
     deletedProject() {
       return this.projects
-          .find(value => value.name.toLowerCase() === "deleted");
+        .find(value => value.name.toLowerCase() === "deleted");
     },
     completedProject() {
       return this.projects
-          .find(value => value.name.toLowerCase() === "completed");
+        .find(value => value.name.toLowerCase() === "completed");
     },
     defaultProjects() {
       return this.projects
-          .filter(value => {
-            const str = value.name.toLowerCase();
-            return str === "inbox" || str === "today" || str === "upcoming";
-          });
+        .filter(value => {
+          const str = value.name.toLowerCase();
+          return str === "inbox" || str === "today" || str === "upcoming";
+        });
     },
     userProjects() {
       return this.projects
-          .filter(x => !this.defaultProjects.includes(x) && !this.otherProjects.includes(x));
+        .filter(x => !this.defaultProjects.includes(x) && !this.otherProjects.includes(x));
     },
     otherProjects() {
       return this.projects
-          .filter(value => {
-            const str = value.name.toLowerCase();
-            return str === "deleted" || str === "completed";
-          });
+        .filter(value => {
+          const str = value.name.toLowerCase();
+          return str === "deleted" || str === "completed";
+        });
     },
   },
   methods: {
@@ -149,9 +146,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/variables.scss";
+
 * {
-  font-family: Roboto, sans-serif;
+  font-family: $font-family;
   list-style-position: inside;
 }
 
@@ -198,7 +197,7 @@ a {
 }
 
 .divisor[data-theme="dark"] {
-  background-color: #323232;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
 }
 
 body[data-theme="light"] {
@@ -208,7 +207,7 @@ body[data-theme="light"] {
 
 body[data-theme="dark"] {
   color: white;
-  background: #1a1a1a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
 }
 
 #app {
@@ -237,7 +236,7 @@ body[data-theme="dark"] {
 
 #left-section[data-theme="dark"] {
   color: white;
-  background: #1a1a1a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
 }
 
 #middle-section {
@@ -253,12 +252,12 @@ body[data-theme="dark"] {
 
 #middle-section[data-theme="dark"] {
   color: white;
-  background: #1e1e1e;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
 }
 
 #right-section {
   flex: 6;
-  background: #1a1a1a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
   height: 100vh;
   overflow-y: auto;
 }
@@ -270,7 +269,7 @@ body[data-theme="dark"] {
 
 #right-section[data-theme="dark"] {
   color: white;
-  background: #1a1a1a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
 }
 
 .border-right[data-theme="light"] {
@@ -278,6 +277,6 @@ body[data-theme="dark"] {
 }
 
 .border-right[data-theme="dark"] {
-  border-right: 1px #323232 solid;
+  border-right: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1) solid;
 }
 </style>

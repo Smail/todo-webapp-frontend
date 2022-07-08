@@ -90,7 +90,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/variables.scss";
+
 #content-section {
   width: 100%;
   height: 100%;
@@ -146,12 +148,12 @@ export default {
   width: fit-content;
   height: fit-content;
   padding: .75em;
-  background-color: #323232;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
   border: none;
   border-radius: 3px;
 }
 
 #markdown-btn:active {
-  background-color: #5a5a5a;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 25%, 1);
 }
 </style>

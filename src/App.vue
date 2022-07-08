@@ -2,7 +2,7 @@
   <router-view/>
 </template>
 
-<style>
+<style lang="scss">
 body {
   overflow: hidden;
 }

@@ -45,7 +45,6 @@ export default {
   position: absolute;
   border: thin solid hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1);
   border-radius: 5px;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
   filter: drop-shadow(0 0 0.25em black);
   padding: 0;
   margin: 0;

@@ -120,14 +120,6 @@ export default {
   overflow-wrap: anywhere;
 }
 
-#markdown-container[data-theme="dark"] a {
-  color: hotpink;
-}
-
-#markdown-container[data-theme="dark"] a:hover {
-  color: deeppink;
-}
-
 #header {
   display: flex;
   flex-direction: row;
@@ -148,12 +140,7 @@ export default {
   width: fit-content;
   height: fit-content;
   padding: .75em;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
   border: none;
   border-radius: 3px;
-}
-
-#markdown-btn:active {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 25%, 1);
 }
 </style>

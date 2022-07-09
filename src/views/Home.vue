@@ -157,24 +157,6 @@ export default {
   margin: 0.5em;
 }
 
-.divisor[data-theme="light"] {
-  background-color: black;
-}
-
-.divisor[data-theme="dark"] {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
-}
-
-body[data-theme="light"] {
-  color: black;
-  background: white;
-}
-
-body[data-theme="dark"] {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
-}
-
 #app {
   min-width: 100vw;
   min-height: 100vh;
@@ -192,54 +174,15 @@ body[data-theme="dark"] {
   margin-top: 0.5em;
 }
 
-#left-section[data-theme="light"] {
-  color: black;
-  background: white;
-}
-
-#left-section[data-theme="dark"] {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
-}
-
 #middle-section {
   flex: 6;
   height: 100vh;
   overflow-y: auto;
 }
 
-#middle-section:not([data-theme="dark"]) {
-  color: black;
-  background: white;
-}
-
-#middle-section[data-theme="dark"] {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
-}
-
 #right-section {
   flex: 6;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
   height: 100vh;
   overflow-y: auto;
-}
-
-#right-section:not([data-theme="dark"]) {
-  color: black;
-  background: white;
-}
-
-#right-section[data-theme="dark"] {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
-}
-
-.border-right[data-theme="light"] {
-  border-right: 1px black solid;
-}
-
-.border-right[data-theme="dark"] {
-  border-right: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1) solid;
 }
 </style>

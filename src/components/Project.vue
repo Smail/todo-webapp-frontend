@@ -54,36 +54,4 @@ export default {
   cursor: pointer;
   background-color: transparent;
 }
-
-.project[data-theme="light"] {
-  color: black;
-}
-
-.project[data-theme="dark"] {
-  color: white;
-}
-
-.project[data-theme="light"]:hover {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 59%, 1);
-}
-
-.project[data-theme="dark"]:hover {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
-}
-
-.project[data-theme="light"].active {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
-}
-
-.project[data-theme="dark"].active {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 18%, 1);
-}
-
-.material-icons[data-theme="dark"] {
-  color: hsla(hue($theme), saturation($theme), lightness($theme) + 38%, 1);
-}
 </style>

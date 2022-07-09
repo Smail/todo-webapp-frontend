@@ -1,0 +1,43 @@
+@import "@/assets/variables.scss";
+
+.divisor[data-theme="light"] {
+  background-color: black;
+}
+
+body[data-theme="light"] {
+  color: black;
+  background: white;
+}
+
+#left-section[data-theme="light"] {
+  color: black;
+  background: white;
+}
+
+#middle-section[data-theme="light"] {
+  color: black;
+  background: white;
+}
+
+#right-section:not([data-theme="dark"]) {
+  color: black;
+  background: white;
+}
+
+.border-right[data-theme="light"] {
+  border-right: 1px black solid;
+}
+
+.project[data-theme="light"] {
+  color: black;
+}
+
+.project[data-theme="light"]:hover {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 59%, 1);
+}
+
+.project[data-theme="light"].active {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+}

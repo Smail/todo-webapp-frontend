@@ -1,0 +1,63 @@
+@import "@/assets/variables.scss";
+
+.divisor[data-theme="dark"] {
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
+}
+
+body[data-theme="dark"] {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+}
+
+#left-section[data-theme="dark"] {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+}
+
+#middle-section[data-theme="dark"] {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
+}
+
+#right-section[data-theme="dark"] {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+}
+
+.border-right[data-theme="dark"] {
+  border-right: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1) solid;
+}
+
+#markdown-container[data-theme="dark"] a {
+  color: hotpink;
+}
+
+#markdown-container[data-theme="dark"] a:hover {
+  color: deeppink;
+}
+
+#markdown-btn[data-theme="dark"] {
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
+}
+
+#markdown-btn[data-theme="dark"]:active {
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 25%, 1);
+}
+
+#context-menu[data-theme="dark"] {
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
+}
+
+.project[data-theme="dark"] {
+  color: white;
+}
+
+.project[data-theme="dark"]:hover {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
+}
+
+.project[data-theme="dark"].active {
+  color: white;
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 18%, 1);
+}

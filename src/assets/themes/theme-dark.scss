@@ -1,63 +1,66 @@
 @import "@/assets/variables.scss";
 
-.divisor[data-theme="dark"] {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
+$theme-name: "dark";
+
+.divisor[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme, $amount: 10);
 }
 
-body[data-theme="dark"] {
+body[data-theme=#{$theme-name}] {
   color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+  background-color: lighten($color: $theme, $amount: 0);
 }
 
-#left-section[data-theme="dark"] {
+#left-section[data-theme=#{$theme-name}] {
   color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+  background-color: lighten($color: $theme, $amount: 0);
 }
 
-#middle-section[data-theme="dark"] {
+#middle-section[data-theme=#{$theme-name}] {
   color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
+  background-color: lighten($color: $theme, $amount: 2);
 }
 
-#right-section[data-theme="dark"] {
+#right-section[data-theme=#{$theme-name}] {
   color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+  background-color: lighten($color: $theme, $amount: 0);
 }
 
-.border-right[data-theme="dark"] {
-  border-right: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1) solid;
+.border-right[data-theme=#{$theme-name}] {
+  border-right: 1px lighten($color: $theme, $amount: 10) solid;
 }
 
-#markdown-container[data-theme="dark"] a {
+// This is never used?
+#markdown-container[data-theme=#{$theme-name}] a {
   color: hotpink;
 }
 
-#markdown-container[data-theme="dark"] a:hover {
+#markdown-container[data-theme=#{$theme-name}] a:hover {
   color: deeppink;
 }
 
-#markdown-btn[data-theme="dark"] {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
+#markdown-btn[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme, $amount: 10);
 }
 
-#markdown-btn[data-theme="dark"]:active {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 25%, 1);
+#markdown-btn[data-theme=#{$theme-name}]:active {
+  background-color: lighten($color: $theme, $amount: 25);
 }
 
-#context-menu[data-theme="dark"] {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
+#context-menu[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme, $amount: 6);
 }
 
-.project[data-theme="dark"] {
+.project[data-theme=#{$theme-name}] {
   color: white;
 }
 
-.project[data-theme="dark"]:hover {
+.project[data-theme=#{$theme-name}]:hover {
   color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
+  background-color: lighten($color: $theme, $amount: 6);
 }
 
-.project[data-theme="dark"].active {
+.project[data-theme=#{$theme-name}].active {
   color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 18%, 1);
+  background-color: lighten($color: $theme, $amount: 18);
 }

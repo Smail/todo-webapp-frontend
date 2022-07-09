@@ -185,4 +185,8 @@ export default {
   height: 100vh;
   overflow-y: auto;
 }
+
+.border-right {
+  border-right: 1px solid;
+}
 </style>

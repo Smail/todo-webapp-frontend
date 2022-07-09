@@ -31,7 +31,7 @@ body[data-theme=#{$theme-name}] {
 }
 
 .border-right[data-theme=#{$theme-name}] {
-  border-right: 1px lighten($color: $theme, $amount: 10) solid;
+  border-color: lighten($color: $theme, $amount: 10);
 }
 
 #markdown-container[data-theme=#{$theme-name}] a {

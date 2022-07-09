@@ -1,6 +1,6 @@
 <template>
-  <section @focusout="updateContextMenu($event, false, null)">
-    <h1 :data-theme="theme">{{ project.name }}</h1>
+  <section id="task-view-section" @focusout="updateContextMenu($event, false, null)">
+    <h1 id="task-view-section-title" :data-theme="theme">{{ project.name }}</h1>
     <ul>
       <li v-for="(task, index) in tasks" :data-theme="theme">
         <!-- Choosing @input instead of @focusout increases the server load, so this might be open to change -->
@@ -8,15 +8,15 @@
         <div :data-theme="theme" class="task"
              @click="setActiveTask(task)"
              @contextmenu="updateContextMenu($event, true, task)">
-          <input :data-theme="theme" class="material-icons-outlined" type="checkbox"/>
-          <input v-model="task.name" :data-theme="theme" type="text"
+          <input class="material-icons-outlined task-checkbox" type="checkbox" :data-theme="theme"/>
+          <input v-model="task.name" class="task-name-input" type="text" :data-theme="theme" 
                  @input="setTaskName(task, $event.target.value)"/>
-          <button :data-theme="theme"
+          <button class="more-options-btn" :data-theme="theme"
                   @click="updateContextMenu($event, true, task)">
             <span class="material-icons">more_horiz</span>
           </button>
         </div>
-        <hr v-if="index < tasks.length - 1" :data-theme="theme">
+        <hr v-if="index < tasks.length - 1" class="task-divider" :data-theme="theme">
       </li>
       <li>
         <input id="new-task" :data-theme="theme" placeholder="New task" type="text"
@@ -41,7 +41,7 @@
           </ul>
         </li>
         <li>
-          <hr :data-theme="theme" class="cm-hr">
+          <hr :data-theme="theme" class="task-divider">
         </li>
         <li :data-theme="theme" class="cm-item"
             @mouseenter="displaySubmenu($event.target, true)"
@@ -63,7 +63,7 @@
           <p>Tags</p>
         </li>
         <li>
-          <hr :data-theme="theme" class="cm-hr">
+          <hr :data-theme="theme" class="task-divider">
         </li>
         <li :data-theme="theme" class="cm-item">
           <span class="material-icons-outlined">file_copy</span>
@@ -321,7 +321,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/variables.scss";
 
 .cm-submenu {
@@ -344,7 +344,7 @@ export default {
   padding: .25em;
 }
 
-#cm-container hr {
+#cm-container .task-divider {
   padding: 0;
 }
 
@@ -401,26 +401,26 @@ export default {
   align-items: center;
 }
 
-button {
+.more-options-btn {
   display: flex;
   justify-content: center;
   border: 0 none;
   background-color: transparent;
 }
 
-button[data-theme="light"] {
+.more-options-btn[data-theme="light"] {
   color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
 }
 
-button[data-theme="dark"] {
+.more-options-btn[data-theme="dark"] {
   color: white;
 }
 
-section {
+#task-view-section {
   padding: 1em;
 }
 
-h1 {
+#task-view-section-title {
   text-transform: capitalize;
   margin: 0 0 0.5em 0;
 }
@@ -448,7 +448,7 @@ div.task[data-theme="dark"]:focus-within {
   background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 15%, 1);
 }
 
-input[type="checkbox"] {
+.task-checkbox {
   margin: 0 0.5em;
   padding: 0.5em;
   font-size: 10pt;
@@ -458,7 +458,7 @@ input[type="checkbox"] {
   position: relative;
 }
 
-input[type="checkbox"]:checked::before {
+.task-checkbox:checked::before {
   content: 'check';
   font-size: inherit;
   position: absolute;
@@ -471,17 +471,17 @@ input[type="checkbox"]:checked::before {
   align-items: center;
 }
 
-input[type="checkbox"][data-theme="light"]:checked::before {
+.task-checkbox[data-theme="light"]:checked::before {
   color: white;
   background-color: black;
 }
 
-input[type="checkbox"][data-theme="dark"]:checked::before {
+.task-checkbox[data-theme="dark"]:checked::before {
   color: black;
   background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 38%, 1);
 }
 
-input[type="text"] {
+.task-name-input {
   background-color: transparent;
   border-width: 0;
   font-size: inherit;
@@ -490,17 +490,17 @@ input[type="text"] {
   width: 100%;
 }
 
-input[type="text"][data-theme="dark"] {
+.task-name-input[data-theme="dark"] {
   color: white;
 }
 
-hr {
+.task-divider {
   height: 1px;
   border: none;
   background-color: black;
 }
 
-hr[data-theme="dark"] {
+.task-divider[data-theme="dark"] {
   background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 17%, 1);
 }
 

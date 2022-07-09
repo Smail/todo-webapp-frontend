@@ -30,13 +30,12 @@ body[data-theme=#{$theme-name}] {
   border-right: 1px lighten($color: $theme, $amount: 10) solid;
 }
 
-// This is never used?
 #markdown-container[data-theme=#{$theme-name}] a {
-  color: hotpink;
+  color: complement($color: lighten($color: $theme, $amount: 40));
 }
 
 #markdown-container[data-theme=#{$theme-name}] a:hover {
-  color: deeppink;
+  color: lighten($color: $theme, $amount: 40);
 }
 
 #markdown-btn[data-theme=#{$theme-name}] {

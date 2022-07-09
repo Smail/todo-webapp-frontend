@@ -2,27 +2,27 @@
 
 $theme-name: "dark";
 
+*[data-theme=#{$theme-name}] {
+  color: white;
+}
+
 .divisor[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 10);
 }
 
 body[data-theme=#{$theme-name}] {
-  color: white;
   background-color: lighten($color: $theme, $amount: 0);
 }
 
 #left-section[data-theme=#{$theme-name}] {
-  color: white;
   background-color: lighten($color: $theme, $amount: 0);
 }
 
 #middle-section[data-theme=#{$theme-name}] {
-  color: white;
   background-color: lighten($color: $theme, $amount: 2);
 }
 
 #right-section[data-theme=#{$theme-name}] {
-  color: white;
   background-color: lighten($color: $theme, $amount: 0);
 }
 
@@ -50,16 +50,10 @@ body[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 6);
 }
 
-.project[data-theme=#{$theme-name}] {
-  color: white;
-}
-
 .project[data-theme=#{$theme-name}]:hover {
-  color: white;
   background-color: lighten($color: $theme, $amount: 6);
 }
 
 .project[data-theme=#{$theme-name}].active {
-  color: white;
   background-color: lighten($color: $theme, $amount: 18);
 }

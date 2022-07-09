@@ -4,7 +4,6 @@ $theme: hsl(hue($color), saturation($color), 10%);
 
 // Create theme shades
 @for $i from 0 through 10 {
-  @debug $i;
   .theme-#{$i} {
     background-color: hsl(hue($color), saturation($color), $i * 10%);
   }

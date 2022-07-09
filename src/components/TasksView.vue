@@ -29,14 +29,15 @@
         <li>
           <h5 :data-theme="theme">Priority</h5>
           <ul id="priority-list" :data-theme="theme">
-            <li :data-theme="theme" class="cm-item">
-            <span class="material-icons">
-              !!!
-            </span>
+            <!-- The class "justify-center" must come  -->
+            <li v-for="i in [3, 2, 1, 0]" :data-theme="theme" class="cm-item-priority material-icons-round">
+              <template v-if="i == 0">
+                not_interested
+              </template>
+              <template v-else>
+                {{ "priority_high".repeat(i) }}
+              </template>
             </li>
-            <li :data-theme="theme" class="cm-item material-icons">!!</li>
-            <li :data-theme="theme" class="cm-item material-icons">!</li>
-            <li :data-theme="theme" class="cm-item">0</li>
           </ul>
         </li>
         <li>
@@ -350,23 +351,51 @@ export default {
   padding: 0;
 }
 
-.cm-item {
+@mixin cm-item {
   flex: 1 1 100%;
   position: relative;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
   padding: 0;
   margin: 0;
 }
 
-.cm-item[data-theme="dark"]:hover {
+.cm-item {
+  @include cm-item;
+  justify-content: flex-start;
+}
+
+.cm-item-priority {
+  @include cm-item;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  letter-spacing: -0.75em;
+  text-indent: -0.75em;
+  text-align: center;
+}
+
+.cm-item-priority:nth-child(1) {
+  color: red;
+}
+
+.cm-item-priority:nth-child(2) {
+  color: orange;
+}
+
+.cm-item-priority:nth-child(3) {
+  color: yellow;
+}
+
+.cm-item[data-theme="dark"]:hover,
+.cm-item-priority[data-theme="dark"]:hover {
   background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 15%, 1);
 }
 
 .cm-item > .material-icons,
-.cm-item > .material-icons-outlined {
+.cm-item > .material-icons-outlined,
+.cm-item > .material-icons-round {
   padding: 0 0.25em 0 0;
 }
 

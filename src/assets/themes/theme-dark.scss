@@ -23,7 +23,7 @@ body[data-theme=#{$theme-name}] {
 }
 
 #middle-section[data-theme=#{$theme-name}] {
-  background-color: lighten($color: $theme, $amount: 2);
+  background-color: lighten($color: $theme, $amount: 2.5);
 }
 
 #right-section[data-theme=#{$theme-name}] {
@@ -51,13 +51,13 @@ body[data-theme=#{$theme-name}] {
 }
 
 #context-menu[data-theme=#{$theme-name}] {
-  background-color: lighten($color: $theme, $amount: 6);
+  background-color: lighten($color: $theme, $amount: 5);
 }
 
 .project[data-theme=#{$theme-name}]:hover {
-  background-color: lighten($color: $theme, $amount: 6);
+  background-color: lighten($color: $theme, $amount: 10);
 }
 
 .project[data-theme=#{$theme-name}].active {
-  background-color: lighten($color: $theme, $amount: 18);
+  background-color: lighten($color: $theme, $amount: 20);
 }

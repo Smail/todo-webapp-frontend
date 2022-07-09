@@ -171,7 +171,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-top: 0.5em;
+  padding: 0.5em 0;
 }
 
 #middle-section {

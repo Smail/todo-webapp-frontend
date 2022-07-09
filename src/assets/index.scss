@@ -24,16 +24,13 @@
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 body {
-  padding: 0;
-  margin: 0;
   overflow: hidden;
-}
-
-p {
-  margin: 0;
 }
 
 .material-icons,

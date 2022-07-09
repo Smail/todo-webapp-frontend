@@ -338,13 +338,10 @@ export default {
 #cm-container {
   display: flex;
   flex-direction: column;
-  padding: 0;
-  margin: 0;
 }
 
 #cm-container * {
   padding: .25em;
-  margin: 0;
 }
 
 #cm-container hr {
@@ -357,8 +354,6 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
 }
 
 .cm-item {
@@ -430,25 +425,11 @@ h1 {
   margin: 0 0 0.5em 0;
 }
 
-ul {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 div.task {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.25em 0.5em;
-  margin: 0;
 }
 
 div.task[data-theme="light"]:hover {
@@ -516,7 +497,6 @@ input[type="text"][data-theme="dark"] {
 hr {
   height: 1px;
   border: none;
-  margin: 0;
   background-color: black;
 }
 

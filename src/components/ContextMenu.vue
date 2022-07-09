@@ -43,10 +43,8 @@ export default {
 #context-menu {
   display: block;
   position: absolute;
-  border: thin solid hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1);
+  border: thin solid;
   border-radius: 5px;
   filter: drop-shadow(0 0 0.25em black);
-  padding: 0;
-  margin: 0;
 }
 </style>

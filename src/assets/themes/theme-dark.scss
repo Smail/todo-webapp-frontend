@@ -51,6 +51,7 @@ body[data-theme=#{$theme-name}] {
 }
 
 #context-menu[data-theme=#{$theme-name}] {
+  border-color: lighten($color: $theme, $amount: 20);
   background-color: lighten($color: $theme, $amount: 5);
 }
 
@@ -71,6 +72,10 @@ body[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 5);
 }
 
+.task-checkbox[data-theme=#{$theme-name}] {
+  border-color: lighten($color: $theme, $amount: 20);
+}
+
 .task-checkbox[data-theme=#{$theme-name}]:checked::before {
   color: black;
   background-color: lighten($color: $theme, $amount: 40);
@@ -84,11 +89,6 @@ body[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 15);
 }
 
-.cm-item[data-theme=#{$theme-name}]:hover,
-.cm-item-priority[data-theme=#{$theme-name}]:hover {
-  background-color: lighten($color: $theme, $amount: 15);
-}
-
 #new-task[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 6);
 }
@@ -99,4 +99,15 @@ body[data-theme=#{$theme-name}] {
 
 #new-task[data-theme=#{$theme-name}]:focus {
   outline: thin solid lighten($color: $theme, $amount: 10);
+}
+
+// Context menu
+.cm-submenu[data-theme=#{$theme-name}] {
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
+  border-color: hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1);
+}
+
+.cm-item[data-theme=#{$theme-name}]:hover,
+.cm-item-priority[data-theme=#{$theme-name}]:hover {
+  background-color: lighten($color: $theme, $amount: 10);
 }

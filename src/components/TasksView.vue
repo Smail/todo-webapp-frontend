@@ -26,9 +26,11 @@
     <ContextMenu v-show="showContextMenu" id="context-menu" :pos-x="contextMenuPosX"
                  :pos-y="contextMenuPosY" :task="contextMenuTask" :data-theme="theme">
       <ul id="cm-container" :data-theme="theme">
-        <li>
+        <li style="margin: 0.5rem;">
           <h5 :data-theme="theme">Priority</h5>
-          <ul id="priority-list" :data-theme="theme">
+        </li>
+        <li style="margin: 0 0.25rem;">
+          <ul id="cm-priority-list" :data-theme="theme">
             <!-- The class "justify-center" must come  -->
             <li v-for="i in [3, 2, 1, 0]" :data-theme="theme" class="cm-item-priority material-icons-round">
               <template v-if="i == 0">
@@ -40,7 +42,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li style="margin: 0.25rem 0">
           <hr :data-theme="theme" class="task-divider">
         </li>
         <li :data-theme="theme" class="cm-item"
@@ -49,7 +51,7 @@
           <span class="material-icons-outlined">exit_to_app</span>
           <p>Move to different project</p>
 
-          <ul class="cm-submenu">
+          <ul class="cm-submenu" :data-theme="theme">
             <Project v-for="p in projects.filter(proj => proj !== project)"
                      :is-active="false"
                      :project="p"
@@ -62,7 +64,7 @@
           <span class="material-icons-outlined">label</span>
           <p>Tags</p>
         </li>
-        <li>
+        <li style="margin: 0.25rem 0">
           <hr :data-theme="theme" class="task-divider">
         </li>
         <li :data-theme="theme" class="cm-item">
@@ -329,23 +331,27 @@ export default {
   position: absolute;
   top: 0;
   left: calc(100%);
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
   border-radius: 0 5px 5px;
-  border: thin solid hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1);
   white-space: nowrap;
+  border: thin solid;
+}
+
+.cm-submenu .project {
+  margin: 0 0.25rem;
+}
+
+.cm-submenu .project:first-child {
+  margin-top: 0.25rem;
+}
+
+.cm-submenu .project:last-child {
+  margin-bottom: 0.25rem;
 }
 
 #cm-container {
   display: flex;
   flex-direction: column;
-}
-
-#cm-container * {
-  padding: .25em;
-}
-
-#cm-container .task-divider {
-  padding: 0;
+  margin-bottom: 0.25rem;
 }
 
 @mixin cm-item {
@@ -353,12 +359,15 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .cm-item {
   @include cm-item;
   justify-content: flex-start;
+  padding: 0.5em;
+  margin: 0 0.25rem;
 }
 
 .cm-item-priority {
@@ -369,6 +378,7 @@ export default {
   letter-spacing: -0.75em;
   text-indent: -0.75em;
   text-align: center;
+  padding: 0.5em;
 }
 
 .cm-item-priority:nth-child(1) {
@@ -389,7 +399,8 @@ export default {
   padding: 0 0.25em 0 0;
 }
 
-#priority-list {
+#cm-priority-list {
+  flex: 1;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -401,10 +412,6 @@ export default {
   justify-content: center;
   border: 0 none;
   background-color: transparent;
-}
-
-.more-options-btn[data-theme="light"] {
-  color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
 }
 
 #task-view-section {
@@ -423,21 +430,12 @@ export default {
   padding: 0.25em 0.5em;
 }
 
-div.task[data-theme="light"]:hover {
-  background-color: red; /* TODO */
-}
-
-
-div.task[data-theme="light"]:focus-within {
-  background-color: red; /* TODO */
-}
-
 .task-checkbox {
   margin: 0 0.5em;
   padding: 0.5em;
   font-size: 10pt;
   background-color: transparent;
-  border: 1px hsla(hue($theme), saturation($theme), lightness($theme) + 19%, 1) solid;
+  border: 1px solid;
   appearance: none;
   position: relative;
 }
@@ -453,11 +451,6 @@ div.task[data-theme="light"]:focus-within {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.task-checkbox[data-theme="light"]:checked::before {
-  color: white;
-  background-color: black;
 }
 
 .task-name-input {

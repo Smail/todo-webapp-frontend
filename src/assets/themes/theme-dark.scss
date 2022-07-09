@@ -61,3 +61,46 @@ body[data-theme=#{$theme-name}] {
 .project[data-theme=#{$theme-name}].active {
   background-color: lighten($color: $theme, $amount: 20);
 }
+
+// TaskView.vue
+.task[data-theme=#{$theme-name}]:focus-within {
+  background-color: lighten($color: $theme, $amount: 15);
+}
+
+.task[data-theme=#{$theme-name}]:hover {
+  background-color: lighten($color: $theme, $amount: 5);
+}
+
+.task-checkbox[data-theme=#{$theme-name}]:checked::before {
+  color: black;
+  background-color: lighten($color: $theme, $amount: 40);
+}
+
+.task-name-input[data-theme=#{$theme-name}] {
+  // color: white;
+}
+
+.more-options-btn[data-theme=#{$theme-name}] {
+  // color: white;
+}
+
+.task-divider[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme, $amount: 15);
+}
+
+.cm-item[data-theme=#{$theme-name}]:hover,
+.cm-item-priority[data-theme=#{$theme-name}]:hover {
+  background-color: lighten($color: $theme, $amount: 15);
+}
+
+#new-task[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme, $amount: 6);
+}
+
+#new-task[data-theme=#{$theme-name}]::placeholder {
+  color: lighten($color: $theme, $amount: 40);
+}
+
+#new-task[data-theme=#{$theme-name}]:focus {
+  outline: thin solid lighten($color: $theme, $amount: 10);
+}

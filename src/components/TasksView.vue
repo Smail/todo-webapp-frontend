@@ -383,11 +383,6 @@ export default {
   color: yellow;
 }
 
-.cm-item[data-theme="dark"]:hover,
-.cm-item-priority[data-theme="dark"]:hover {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 15%, 1);
-}
-
 .cm-item > .material-icons,
 .cm-item > .material-icons-outlined,
 .cm-item > .material-icons-round {
@@ -412,10 +407,6 @@ export default {
   color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
 }
 
-.more-options-btn[data-theme="dark"] {
-  color: white;
-}
-
 #task-view-section {
   padding: 1em;
 }
@@ -425,7 +416,7 @@ export default {
   margin: 0 0 0.5em 0;
 }
 
-div.task {
+.task {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -436,16 +427,9 @@ div.task[data-theme="light"]:hover {
   background-color: red; /* TODO */
 }
 
-div.task[data-theme="dark"]:hover {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
-}
 
 div.task[data-theme="light"]:focus-within {
   background-color: red; /* TODO */
-}
-
-div.task[data-theme="dark"]:focus-within {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 15%, 1);
 }
 
 .task-checkbox {
@@ -476,11 +460,6 @@ div.task[data-theme="dark"]:focus-within {
   background-color: black;
 }
 
-.task-checkbox[data-theme="dark"]:checked::before {
-  color: black;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 38%, 1);
-}
-
 .task-name-input {
   background-color: transparent;
   border-width: 0;
@@ -490,49 +469,15 @@ div.task[data-theme="dark"]:focus-within {
   width: 100%;
 }
 
-.task-name-input[data-theme="dark"] {
-  color: white;
-}
-
 .task-divider {
   height: 1px;
   border: none;
-  background-color: black;
-}
-
-.task-divider[data-theme="dark"] {
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 17%, 1);
 }
 
 #new-task {
   padding: 0.5em;
   width: calc(100% - 2 * 0.5em);
   border-radius: 5px;
-}
-
-#new-task:not([data-theme="dark"]) {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
-}
-
-#new-task[data-theme="dark"] {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 6%, 1);
-}
-
-#new-task::placeholder {
-  color: lightgray;
-}
-
-#new-task[data-theme="dark"]::placeholder {
-  color: hsla(hue($theme), saturation($theme), lightness($theme) + 39%, 1);
-}
-
-#new-task:not([data-theme="dark"]):focus {
-  outline: thin solid hsla(hue($theme), saturation($theme), lightness($theme), 1);;
-}
-
-#new-task[data-theme="dark"]:focus {
-  outline: thin solid hsla(hue($theme), saturation($theme), lightness($theme) + 10%, 1);
+  border: none;
 }
 </style>

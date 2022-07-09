@@ -35,6 +35,6 @@ export default {
 <style>
 .project-list-section-title {
   padding: 0 1em;
-  margin: 0.5em 0;
+  margin: 0.5rem 0;
 }
 </style>

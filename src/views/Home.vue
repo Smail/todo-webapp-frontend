@@ -2,11 +2,15 @@
   <!-- eslint-disable -->
   <div v-if="hasLoaded" id="app-content" :data-theme="theme">
     <div id="left-section" :data-theme="theme" class="border-right">
+      <ProjectList v-model:active-project="activeProject" :projects="defaultProjects" :theme="theme"
+        section-title="Quick Access"></ProjectList>
       <hr :data-theme="theme" class="divider">
-      <router-link :data-theme="theme" class="project" to="/calendar">
+      <section>
+        <router-link :data-theme="theme" class="project" to="/calendar">
         <span :data-theme="theme" class="material-icons">date_range</span>
         <p>Calendar</p>
       </router-link>
+      </section>
       <hr v-if="defaultProjects.length > 0" :data-theme="theme" class="divider">
       <ProjectList v-model:active-project="activeProject" :projects="userProjects" :theme="theme"
         section-title="Projects"></ProjectList>
@@ -162,7 +166,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0.5em 0;
+  gap: 0.5rem;
 }
 
 #middle-section {
@@ -186,6 +190,5 @@ export default {
   height: 1px;
   border: 0;
   align-self: center;
-  margin: 0.5em;
 }
 </style>

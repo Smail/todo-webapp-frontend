@@ -10,7 +10,7 @@ $theme-name: "dark";
   background-color: lighten($color: $theme, $amount: 20);
 }
 
-.divisor[data-theme=#{$theme-name}] {
+.divider[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 10);
 }
 

@@ -252,7 +252,7 @@ body[data-theme="dark"] {
 
 #middle-section[data-theme="dark"] {
   color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 2%, 1);
 }
 
 #right-section {

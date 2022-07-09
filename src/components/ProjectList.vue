@@ -1,6 +1,6 @@
 <template>
   <section v-if="projects.length > 0">
-    <h5 v-if="sectionTitle != null && sectionTitle.length > 0" :data-theme="theme">
+    <h5 v-if="sectionTitle != null && sectionTitle.length > 0" class="project-list-section-title" :data-theme="theme">
       {{ sectionTitle }}
     </h5>
     <ul :data-theme="theme">
@@ -32,8 +32,8 @@ export default {
 }
 </script>
 
-<style scoped>
-h5 {
+<style>
+.project-list-section-title {
   padding: 0 1em;
   margin: 0.5em 0;
 }

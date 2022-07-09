@@ -27,22 +27,22 @@
                  :pos-y="contextMenuPosY" :task="contextMenuTask" :data-theme="theme">
       <ul id="cm-container" :data-theme="theme">
         <li>
-          <h5 :data-theme="theme" class="color-primary">Priority</h5>
+          <h5 :data-theme="theme">Priority</h5>
           <ul id="priority-list" :data-theme="theme">
-            <li :data-theme="theme" class="cm-item color-primary">
+            <li :data-theme="theme" class="cm-item">
             <span class="material-icons">
               !!!
             </span>
             </li>
-            <li :data-theme="theme" class="cm-item color-primary material-icons">!!</li>
-            <li :data-theme="theme" class="cm-item color-primary material-icons">!</li>
-            <li :data-theme="theme" class="cm-item color-primary">0</li>
+            <li :data-theme="theme" class="cm-item material-icons">!!</li>
+            <li :data-theme="theme" class="cm-item material-icons">!</li>
+            <li :data-theme="theme" class="cm-item">0</li>
           </ul>
         </li>
         <li>
           <hr :data-theme="theme" class="cm-hr">
         </li>
-        <li :data-theme="theme" class="cm-item color-primary"
+        <li :data-theme="theme" class="cm-item"
             @mouseenter="displaySubmenu($event.target, true)"
             @mouseleave="displaySubmenu($event.target, false)">
           <span class="material-icons-outlined">exit_to_app</span>
@@ -57,18 +57,18 @@
             </Project>
           </ul>
         </li>
-        <li :data-theme="theme" class="cm-item color-primary">
+        <li :data-theme="theme" class="cm-item">
           <span class="material-icons-outlined">label</span>
           <p>Tags</p>
         </li>
         <li>
           <hr :data-theme="theme" class="cm-hr">
         </li>
-        <li :data-theme="theme" class="cm-item color-primary">
+        <li :data-theme="theme" class="cm-item">
           <span class="material-icons-outlined">file_copy</span>
           <p>Duplicate</p>
         </li>
-        <li :data-theme="theme" class="cm-item color-primary"
+        <li :data-theme="theme" class="cm-item"
             @click="deleteTask(contextMenuTask); hideContextMenu();">
           <span class="material-icons-outlined" style="color:#ff0000;">delete</span>
           <p>Delete</p>
@@ -375,14 +375,6 @@ export default {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-}
-
-.color-primary[data-theme="light"] {
-  color: black;
-}
-
-.color-primary[data-theme="dark"] {
-  color: white;
 }
 
 button {

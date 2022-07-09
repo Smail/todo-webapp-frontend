@@ -149,41 +149,6 @@ export default {
 <style lang="scss">
 @import "@/assets/variables.scss";
 
-* {
-  font-family: $font-family;
-  list-style-position: inside;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 .divisor {
   width: 90%;
   height: 1px;
@@ -218,8 +183,6 @@ body[data-theme="dark"] {
   margin: 0;
   overflow: hidden;
   display: flex;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 #left-section {

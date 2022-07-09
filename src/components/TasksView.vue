@@ -357,7 +357,6 @@ export default {
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
-  font-size: 11pt;
   padding: 0;
   margin: 0;
 }
@@ -369,12 +368,6 @@ export default {
 .cm-item > .material-icons,
 .cm-item > .material-icons-outlined {
   padding: 0 0.25em 0 0;
-}
-
-.material-icons,
-.material-icons-outlined {
-  color: inherit;
-  font-size: inherit;
 }
 
 #priority-list {
@@ -425,7 +418,6 @@ ul {
 
 li {
   list-style: none;
-  font-size: 11pt;
   padding: 0;
   margin: 0;
 }

@@ -83,16 +83,7 @@ export default {
   background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 18%, 1);
 }
 
-.material-icons {
-  font-size: 12pt;
-}
-
 .material-icons[data-theme="dark"] {
   color: hsla(hue($theme), saturation($theme), lightness($theme) + 38%, 1);
-}
-
-p {
-  font-size: 11pt;
-  margin: 0;
 }
 </style>

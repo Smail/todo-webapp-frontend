@@ -6,6 +6,10 @@ $theme-name: "dark";
   color: white;
 }
 
+::-webkit-scrollbar-thumb {
+  background-color: lighten($color: $theme, $amount: 20);
+}
+
 .divisor[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 10);
 }

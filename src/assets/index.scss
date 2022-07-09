@@ -36,6 +36,16 @@ p {
   margin: 0;
 }
 
+#app {
+  min-width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+}
+
 .material-icons,
 .material-icons-outlined {
   color: inherit;

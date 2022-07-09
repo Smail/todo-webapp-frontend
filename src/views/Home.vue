@@ -157,16 +157,6 @@ export default {
   margin: 0.5em;
 }
 
-#app {
-  min-width: 100vw;
-  min-height: 100vh;
-  max-width: 100vw;
-  max-height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  display: flex;
-}
-
 #left-section {
   display: flex;
   flex-direction: column;

@@ -76,13 +76,9 @@ body[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 40);
 }
 
-.task-name-input[data-theme=#{$theme-name}] {
-  // color: white;
-}
+// .task-name-input[data-theme=#{$theme-name}] {}
 
-.more-options-btn[data-theme=#{$theme-name}] {
-  // color: white;
-}
+// .more-options-btn[data-theme=#{$theme-name}] {}
 
 .task-divider[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 15);

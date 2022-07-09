@@ -24,7 +24,7 @@
       </li>
     </ul>
     <ContextMenu v-show="showContextMenu" id="context-menu" :pos-x="contextMenuPosX"
-                 :pos-y="contextMenuPosY" :task="contextMenuTask">
+                 :pos-y="contextMenuPosY" :task="contextMenuTask" :data-theme="theme">
       <ul id="cm-container" :data-theme="theme">
         <li>
           <h5 :data-theme="theme" class="color-primary">Priority</h5>

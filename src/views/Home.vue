@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable -->
-  <div v-if="hasLoaded" id="app" :data-theme="theme">
+  <div v-if="hasLoaded" id="app-content" :data-theme="theme">
     <div id="left-section" :data-theme="theme" class="border-right">
       <ProjectList v-model:active-project="activeProject" :projects="defaultProjects" :theme="theme"></ProjectList>
       <hr :data-theme="theme" class="divisor">
@@ -149,12 +149,14 @@ export default {
 <style lang="scss">
 @import "@/assets/variables.scss";
 
-.divisor {
-  width: 90%;
-  height: 1px;
-  border: 0;
-  align-self: center;
-  margin: 0.5em;
+#app-content {
+  min-width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
 }
 
 #left-section {
@@ -178,5 +180,13 @@ export default {
 
 .border-right {
   border-right: 1px solid;
+}
+
+.divisor {
+  width: 90%;
+  height: 1px;
+  border: 0;
+  align-self: center;
+  margin: 0.5em;
 }
 </style>

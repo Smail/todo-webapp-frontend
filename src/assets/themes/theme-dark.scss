@@ -6,7 +6,7 @@ $theme-name: "dark";
   color: white;
 }
 
-::-webkit-scrollbar-thumb {
+*[data-theme=#{$theme-name}]::-webkit-scrollbar-thumb {
   background-color: lighten($color: $theme, $amount: 20);
 }
 
@@ -45,6 +45,8 @@ body[data-theme=#{$theme-name}] {
 #markdown-btn[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 10);
 }
+
+// #markdown-btn[data-theme=#{$theme-name}]:hover {}
 
 #markdown-btn[data-theme=#{$theme-name}]:active {
   background-color: lighten($color: $theme, $amount: 25);
@@ -91,6 +93,7 @@ body[data-theme=#{$theme-name}] {
 
 #new-task[data-theme=#{$theme-name}] {
   background-color: lighten($color: $theme, $amount: 6);
+  border-color: lighten($color: $theme, $amount: 20);
 }
 
 #new-task[data-theme=#{$theme-name}]::placeholder {
@@ -98,7 +101,7 @@ body[data-theme=#{$theme-name}] {
 }
 
 #new-task[data-theme=#{$theme-name}]:focus {
-  outline: thin solid lighten($color: $theme, $amount: 10);
+  outline-color: lighten($color: $theme, $amount: 10);
 }
 
 // Context menu

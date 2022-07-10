@@ -471,6 +471,10 @@ export default {
   padding: 0.5em;
   width: calc(100% - 2 * 0.5em);
   border-radius: 5px;
-  border: none;
+  border: solid 1px;
+}
+
+#new-task:focus {
+  outline: thin solid;
 }
 </style>

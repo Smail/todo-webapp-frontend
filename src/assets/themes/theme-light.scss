@@ -1,43 +1,136 @@
 @import "@/assets/variables.scss";
 
-.divider[data-theme="light"] {
-  background-color: black;
-}
+$theme-name: "light";
+$theme: white;
+$theme-accent: deeppink;
 
-body[data-theme="light"] {
-  color: black;
-  background: white;
-}
-
-#left-section[data-theme="light"] {
-  color: black;
-  background: white;
-}
-
-#middle-section[data-theme="light"] {
-  color: black;
-  background: white;
-}
-
-#right-section:not([data-theme="dark"]) {
-  color: black;
-  background: white;
-}
-
-.border-right[data-theme="light"] {
-  border-right: 1px black solid;
-}
-
-.project[data-theme="light"] {
+*[data-theme=#{$theme-name}] {
   color: black;
 }
 
-.project[data-theme="light"]:hover {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme) + 59%, 1);
+*[data-theme=#{$theme-name}]::-webkit-scrollbar-thumb {
+  background-color: $theme-accent;
 }
 
-.project[data-theme="light"].active {
-  color: white;
-  background-color: hsla(hue($theme), saturation($theme), lightness($theme), 1);
+.divider[data-theme=#{$theme-name}] {
+  background-color: $theme-accent;
+}
+
+body[data-theme=#{$theme-name}] {
+  background-color: $theme-accent;
+}
+
+#left-section[data-theme=#{$theme-name}] {
+  background-color: $theme;
+}
+
+#middle-section[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme, $amount: 2.5);
+}
+
+#right-section[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme, $amount: 0);
+}
+
+.border-right[data-theme=#{$theme-name}] {
+  border-color: $theme-accent;
+}
+
+#markdown-container[data-theme=#{$theme-name}] a {
+  color: $theme-accent;
+}
+
+#markdown-container[data-theme=#{$theme-name}] a:hover {
+  color: darken($color: $theme-accent, $amount: 10);
+}
+
+#markdown-btn[data-theme=#{$theme-name}] {
+  background-color: darken($color: $theme-accent, $amount: 0);
+}
+
+#markdown-btn[data-theme=#{$theme-name}]:hover {
+  background-color: lighten($color: $theme-accent, $amount: 30);
+}
+
+#markdown-btn[data-theme=#{$theme-name}]:active {
+  background-color: lighten($color: $theme-accent, $amount: 0);
+}
+
+#context-menu[data-theme=#{$theme-name}] {
+  border-color: $theme-accent;
+  background-color: $theme;
+}
+
+.project[data-theme=#{$theme-name}]:hover {
+  background-color: lighten($color: $theme-accent, $amount: 30);
+}
+
+.project[data-theme=#{$theme-name}].active {
+  background-color: $theme-accent;
+}
+
+// TaskView.vue
+.task[data-theme=#{$theme-name}]:focus-within {
+  background-color: lighten($color: $theme, $amount: 15);
+}
+
+.task[data-theme=#{$theme-name}]:hover {
+  background-color: lighten($color: $theme-accent, $amount: 40);
+}
+
+.task-checkbox[data-theme=#{$theme-name}] {
+  border-color: $theme-accent;
+}
+
+.task-checkbox[data-theme=#{$theme-name}]:checked::before {
+  color: $theme-accent;
+  background-color: $theme;
+}
+
+// .task-name-input[data-theme=#{$theme-name}] {}
+
+// .more-options-btn[data-theme=#{$theme-name}] {}
+
+.task-divider[data-theme=#{$theme-name}] {
+  background-color: $theme-accent;
+}
+
+#new-task[data-theme=#{$theme-name}] {
+  background-color: lighten($color: $theme-accent, $amount: 40);
+  border-color: lighten($color: $theme-accent, $amount: 20);
+}
+
+#new-task[data-theme=#{$theme-name}]::placeholder {
+  // color: lighten($color: $theme, $amount: 40);
+}
+
+#new-task[data-theme=#{$theme-name}]:focus {
+  outline-color: $theme-accent;
+}
+
+.cm-submenu[data-theme=#{$theme-name}] {
+  background-color: $theme;
+  border-color: $theme-accent;
+}
+
+.cm-item[data-theme=#{$theme-name}] {
+  background-color: $theme;
+  border-color: $theme-accent;
+}
+
+.cm-item[data-theme=#{$theme-name}]:hover,
+.cm-item-priority[data-theme=#{$theme-name}]:hover {
+  background-color: lighten($color: $theme-accent, $amount: 40);
+}
+
+.cm-item-priority[data-theme=#{$theme-name}]:nth-child(1) {
+  color: red;
+}
+
+.cm-item-priority[data-theme=#{$theme-name}]:nth-child(2) {
+  color: orangered;
+}
+
+.cm-item-priority[data-theme=#{$theme-name}]:nth-child(3) {
+  color: orange;
 }

@@ -142,5 +142,6 @@ export default {
   padding: .75em;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
 }
 </style>

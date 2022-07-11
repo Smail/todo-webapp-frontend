@@ -1,11 +1,11 @@
 import {createRouter, createWebHistory} from "vue-router"
-import Home from "../views/Home.vue"
+import TaskManager from "../views/TaskManagerView.vue"
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "TaskManager",
+    component: TaskManager
   },
   {
     path: "/calendar",

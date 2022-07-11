@@ -75,7 +75,6 @@ function randColorArray(size) {
 }
 
 export default {
-  name: "Calendar",
   components: {CalendarTask, TimeSlot},
   props: {
     theme: String,

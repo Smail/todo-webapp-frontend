@@ -36,7 +36,6 @@ import TasksView from "@/components/TasksView";
 import ContentPanel from "@/components/ContentPanel";
 
 export default {
-  name: "App",
   components: {
     ContentPanel,
     TasksView,
